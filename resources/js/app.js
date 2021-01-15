@@ -4,9 +4,27 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-require('./bootstrap');
+import 'es6-promise/auto'
+import axios from 'axios'
+import './bootstrap'
+import Vue from 'vue'
+import VueAuth from '@websanova/vue-auth'
+import VueAxios from 'vue-axios'
+import VueRouter from 'vue-router'
+import Index from './Index'
+import auth from './auth'
+import router from './router'
 
 window.Vue = require('vue').default;
+
+// Set Vue router
+Vue.router = router
+Vue.use(VueRouter)
+
+// Set Vue authentication
+Vue.use(VueAxios, axios)
+axios.defaults.baseURL = 'http://myapp.com:8000/api'
+Vue.use(VueAuth, auth)
 
 /**
  * The following block of code may be used to automatically register your
@@ -19,7 +37,9 @@ window.Vue = require('vue').default;
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+// Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+Vue.component('index', Index);
+
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -29,4 +49,5 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 
 const app = new Vue({
     el: '#app',
+    router
 });
