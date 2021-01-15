@@ -7,6 +7,7 @@
 import 'es6-promise/auto'
 import axios from 'axios'
 import './bootstrap'
+import './fontawesome'
 import Vue from 'vue'
 import VueAuth from '@websanova/vue-auth'
 import VueAxios from 'vue-axios'
@@ -14,6 +15,8 @@ import VueRouter from 'vue-router'
 import Index from './Index'
 import auth from './auth'
 import router from './router'
+import VueIziToast from 'vue-izitoast'
+import 'izitoast/dist/css/iziToast.min.css'
 
 window.Vue = require('vue').default;
 
@@ -25,6 +28,8 @@ Vue.use(VueRouter)
 Vue.use(VueAxios, axios)
 axios.defaults.baseURL = 'http://myapp.com:8000/api'
 Vue.use(VueAuth, auth)
+
+Vue.use(VueIziToast);
 
 /**
  * The following block of code may be used to automatically register your
@@ -39,7 +44,6 @@ Vue.use(VueAuth, auth)
 
 // Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('index', Index);
-
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
