@@ -30,7 +30,7 @@
             <div class="login-content">
                 <form action="index.html" method="GET" class="margin-bottom-0">
                     <div class="form-group m-b-15">
-                        <input type="text" class="form-control form-control-lg" placeholder="이메일" required />
+                        <input type="text" class="form-control form-control-lg" placeholder="이메일" autofocus required />
                     </div>
                     <div class="form-group m-b-15">
                         <input type="password" class="form-control form-control-lg" placeholder="비밀번호" required />
@@ -45,49 +45,7 @@
                     </div>
                 </form>
                 <hr class="m-t-15" />
-                <div class="register-buttons text-center">
-                    <button type="button" class="btn btn-info p-t-15 p-b-15 p-l-40 p-r-40" data-toggle="modal"
-                        data-target="#registerModal">새 계정 만들기</button>
-
-                    <div class="modal fade" id="registerModal" tabindex="-1" data-backdrop="static" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">가입하기</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <form>
-                                        <label class="control-label">이름 <span class="text-danger">*</span></label>
-                                        <div class="row m-b-15">
-                                            <div class="col-md-12">
-                                                <input type="text" class="form-control text-center" placeholder="본인 이름을 입력하세요." required />
-                                            </div>
-                                        </div>
-                                        <label class="control-label">이메일 <span class="text-danger">*</span></label>
-                                        <div class="row m-b-15">
-                                            <div class="col-md-12">
-                                                <input type="text" class="form-control text-center" placeholder="로그인할 때와 비밀번호 재설정해야 할 때 사용하는 정보입니다." required />
-                                            </div>
-                                        </div>
-                                        <label class="control-label">비밀번호 <span class="text-danger">*</span></label>
-                                        <div class="row m-b-15">
-                                            <div class="col-md-12">
-                                                <input type="password" class="form-control text-center" placeholder="여덟 자리 이상의 비밀번호를 입력하세요." required />
-                                            </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">나가기</button>
-                                            <button type="submit" class="btn btn-primary">가입하기</button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <register></register>
             </div>
             <!-- end login-content -->
         </div>
@@ -95,3 +53,26 @@
     </div>
     <!-- end login -->
 </template>
+
+<script>
+import register from '../components/Register.vue'
+
+export default {
+    data() {
+        return {
+            email: '',
+            password: '',
+        }
+    },
+
+    components: {
+        register
+    },
+
+    methods: {
+        clear() {
+
+        }
+    },
+}
+</script>

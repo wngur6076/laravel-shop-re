@@ -1,5 +1,5 @@
 <template>
-    <div id="main" v-if="$auth.check(1)">
+    <div id="login" v-if="$auth.check()">
         <header id="js-header" class="u-header u-header--static">
             <navigationMenu></navigationMenu>
         </header>
@@ -7,24 +7,25 @@
             <router-view></router-view>
         </div>
     </div>
-    <div class="login" v-else>
-        <login></login>
+    <div class="not-login" v-else>
+        <div id="content">
+            <router-view></router-view>
+        </div>
     </div>
 </template>
 
 <script>
-    import navigationMenu from './components/Menu.vue'
-import Login from './pages/Login.vue'
-    import login from './pages/Login.vue'
-    export default {
-        data() {
-            return {
-                //
-            }
-        },
-        components: {
-            navigationMenu,
-                Login
+import navigationMenu from './components/Menu.vue'
+
+export default {
+    data() {
+        return {
+            //
         }
+    },
+
+    components: {
+        navigationMenu,
     }
+}
 </script>

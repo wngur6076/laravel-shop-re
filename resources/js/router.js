@@ -4,6 +4,7 @@ import VueRouter from 'vue-router'
 import Home from './pages/Home'
 import Register from './pages/Register'
 import Login from './pages/Login'
+import NotFound from './pages/NotFound'
 import Dashboard from './pages/user/Dashboard'
 import AdminDashboard from './pages/admin/Dashboard'
 
@@ -13,7 +14,13 @@ const routes = [{
         name: 'home',
         component: Home,
         meta: {
-            auth: undefined
+            auth: {
+                roles: true,
+                redirect: {
+                    name: 'login'
+                },
+                forbiddenRedirect: '/403'
+            }
         }
     },
     {
@@ -56,6 +63,10 @@ const routes = [{
             }
         }
     },
+    {
+        path: '*',
+        component: NotFound
+    }
 ]
 
 const router = new VueRouter({
