@@ -52,9 +52,9 @@
     export default {
         data() {
             return {
-                name: '',
-                email: '',
-                password: '',
+                name: null,
+                email: null,
+                password: null,
 
                 errors: {}
             }
@@ -69,9 +69,9 @@
             },
 
             clearText() {
-                this.name = ''
-                this.email = ''
-                this.password = ''
+                this.name = null
+                this.email = null
+                this.password = null
                 this.errors = {}
             },
 
@@ -86,6 +86,7 @@
                     success: function () {
                         $(this.$refs.modal).modal('hide')
                         app.clearText()
+                        this.$toast.success('회원 가입 완료되었습니다.', "Success")
                     },
                     error: function (res) {
                         app.errors = res.response.data.errors || {}

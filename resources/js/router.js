@@ -2,7 +2,6 @@ import VueRouter from 'vue-router'
 
 // Pages
 import Home from './pages/Home'
-import Register from './pages/Register'
 import Login from './pages/Login'
 import NotFound from './pages/NotFound'
 import Dashboard from './pages/user/Dashboard'
@@ -21,14 +20,6 @@ const routes = [{
                 },
                 forbiddenRedirect: '/403'
             }
-        }
-    },
-    {
-        path: '/register',
-        name: 'register',
-        component: Register,
-        meta: {
-            auth: false
         }
     },
     {

@@ -28,12 +28,15 @@
             <!-- end login-header -->
             <!-- begin login-content -->
             <div class="login-content">
-                <form action="index.html" method="GET" class="margin-bottom-0">
+                <form @submit.prevent="login" method="post" class="margin-bottom-0">
                     <div class="form-group m-b-15">
-                        <input type="text" class="form-control form-control-lg" placeholder="이메일" autofocus required />
+                        <input type="text" :class="errorClass()" v-model="email" placeholder="이메일" autofocus required />
                     </div>
                     <div class="form-group m-b-15">
-                        <input type="password" class="form-control form-control-lg" placeholder="비밀번호" required />
+                        <input type="password" :class="errorClass()" v-model="password" placeholder="비밀번호" required />
+                    </div>
+                    <div v-if="has_error" class="alert alert-danger text-center">
+                        <strong>가입하지 않은 아이디이거나, 잘못된 비밀번호입니다.</strong>
                     </div>
                     <div class="login-buttons">
                         <button type="submit" class="btn btn-success btn-block btn-lg">로그인</button>
@@ -55,13 +58,14 @@
 </template>
 
 <script>
-import register from '../components/Register.vue'
+import register from '../components/Register'
 
 export default {
     data() {
         return {
-            email: '',
-            password: '',
+            email: null,
+            password: null,
+            has_error: false
         }
     },
 
@@ -70,8 +74,33 @@ export default {
     },
 
     methods: {
-        clear() {
-
+        errorClass() {
+            return [
+                'form-control form-control-lg',
+                this.has_error  ? 'is-invalid' : ''
+            ]
+        },
+            
+        login() {
+            var app = this
+            this.$auth.login({
+                params: {
+                    email: app.email,
+                    password: app.password
+                },
+                success: function () {
+                    this.$router.push({
+                        name: 'home'
+                    })
+                    let message = this.$auth.user().name + '님 환영합니다.'
+                    this.$toast.success(message, "Success");
+                },
+                error: function () {
+                    app.has_error = true
+                },
+                rememberMe: true,
+                fetchUser: true
+            })
         }
     },
 }
