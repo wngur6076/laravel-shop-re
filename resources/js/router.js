@@ -4,8 +4,6 @@ import VueRouter from 'vue-router'
 import Home from './pages/Home'
 import Login from './pages/Login'
 import NotFound from './pages/NotFound'
-import Dashboard from './pages/user/Dashboard'
-import AdminDashboard from './pages/admin/Dashboard'
 
 // Routes
 const routes = [{
@@ -28,30 +26,6 @@ const routes = [{
         component: Login,
         meta: {
             auth: false
-        }
-    },
-    // USER ROUTES
-    {
-        path: '/dashboard',
-        name: 'dashboard',
-        component: Dashboard,
-        meta: {
-            auth: true
-        }
-    },
-    // ADMIN ROUTES
-    {
-        path: '/admin',
-        name: 'admin.dashboard',
-        component: AdminDashboard,
-        meta: {
-            auth: {
-                roles: 2,
-                redirect: {
-                    name: 'login'
-                },
-                forbiddenRedirect: '/403'
-            }
         }
     },
     {

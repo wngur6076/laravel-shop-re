@@ -2,9 +2,9 @@
     <div class="u-header__section u-header__section--light g-bg-white g-transition-0_3">
         <nav class="js-mega-menu navbar navbar-expand-lg hs-menu-initialized hs-menu-horizontal">
             <div class="container">
-                <!-- Responsive Toggle Button -->
+                <!-- Responsive Toggle Button -->        
                 <button
-                    class="navbar-toggler navbar-toggler-right btn g-line-height-1 g-brd-none g-pa-0 g-pos-abs g-top-minus-3 g-right-0"
+                    class="navbar-toggler navbar-toggler-right btn g-line-height-1 g-brd-none g-pa-0 g-pos-abs g-top-5 g-right-0"
                     type="button" aria-label="Toggle navigation" aria-expanded="false" aria-controls="navBar"
                     data-toggle="collapse" data-target="#navBar">
                     <span class="hamburger hamburger--slider">
@@ -67,23 +67,25 @@
                         </li>
                         <!-- End Intro -->
                         
-
-                        <!-- <li class="nav-item  g-mx-10--lg g-mx-15--xl" v-if="$auth.check()">
-                            <a href="#" class="nav-link g-py-7 g-px-0" @click.prevent="logout">Logout</a>
-                        </li>
-
-                        <li class="nav-item  g-mx-10--lg g-mx-15--xl" v-if="$auth.check(2)">
-                            <a href="#" class="nav-link g-py-7 g-px-0" @click.prevent="logout">관리자</a>
-                        </li> -->
                     </ul>
                 </div>
                 <!-- End Navigation -->
 
-                <div class="d-inline-block g-hidden-md-down g-pos-rel g-valign-middle g-pl-30 g-pl-0--lg">
-                    <a class="btn u-btn-outline-primary g-font-size-13 text-uppercase g-py-10 g-px-15"
-                        href="https://wrapbootstrap.com/theme/unify-responsive-website-template-WB0412697?ref=htmlstream"
-                        target="_blank">Purchase now</a>
-                </div>
+                <!-- dropdown-group -->
+                <div class="dropdown-group">
+                    <div class="dropdown-button" data-toggle="dropdown">
+                        <i class="fa-2x rounded-circle fas fa-sort-down btn btn-light g-font-size-13"></i>
+                    </div>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <button class="dropdown-item pointer-none">{{ $auth.user().name }}</button>
+                        <div class="dropdown-divider"></div>
+                        <button class="dropdown-item pointer-none" v-if="creditCheck"><span :class="classes">{{ credit }}</span> 등급</button>
+                        <button class="dropdown-item pointer-none"><span class="badge badge-danger pull-right">{{ $auth.user().money }}원</span> 잔액</button>
+                        <div class="dropdown-divider"></div>
+                        <button @click.prevent="logout" class="dropdown-item">로그아웃</button>
+                    </div>   
+                </div>  
+                <!-- End dropdown-group -->
             </div>
         </nav>
     </div>
@@ -93,6 +95,10 @@
     export default {
         data() {
             return {
+                credit: null,
+
+                creditClass: null,
+
                 routes: {
                     // UNLOGGED
                     unlogged: [{
@@ -119,6 +125,33 @@
             }
         },
 
+        computed: {
+            creditCheck() {
+                if (this.$auth.check(2)) {
+                    this.credit = '판매자'
+                    this.creditClass = 'badge-success'
+                }
+                else if (this.$auth.check(1) && this.$auth.user().credit) {
+                    this.credit = '구매자'
+                    this.creditClass = 'badge-primary'
+                }
+                else {
+                    this.credit = '비구매자'
+                    this.creditClass = 'badge-secondary'
+                }
+                    
+
+                return true
+            },
+
+            classes () {
+                return [
+                    'badge', 'pull-right',
+                    this.creditClass
+                ]
+            },
+        },
+        
         methods: {
             logout() {
                 this.$auth.logout()
@@ -138,7 +171,7 @@
     .u-header__section {
         margin: 0;
         padding: 0;
-        box-shadow: 2px 2px 2px 2px gray;
+        box-shadow: 2px 2px 2px 2px $gray;
 
         .nav-item {
             padding: 0px 30px;
@@ -148,24 +181,31 @@
                 border-color: $white;
                 background-color: $background;
             }
-
+        }
+        .dropdown-item {
+            &.pointer-none { pointer-events: none; }
         }
     }
 
 
     @media screen and (max-width: 992px) {
-        .u-header__section {
+        .u-header__section { 
             .nav-item {
                 padding: 0px;
                 a {
                     display: flex;
-                    justify-content: flex-start;
+                    justify-content: flex-end;
                     align-items: center;
                     .name { 
                         margin-left: 15px;
                         font-size: $font-medium;
                     }
                 }
+            }
+            .dropdown-button {
+                position: absolute;
+                top: 10px;
+                right: 70px;
             }
         }
     }
