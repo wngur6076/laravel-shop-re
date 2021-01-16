@@ -7,6 +7,7 @@ $font-size-base: 0.9rem;
 $line-height-base: 1.6;
 
 // Colors
+$white: #fff;
 $blue: #3490dc;
 $indigo: #6574cd;
 $purple: #9561e2;
@@ -17,3 +18,21 @@ $yellow: #ffed4a;
 $green: #38c172;
 $teal: #4dc0b5;
 $cyan: #6cb2eb;
+$background: #F0F2F5;
+$light-white: #eeeeee;
+$dark-white: #bdbdbd;
+
+/* Font size */
+$font-large: 40px;
+$font-medium: 28px;
+$font-regular: 18px;
+$font-small: 16px;
+$font-micro: 14px;
+
+/* Font weight */
+$weight-bold: 600;
+$weight-semi-bold: 400;
+$weight-regular: 300;
+
+$size--avatar: 220px;
+$size--border-radius: 10px;

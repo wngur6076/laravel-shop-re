@@ -10,6 +10,8 @@ import {
         faArrowUp,
         faAngleRight,
         faSignInAlt,
+    faHome,
+        faCashRegister, faMoneyCheck
 } from '@fortawesome/free-solid-svg-icons';
 
 import {
@@ -20,7 +22,8 @@ library.add(
         faCaretUp,
         faCaretDown,
         faStar,
-        faCheck, faSpinner, faArrowUp, faAngleRight, faSignInAlt
+    faCheck, faSpinner, faArrowUp, faAngleRight, faSignInAlt, faHome,
+        faCashRegister, faMoneyCheck
     );
     // Kicks off the process of finding <i> tags and replacing with <svg>
     dom.watch();

@@ -90,6 +90,7 @@
                     },
                     error: function (res) {
                         app.errors = res.response.data.errors || {}
+                        this.$toast.error('입력을 다시 확인해주세요.', "Error")
                     }
                 })
             }
