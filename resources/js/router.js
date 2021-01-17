@@ -1,9 +1,10 @@
 import VueRouter from 'vue-router'
 
 // Pages
-import Shop from './components/Shop'
+import Shop from './pages/Shop'
 import Login from './pages/Login'
-import Home from './pages/Home'
+import Charge from './pages/Charge'
+import ChargeHistory from './pages/ChargeHistory'
 import NotFound from './pages/NotFound'
 
 // Routes
@@ -23,9 +24,23 @@ const routes = [
         }
     },
     {
-        path: '/shop',
-        name: 'shop',
-        component: Shop,
+        path: '/charge',
+        name: 'charge',
+        component: Charge,
+        meta: {
+            auth: {
+                roles: true,
+                redirect: {
+                    name: 'login'
+                },
+                forbiddenRedirect: '/403'
+            }
+        }
+    },
+    {
+        path: '/history/charge',
+        name: 'history.charge',
+        component: ChargeHistory,
         meta: {
             auth: {
                 roles: true,

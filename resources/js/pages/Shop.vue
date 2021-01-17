@@ -222,10 +222,12 @@
 
 <script>
     import VueMasonryWall from "vue-masonry-wall";
+
     export default {
         components: {
             VueMasonryWall
         },
+
         data() {
             return {
                 options: {

@@ -3,7 +3,7 @@
 
 <!-- JS Implementing Plugins -->
 <script src="{{ asset('unify/assets/vendor/hs-megamenu/src/hs.megamenu.js') }}"></script>
-<script src="{{ asset('unify/assets/vendor/masonry/dist/masonry.pkgd.min.js') }}"></script>
+{{-- <script src="{{ asset('unify/assets/vendor/masonry/dist/masonry.pkgd.min.js') }}"></script> --}}
 <script src="{{ asset('unify/assets/vendor/imagesloaded/imagesloaded.pkgd.min.js') }}">
 </script>
 
@@ -36,26 +36,7 @@
             pageContainer: $('.container'),
             breakpoint: 991
         });
-
-        // initialization of masonry
-        $('.masonry-grid').imagesLoaded().then(function () {
-            $('.masonry-grid').masonry({
-                columnWidth: '.masonry-grid-sizer',
-                itemSelector: '.masonry-grid-item',
-                percentPosition: true
-            });
-        });
-
-        // initialization of sticky blocks
-        setTimeout(function () {
-            $.HSCore.components.HSStickyBlock.init('.js-sticky-block');
-        }, 300);
-    });
-
-    $(window).on('resize', function () {
-        setTimeout(function () {
-            $.HSCore.components.HSTabs.init('[role="tablist"]');
-        }, 200);
+        
     });
 </script>
 <!-- ================== END BASE JS ================== -->

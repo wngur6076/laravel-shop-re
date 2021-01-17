@@ -1,6 +1,6 @@
 <template>
     <div id="main">
-        <header id="js-header" v-if="$auth.check()" class="u-header u-header--static">
+        <header id="js-header" v-show="$auth.check()" class="u-header u-header--static">
             <navigationMenu></navigationMenu>
         </header>
 
@@ -13,12 +13,10 @@
 
 <script>
     import navigationMenu from './components/Menu.vue'
-    import Shop from './components/Shop.vue'
 
     export default {
         components: {
             navigationMenu,
-            Shop
-        }
+        },
     }
 </script>
