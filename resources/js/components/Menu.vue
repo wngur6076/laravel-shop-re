@@ -49,7 +49,6 @@
                                 <span class="name">홈</span>
                             </a>
                         </li>
-                        <!-- End Intro -->
                         <!-- Intro -->
                         <li class="nav-item">
                             <a class="nav-link g-py-7 g-px-0">

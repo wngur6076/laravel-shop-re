@@ -1,15 +1,31 @@
 import VueRouter from 'vue-router'
 
 // Pages
-import Home from './pages/Home'
+import Shop from './components/Shop'
 import Login from './pages/Login'
+import Home from './pages/Home'
 import NotFound from './pages/NotFound'
 
 // Routes
-const routes = [{
+const routes = [
+    {
         path: '/',
         name: 'home',
-        component: Home,
+        component: Shop,
+        meta: {
+            auth: {
+                roles: true,
+                redirect: {
+                    name: 'login'
+                },
+                forbiddenRedirect: '/403'
+            }
+        }
+    },
+    {
+        path: '/shop',
+        name: 'shop',
+        component: Shop,
         meta: {
             auth: {
                 roles: true,
@@ -37,6 +53,7 @@ const routes = [{
 const router = new VueRouter({
     history: true,
     mode: 'history',
+    linkActiveClass: 'active',
     routes,
 })
 

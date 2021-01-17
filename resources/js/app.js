@@ -17,6 +17,7 @@ import auth from './auth'
 import router from './router'
 import VueIziToast from 'vue-izitoast'
 import 'izitoast/dist/css/iziToast.min.css'
+import LoadScript from 'vue-plugin-load-script';
 
 window.Vue = require('vue').default;
 
@@ -26,10 +27,12 @@ Vue.use(VueRouter)
 
 // Set Vue authentication
 Vue.use(VueAxios, axios)
-axios.defaults.baseURL = 'http://myapp.com:8000/api'
 Vue.use(VueAuth, auth)
-
 Vue.use(VueIziToast);
+Vue.use(LoadScript);
+
+
+axios.defaults.baseURL = 'http://myapp.com:8000/api'
 
 /**
  * The following block of code may be used to automatically register your

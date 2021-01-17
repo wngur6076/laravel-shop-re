@@ -6,10 +6,8 @@
 </head>
 
 <body>
-    <div id="app">
-        <index></index>
-    </div>
-
+    <index id="app"></index>
+    
     @include('includes.page-js')
 </body>
 

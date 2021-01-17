@@ -9,12 +9,12 @@
 <!-- Styles -->
 <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
+<!-- Favicon -->
+<link rel="shortcut icon" href="{{ asset('favicon.ico') }}">
+
 <!-- ================== BEGIN BASE CSS STYLE ================== -->
 <link href="{{ asset('/color/assets/css/default/app.min.css') }}" rel="stylesheet" />
 <!-- ================== END BASE CSS STYLE ================== -->
-
-<!-- Favicon -->
-<link rel="shortcut icon" href="{{ asset('favicon.ico') }}">
 
 <!-- CSS Global Compulsory -->
 <link rel="stylesheet" href="{{ asset('unify/assets/vendor/bootstrap/bootstrap.min.css') }}">
@@ -28,6 +28,5 @@
 <link rel="stylesheet" href="{{ asset('unify/assets/css/unify-core.css') }}">
 <link rel="stylesheet" href="{{ asset('unify/assets/css/unify-components.css') }}">
 <link rel="stylesheet" href="{{ asset('unify/assets/css/unify-globals.css') }}">
-
 
 @stack('css')

@@ -1,10 +1,6 @@
 <!-- Scripts -->
 <script src="{{ asset('js/app.js') }}"></script>
 
-<!-- ================== BEGIN BASE JS ================== -->
-{{-- <script src="{{ asset('/color/assets/js/theme/default.min.js') }}"></script> --}}
-<!-- ================== END BASE JS ================== -->
-
 <!-- JS Implementing Plugins -->
 <script src="{{ asset('unify/assets/vendor/hs-megamenu/src/hs.megamenu.js') }}"></script>
 <script src="{{ asset('unify/assets/vendor/masonry/dist/masonry.pkgd.min.js') }}"></script>
@@ -62,5 +58,6 @@
         }, 200);
     });
 </script>
+<!-- ================== END BASE JS ================== -->
 
 @stack('scripts')
