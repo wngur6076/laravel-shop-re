@@ -45,25 +45,25 @@
                     id="navBar">
                     <ul class="navbar-nav text-uppercase g-pos-rel g-font-weight-600 ml-auto">
                         <!-- Intro -->
-                        <router-link class="nav-item g-mx-10--lg g-mx-15--xl" @click.native="routerLink('home')" tag="li" :to="{ name: 'home' }" exact>
-                            <a class="nav-link g-py-7 g-px-0">
+                        <router-link class="nav-item g-mx-10--lg g-mx-15--xl" tag="li" :to="{ name: 'home' }" exact>
+                            <div class="nav-link g-py-7 g-px-0">
                                 <i class="fas fa-home fa-3x"></i>
                                 <span class="name">홈</span>
-                            </a>
+                            </div>
                         </router-link>
 
-                        <router-link class="nav-item g-mx-10--lg g-mx-15--xl" @click.native="routerLink('charge')" tag="li" :to="{ name: 'charge' }">
-                            <a class="nav-link g-py-7 g-px-0">
+                        <router-link class="nav-item g-mx-10--lg g-mx-15--xl" tag="li" :to="{ name: 'charge' }">
+                            <div class="nav-link g-py-7 g-px-0">
                                 <i class="fas fa-cash-register fa-3x"></i>
                                 <span class="name">충전</span>
-                            </a>
+                            </div>
                         </router-link>
 
-                        <router-link class="nav-item g-mx-10--lg g-mx-15--xl" @click.native="routerLink('history.charge')" tag="li" :to="{ name: 'history.charge' }">
-                            <a class="nav-link g-py-7 g-px-0">
+                        <router-link class="nav-item g-mx-10--lg g-mx-15--xl" tag="li" :to="{ name: 'history.charge' }">
+                            <div class="nav-link g-py-7 g-px-0">
                                 <i class="fas fa-money-check fa-3x"></i>
                                 <span class="name">내역</span>
-                            </a>
+                            </div>
                         </router-link>
 
                     </ul>
@@ -159,10 +159,6 @@
                     this.$router.go(this.$router.currentRoute);
                 }, 100);
             },
-
-            routerLink(name) {
-                this.$router.push({ name: name })
-            }
         },
     }
 </script>
@@ -184,7 +180,7 @@
                 background-color: $background;
             }
 
-            a {
+            .nav-link {
                 display: block;
             }
         }
@@ -198,7 +194,7 @@
         .u-header__section {
             .nav-item {
                 padding: 0px;
-                a {
+                .nav-link {
                     display: flex;
                     justify-content: flex-end;
                     align-items: center;
