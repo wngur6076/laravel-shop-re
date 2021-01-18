@@ -12539,7 +12539,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -12812,6 +12811,191 @@ __webpack_require__.r(__webpack_exports__);
           this.$toast.error('입력을 다시 확인해주세요.', "Error");
         }
       });
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/SidebarRight.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/SidebarRight.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  data: function data() {
+    return {
+      links: {
+        shop: ['상점', '공지'],
+        charge: ['입금 요청', '상품권 충전', '휴대폰 인증'],
+        chargeHistory: ['충전 내역', '구매 내역']
+      },
+      currentLinks: {}
+    };
+  },
+  watch: {
+    "$route": 'fetchQuestions'
+  },
+  mounted: function mounted() {
+    this.fetchQuestions();
+  },
+  methods: {
+    fetchQuestions: function fetchQuestions() {
+      switch (this.$router.currentRoute.name) {
+        case 'home':
+          this.currentLinks = this.links.shop;
+          break;
+
+        case 'charge':
+          this.currentLinks = this.links.charge;
+          break;
+
+        case 'history.charge':
+          this.currentLinks = this.links.chargeHistory;
+          break;
+
+        default:
+          break;
+      }
     }
   }
 });
@@ -50475,15 +50659,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
 /* harmony import */ var _SidebarRight_vue_vue_type_template_id_2dede40b___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./SidebarRight.vue?vue&type=template&id=2dede40b& */ "./resources/js/components/SidebarRight.vue?vue&type=template&id=2dede40b&");
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* harmony import */ var _SidebarRight_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SidebarRight.vue?vue&type=script&lang=js& */ "./resources/js/components/SidebarRight.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
-var script = {}
+
+
 
 
 /* normalize component */
 ;
-var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__.default)(
-  script,
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__.default)(
+  _SidebarRight_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__.default,
   _SidebarRight_vue_vue_type_template_id_2dede40b___WEBPACK_IMPORTED_MODULE_0__.render,
   _SidebarRight_vue_vue_type_template_id_2dede40b___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
   false,
@@ -50734,6 +50920,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Register_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Register.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Register.vue?vue&type=script&lang=js&");
  /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Register_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__.default); 
+
+/***/ }),
+
+/***/ "./resources/js/components/SidebarRight.vue?vue&type=script&lang=js&":
+/*!***************************************************************************!*\
+  !*** ./resources/js/components/SidebarRight.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_SidebarRight_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./SidebarRight.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/SidebarRight.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_SidebarRight_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__.default); 
 
 /***/ }),
 
@@ -51573,389 +51775,339 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c(
+    "div",
+    { staticClass: "col-lg-3 g-brd-left--lg g-brd-gray-light-v4 g-mb-80" },
+    [
+      _c("div", { staticClass: "g-pl-20--lg" }, [
+        _c("div", { staticClass: "g-mb-50" }, [
+          _c("h3", { staticClass: "h5 g-color-black g-font-weight-600 mb-4" }, [
+            _vm._v("Links")
+          ]),
+          _vm._v(" "),
+          _c(
+            "ul",
+            { staticClass: "list-unstyled g-font-size-13 mb-0" },
+            [
+              _vm._l(_vm.currentLinks, function(link, key) {
+                return _c("li", { key: key }, [
+                  _c(
+                    "a",
+                    {
+                      staticClass:
+                        "d-block u-link-v5 g-color-gray-dark-v4 rounded g-px-20 g-py-8",
+                      attrs: { href: "#" }
+                    },
+                    [
+                      _c("i", { staticClass: "mr-2 fa fa-angle-right" }),
+                      _vm._v(" " + _vm._s(link))
+                    ]
+                  )
+                ])
+              }),
+              _vm._v(" "),
+              _vm._m(0)
+            ],
+            2
+          )
+        ]),
+        _vm._v(" "),
+        _c("hr", { staticClass: "g-brd-gray-light-v4 g-mt-50 mb-0" }),
+        _vm._v(" "),
+        _vm._m(1)
+      ])
+    ]
+  )
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      { staticClass: "col-lg-3 g-brd-left--lg g-brd-gray-light-v4 g-mb-80" },
-      [
-        _c("div", { staticClass: "g-pl-20--lg" }, [
+    return _c("li", [
+      _c(
+        "a",
+        {
+          staticClass:
+            "d-block active u-link-v5 g-color-black g-bg-gray-light-v5 g-font-weight-600 g-rounded-50 g-px-20 g-py-8",
+          attrs: { href: "#" }
+        },
+        [
+          _c("i", { staticClass: "mr-2 fa fa-angle-right" }),
+          _vm._v(" Untold Stories")
+        ]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { attrs: { id: "stickyblock-start" } }, [
+      _c(
+        "div",
+        {
+          staticClass: "js-sticky-block g-sticky-block--lg g-pt-50",
+          attrs: {
+            "data-responsive": "true",
+            "data-start-point": "#stickyblock-start",
+            "data-end-point": "#stickyblock-end"
+          }
+        },
+        [
           _c("div", { staticClass: "g-mb-50" }, [
             _c(
               "h3",
               { staticClass: "h5 g-color-black g-font-weight-600 mb-4" },
-              [_vm._v("Links")]
+              [_vm._v("Publications")]
             ),
             _vm._v(" "),
             _c("ul", { staticClass: "list-unstyled g-font-size-13 mb-0" }, [
               _c("li", [
-                _c(
-                  "a",
-                  {
+                _c("article", { staticClass: "media g-mb-35" }, [
+                  _c("img", {
                     staticClass:
-                      "d-block u-link-v5 g-color-gray-dark-v4 rounded g-px-20 g-py-8",
-                    attrs: { href: "#" }
-                  },
-                  [
-                    _c("i", { staticClass: "mr-2 fa fa-angle-right" }),
-                    _vm._v(" People")
-                  ]
-                )
+                      "d-flex g-width-40 g-height-40 rounded-circle mr-3",
+                    attrs: {
+                      src: "/unify/assets/img-temp/100x100/img1.jpg",
+                      alt: "Image Description"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "media-body" }, [
+                    _c(
+                      "h4",
+                      { staticClass: "h6 g-color-black g-font-weight-600" },
+                      [_vm._v("Htmlstream")]
+                    ),
+                    _vm._v(" "),
+                    _c("p", { staticClass: "g-color-gray-dark-v4" }, [
+                      _vm._v(
+                        "This is where we sit down, grab a\n                                        cup of\n                                        coffee and dial in the details."
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "a",
+                      {
+                        staticClass:
+                          "btn u-btn-outline-primary g-font-size-11 g-rounded-25",
+                        attrs: { href: "#" }
+                      },
+                      [_vm._v("Follow")]
+                    )
+                  ])
+                ])
               ]),
               _vm._v(" "),
               _c("li", [
-                _c(
-                  "a",
-                  {
+                _c("article", { staticClass: "media g-mb-35" }, [
+                  _c("img", {
                     staticClass:
-                      "d-block u-link-v5 g-color-gray-dark-v4 rounded g-px-20 g-py-8",
-                    attrs: { href: "#" }
-                  },
-                  [
-                    _c("i", { staticClass: "mr-2 fa fa-angle-right" }),
-                    _vm._v(" News Publications")
-                  ]
-                )
+                      "d-flex g-width-40 g-height-40 rounded-circle mr-3",
+                    attrs: {
+                      src: "/unify/assets/img-temp/100x100/img3.jpg",
+                      alt: "Image Description"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "media-body" }, [
+                    _c(
+                      "h4",
+                      { staticClass: "h6 g-color-black g-font-weight-600" },
+                      [_vm._v("Pixeel")]
+                    ),
+                    _vm._v(" "),
+                    _c("p", { staticClass: "g-color-gray-dark-v4" }, [
+                      _vm._v(
+                        "This is where we sit down, grab a\n                                        cup of\n                                        coffee and dial in the details."
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "a",
+                      {
+                        staticClass:
+                          "btn u-btn-outline-primary g-font-size-11 g-rounded-25",
+                        attrs: { href: "#" }
+                      },
+                      [_vm._v("Follow")]
+                    )
+                  ])
+                ])
               ]),
               _vm._v(" "),
               _c("li", [
+                _c("article", { staticClass: "media" }, [
+                  _c("img", {
+                    staticClass:
+                      "d-flex g-width-40 g-height-40 rounded-circle mr-3",
+                    attrs: {
+                      src: "/unify/assets/img-temp/100x100/img2.jpg",
+                      alt: "Image Description"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "media-body" }, [
+                    _c(
+                      "h4",
+                      { staticClass: "h6 g-color-black g-font-weight-600" },
+                      [_vm._v("WrapBootstrap")]
+                    ),
+                    _vm._v(" "),
+                    _c("p", { staticClass: "g-color-gray-dark-v4" }, [
+                      _vm._v(
+                        "This is where we sit down, grab a\n                                        cup of\n                                        coffee and dial in the details."
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "a",
+                      {
+                        staticClass:
+                          "btn u-btn-outline-primary g-font-size-11 g-rounded-25",
+                        attrs: { href: "#" }
+                      },
+                      [_vm._v("Follow")]
+                    )
+                  ])
+                ])
+              ])
+            ])
+          ]),
+          _vm._v(" "),
+          _c("hr", { staticClass: "g-brd-gray-light-v4 g-my-50" }),
+          _vm._v(" "),
+          _c("div", { staticClass: "g-mb-40" }, [
+            _c(
+              "h3",
+              { staticClass: "h5 g-color-black g-font-weight-600 mb-4" },
+              [_vm._v("Tags")]
+            ),
+            _vm._v(" "),
+            _c("ul", { staticClass: "u-list-inline mb-0" }, [
+              _c("li", { staticClass: "list-inline-item g-mb-10" }, [
                 _c(
                   "a",
                   {
                     staticClass:
-                      "d-block u-link-v5 g-color-gray-dark-v4 rounded g-px-20 g-py-8",
+                      "u-tags-v1 g-color-gray-dark-v4 g-color-white--hover g-bg-gray-light-v5 g-bg-primary--hover g-font-size-12 g-rounded-50 g-py-4 g-px-15",
                     attrs: { href: "#" }
                   },
-                  [
-                    _c("i", { staticClass: "mr-2 fa fa-angle-right" }),
-                    _vm._v(" Marketing & IT")
-                  ]
+                  [_vm._v("Design")]
                 )
               ]),
               _vm._v(" "),
-              _c("li", [
+              _c("li", { staticClass: "list-inline-item g-mb-10" }, [
                 _c(
                   "a",
                   {
                     staticClass:
-                      "d-block u-link-v5 g-color-gray-dark-v4 rounded g-px-20 g-py-8",
+                      "u-tags-v1 g-color-gray-dark-v4 g-color-white--hover g-bg-gray-light-v5 g-bg-primary--hover g-font-size-12 g-rounded-50 g-py-4 g-px-15",
                     attrs: { href: "#" }
                   },
-                  [
-                    _c("i", { staticClass: "mr-2 fa fa-angle-right" }),
-                    _vm._v(" Business Strategy")
-                  ]
+                  [_vm._v("Art")]
                 )
               ]),
               _vm._v(" "),
-              _c("li", [
+              _c("li", { staticClass: "list-inline-item g-mb-10" }, [
                 _c(
                   "a",
                   {
                     staticClass:
-                      "d-block active u-link-v5 g-color-black g-bg-gray-light-v5 g-font-weight-600 g-rounded-50 g-px-20 g-py-8",
+                      "u-tags-v1 g-color-gray-dark-v4 g-color-white--hover g-bg-gray-light-v5 g-bg-primary--hover g-font-size-12 g-rounded-50 g-py-4 g-px-15",
                     attrs: { href: "#" }
                   },
-                  [
-                    _c("i", { staticClass: "mr-2 fa fa-angle-right" }),
-                    _vm._v(" Untold Stories")
-                  ]
+                  [_vm._v("Graphic")]
+                )
+              ]),
+              _vm._v(" "),
+              _c("li", { staticClass: "list-inline-item g-mb-10" }, [
+                _c(
+                  "a",
+                  {
+                    staticClass:
+                      "u-tags-v1 g-color-gray-dark-v4 g-color-white--hover g-bg-gray-light-v5 g-bg-primary--hover g-font-size-12 g-rounded-50 g-py-4 g-px-15",
+                    attrs: { href: "#" }
+                  },
+                  [_vm._v("Front End Development")]
+                )
+              ]),
+              _vm._v(" "),
+              _c("li", { staticClass: "list-inline-item g-mb-10" }, [
+                _c(
+                  "a",
+                  {
+                    staticClass:
+                      "u-tags-v1 g-color-gray-dark-v4 g-color-white--hover g-bg-gray-light-v5 g-bg-primary--hover g-font-size-12 g-rounded-50 g-py-4 g-px-15",
+                    attrs: { href: "#" }
+                  },
+                  [_vm._v("CSS")]
+                )
+              ]),
+              _vm._v(" "),
+              _c("li", { staticClass: "list-inline-item g-mb-10" }, [
+                _c(
+                  "a",
+                  {
+                    staticClass:
+                      "u-tags-v1 g-color-gray-dark-v4 g-color-white--hover g-bg-gray-light-v5 g-bg-primary--hover g-font-size-12 g-rounded-50 g-py-4 g-px-15",
+                    attrs: { href: "#" }
+                  },
+                  [_vm._v("HTML")]
+                )
+              ]),
+              _vm._v(" "),
+              _c("li", { staticClass: "list-inline-item g-mb-10" }, [
+                _c(
+                  "a",
+                  {
+                    staticClass:
+                      "u-tags-v1 g-color-gray-dark-v4 g-color-white--hover g-bg-gray-light-v5 g-bg-primary--hover g-font-size-12 g-rounded-50 g-py-4 g-px-15",
+                    attrs: { href: "#" }
+                  },
+                  [_vm._v("Sass")]
                 )
               ])
             ])
           ]),
           _vm._v(" "),
-          _c("hr", { staticClass: "g-brd-gray-light-v4 g-mt-50 mb-0" }),
+          _c("hr", { staticClass: "g-brd-gray-light-v4 g-my-50" }),
           _vm._v(" "),
-          _c("div", { attrs: { id: "stickyblock-start" } }, [
+          _c("div", { staticClass: "g-mb-50" }, [
             _c(
-              "div",
-              {
-                staticClass: "js-sticky-block g-sticky-block--lg g-pt-50",
-                attrs: {
-                  "data-responsive": "true",
-                  "data-start-point": "#stickyblock-start",
-                  "data-end-point": "#stickyblock-end"
-                }
-              },
-              [
-                _c("div", { staticClass: "g-mb-50" }, [
-                  _c(
-                    "h3",
-                    { staticClass: "h5 g-color-black g-font-weight-600 mb-4" },
-                    [_vm._v("Publications")]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "ul",
-                    { staticClass: "list-unstyled g-font-size-13 mb-0" },
-                    [
-                      _c("li", [
-                        _c("article", { staticClass: "media g-mb-35" }, [
-                          _c("img", {
-                            staticClass:
-                              "d-flex g-width-40 g-height-40 rounded-circle mr-3",
-                            attrs: {
-                              src: "/unify/assets/img-temp/100x100/img1.jpg",
-                              alt: "Image Description"
-                            }
-                          }),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "media-body" }, [
-                            _c(
-                              "h4",
-                              {
-                                staticClass:
-                                  "h6 g-color-black g-font-weight-600"
-                              },
-                              [_vm._v("Htmlstream")]
-                            ),
-                            _vm._v(" "),
-                            _c("p", { staticClass: "g-color-gray-dark-v4" }, [
-                              _vm._v(
-                                "This is where we sit down, grab a\n                                        cup of\n                                        coffee and dial in the details."
-                              )
-                            ]),
-                            _vm._v(" "),
-                            _c(
-                              "a",
-                              {
-                                staticClass:
-                                  "btn u-btn-outline-primary g-font-size-11 g-rounded-25",
-                                attrs: { href: "#" }
-                              },
-                              [_vm._v("Follow")]
-                            )
-                          ])
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("li", [
-                        _c("article", { staticClass: "media g-mb-35" }, [
-                          _c("img", {
-                            staticClass:
-                              "d-flex g-width-40 g-height-40 rounded-circle mr-3",
-                            attrs: {
-                              src: "/unify/assets/img-temp/100x100/img3.jpg",
-                              alt: "Image Description"
-                            }
-                          }),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "media-body" }, [
-                            _c(
-                              "h4",
-                              {
-                                staticClass:
-                                  "h6 g-color-black g-font-weight-600"
-                              },
-                              [_vm._v("Pixeel")]
-                            ),
-                            _vm._v(" "),
-                            _c("p", { staticClass: "g-color-gray-dark-v4" }, [
-                              _vm._v(
-                                "This is where we sit down, grab a\n                                        cup of\n                                        coffee and dial in the details."
-                              )
-                            ]),
-                            _vm._v(" "),
-                            _c(
-                              "a",
-                              {
-                                staticClass:
-                                  "btn u-btn-outline-primary g-font-size-11 g-rounded-25",
-                                attrs: { href: "#" }
-                              },
-                              [_vm._v("Follow")]
-                            )
-                          ])
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("li", [
-                        _c("article", { staticClass: "media" }, [
-                          _c("img", {
-                            staticClass:
-                              "d-flex g-width-40 g-height-40 rounded-circle mr-3",
-                            attrs: {
-                              src: "/unify/assets/img-temp/100x100/img2.jpg",
-                              alt: "Image Description"
-                            }
-                          }),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "media-body" }, [
-                            _c(
-                              "h4",
-                              {
-                                staticClass:
-                                  "h6 g-color-black g-font-weight-600"
-                              },
-                              [_vm._v("WrapBootstrap")]
-                            ),
-                            _vm._v(" "),
-                            _c("p", { staticClass: "g-color-gray-dark-v4" }, [
-                              _vm._v(
-                                "This is where we sit down, grab a\n                                        cup of\n                                        coffee and dial in the details."
-                              )
-                            ]),
-                            _vm._v(" "),
-                            _c(
-                              "a",
-                              {
-                                staticClass:
-                                  "btn u-btn-outline-primary g-font-size-11 g-rounded-25",
-                                attrs: { href: "#" }
-                              },
-                              [_vm._v("Follow")]
-                            )
-                          ])
-                        ])
-                      ])
-                    ]
-                  )
-                ]),
-                _vm._v(" "),
-                _c("hr", { staticClass: "g-brd-gray-light-v4 g-my-50" }),
-                _vm._v(" "),
-                _c("div", { staticClass: "g-mb-40" }, [
-                  _c(
-                    "h3",
-                    { staticClass: "h5 g-color-black g-font-weight-600 mb-4" },
-                    [_vm._v("Tags")]
-                  ),
-                  _vm._v(" "),
-                  _c("ul", { staticClass: "u-list-inline mb-0" }, [
-                    _c("li", { staticClass: "list-inline-item g-mb-10" }, [
-                      _c(
-                        "a",
-                        {
-                          staticClass:
-                            "u-tags-v1 g-color-gray-dark-v4 g-color-white--hover g-bg-gray-light-v5 g-bg-primary--hover g-font-size-12 g-rounded-50 g-py-4 g-px-15",
-                          attrs: { href: "#" }
-                        },
-                        [_vm._v("Design")]
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("li", { staticClass: "list-inline-item g-mb-10" }, [
-                      _c(
-                        "a",
-                        {
-                          staticClass:
-                            "u-tags-v1 g-color-gray-dark-v4 g-color-white--hover g-bg-gray-light-v5 g-bg-primary--hover g-font-size-12 g-rounded-50 g-py-4 g-px-15",
-                          attrs: { href: "#" }
-                        },
-                        [_vm._v("Art")]
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("li", { staticClass: "list-inline-item g-mb-10" }, [
-                      _c(
-                        "a",
-                        {
-                          staticClass:
-                            "u-tags-v1 g-color-gray-dark-v4 g-color-white--hover g-bg-gray-light-v5 g-bg-primary--hover g-font-size-12 g-rounded-50 g-py-4 g-px-15",
-                          attrs: { href: "#" }
-                        },
-                        [_vm._v("Graphic")]
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("li", { staticClass: "list-inline-item g-mb-10" }, [
-                      _c(
-                        "a",
-                        {
-                          staticClass:
-                            "u-tags-v1 g-color-gray-dark-v4 g-color-white--hover g-bg-gray-light-v5 g-bg-primary--hover g-font-size-12 g-rounded-50 g-py-4 g-px-15",
-                          attrs: { href: "#" }
-                        },
-                        [_vm._v("Front End Development")]
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("li", { staticClass: "list-inline-item g-mb-10" }, [
-                      _c(
-                        "a",
-                        {
-                          staticClass:
-                            "u-tags-v1 g-color-gray-dark-v4 g-color-white--hover g-bg-gray-light-v5 g-bg-primary--hover g-font-size-12 g-rounded-50 g-py-4 g-px-15",
-                          attrs: { href: "#" }
-                        },
-                        [_vm._v("CSS")]
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("li", { staticClass: "list-inline-item g-mb-10" }, [
-                      _c(
-                        "a",
-                        {
-                          staticClass:
-                            "u-tags-v1 g-color-gray-dark-v4 g-color-white--hover g-bg-gray-light-v5 g-bg-primary--hover g-font-size-12 g-rounded-50 g-py-4 g-px-15",
-                          attrs: { href: "#" }
-                        },
-                        [_vm._v("HTML")]
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("li", { staticClass: "list-inline-item g-mb-10" }, [
-                      _c(
-                        "a",
-                        {
-                          staticClass:
-                            "u-tags-v1 g-color-gray-dark-v4 g-color-white--hover g-bg-gray-light-v5 g-bg-primary--hover g-font-size-12 g-rounded-50 g-py-4 g-px-15",
-                          attrs: { href: "#" }
-                        },
-                        [_vm._v("Sass")]
-                      )
-                    ])
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("hr", { staticClass: "g-brd-gray-light-v4 g-my-50" }),
-                _vm._v(" "),
-                _c("div", { staticClass: "g-mb-50" }, [
-                  _c(
-                    "h3",
-                    { staticClass: "h5 g-color-black g-font-weight-600 mb-4" },
-                    [_vm._v("Newsletter")]
-                  ),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "input-group" }, [
-                    _c("span", { staticClass: "input-group-btn" }, [
-                      _c(
-                        "button",
-                        {
-                          staticClass:
-                            "btn u-btn-primary g-rounded-left-50 g-py-13 g-px-20"
-                        },
-                        [
-                          _c("i", {
-                            staticClass:
-                              "icon-communication-062 u-line-icon-pro g-pos-rel g-top-1"
-                          })
-                        ]
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("input", {
+              "h3",
+              { staticClass: "h5 g-color-black g-font-weight-600 mb-4" },
+              [_vm._v("Newsletter")]
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "input-group" }, [
+              _c("span", { staticClass: "input-group-btn" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass:
+                      "btn u-btn-primary g-rounded-left-50 g-py-13 g-px-20"
+                  },
+                  [
+                    _c("i", {
                       staticClass:
-                        "form-control g-brd-primary g-placeholder-gray-dark-v5 border-left-0 g-rounded-right-50 g-px-15",
-                      attrs: {
-                        type: "email",
-                        placeholder: "Enter your email ..."
-                      }
+                        "icon-communication-062 u-line-icon-pro g-pos-rel g-top-1"
                     })
-                  ])
-                ])
-              ]
-            )
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _c("input", {
+                staticClass:
+                  "form-control g-brd-primary g-placeholder-gray-dark-v5 border-left-0 g-rounded-right-50 g-px-15",
+                attrs: { type: "email", placeholder: "Enter your email ..." }
+              })
+            ])
           ])
-        ])
-      ]
-    )
+        ]
+      )
+    ])
   }
 ]
 render._withStripped = true

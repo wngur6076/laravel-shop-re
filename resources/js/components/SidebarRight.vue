@@ -5,17 +5,8 @@
             <div class="g-mb-50">
                 <h3 class="h5 g-color-black g-font-weight-600 mb-4">Links</h3>
                 <ul class="list-unstyled g-font-size-13 mb-0">
-                    <li><a class="d-block u-link-v5 g-color-gray-dark-v4 rounded g-px-20 g-py-8" href="#"><i
-                                class="mr-2 fa fa-angle-right"></i> People</a>
-                    </li>
-                    <li><a class="d-block u-link-v5 g-color-gray-dark-v4 rounded g-px-20 g-py-8" href="#"><i
-                                class="mr-2 fa fa-angle-right"></i> News Publications</a>
-                    </li>
-                    <li><a class="d-block u-link-v5 g-color-gray-dark-v4 rounded g-px-20 g-py-8" href="#"><i
-                                class="mr-2 fa fa-angle-right"></i> Marketing &amp; IT</a>
-                    </li>
-                    <li><a class="d-block u-link-v5 g-color-gray-dark-v4 rounded g-px-20 g-py-8" href="#"><i
-                                class="mr-2 fa fa-angle-right"></i> Business Strategy</a>
+                    <li v-for="(link, key) in currentLinks" :key="key"><a class="d-block u-link-v5 g-color-gray-dark-v4 rounded g-px-20 g-py-8" href="#"><i
+                                class="mr-2 fa fa-angle-right"></i> {{ link }}</a>
                     </li>
                     <li><a class="d-block active u-link-v5 g-color-black g-bg-gray-light-v5 g-font-weight-600 g-rounded-50 g-px-20 g-py-8"
                             href="#"><i class="mr-2 fa fa-angle-right"></i> Untold Stories</a>
@@ -139,3 +130,58 @@
         </div>
     </div>
 </template>
+
+<script>
+export default {
+    data() {
+        return {
+            links: {
+                shop: [
+                    '상점',
+                    '공지'
+                ],
+                charge: [
+                    '입금 요청',
+                    '상품권 충전',
+                    '휴대폰 인증'
+                ],
+                chargeHistory: [
+                    '충전 내역',
+                    '구매 내역'
+                ]
+            },
+
+            currentLinks: {},
+        }
+
+    },
+
+    watch: {
+        "$route": 'fetchQuestions'
+    },
+
+    mounted() {
+        this.fetchQuestions();
+
+    },
+
+    methods: {
+        fetchQuestions () {
+            switch (this.$router.currentRoute.name) {
+                case 'home':
+                    this.currentLinks = this.links.shop
+                    break;
+                case 'charge':
+                    this.currentLinks = this.links.charge
+                    break;
+                case 'history.charge':
+                    this.currentLinks = this.links.chargeHistory
+                    break;
+                default:
+                    break;
+            }
+
+        }
+    }
+}
+</script>

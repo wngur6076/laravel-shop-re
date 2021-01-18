@@ -7,7 +7,7 @@
 
 <body>
     <index id="app"></index>
-    
+
     @include('includes.page-js')
 </body>
 
