@@ -11,7 +11,7 @@ import {
         faAngleRight,
         faSignInAlt,
     faHome,
-        faCashRegister, faMoneyCheck, faSortDown, faAngleLeft
+        faCashRegister, faMoneyCheck, faSortDown, faAngleLeft, faShoppingCart
 } from '@fortawesome/free-solid-svg-icons';
 
 import {
@@ -23,7 +23,7 @@ library.add(
         faCaretDown,
         faStar,
     faCheck, faSpinner, faArrowUp, faAngleRight, faSignInAlt, faHome,
-        faCashRegister, faMoneyCheck, faSortDown, faAngleLeft
+        faCashRegister, faMoneyCheck, faSortDown, faAngleLeft, faShoppingCart
     );
     // Kicks off the process of finding <i> tags and replacing with <svg>
     dom.watch();

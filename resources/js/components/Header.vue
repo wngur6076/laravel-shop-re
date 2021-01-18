@@ -52,14 +52,14 @@
                             </div>
                         </router-link>
 
-                        <router-link class="nav-item g-mx-10--lg g-mx-15--xl" tag="li" :to="{ name: 'charge' }">
+                        <router-link class="nav-item g-mx-10--lg g-mx-15--xl" tag="li" :to="{ name: 'charge.index' }">
                             <div class="nav-link g-py-7 g-px-0">
                                 <i class="fas fa-cash-register fa-3x"></i>
                                 <span class="name">충전</span>
                             </div>
                         </router-link>
 
-                        <router-link class="nav-item g-mx-10--lg g-mx-15--xl" tag="li" :to="{ name: 'history.charge' }">
+                        <router-link class="nav-item g-mx-10--lg g-mx-15--xl" tag="li" :to="{ name: 'history.index' }">
                             <div class="nav-link g-py-7 g-px-0">
                                 <i class="fas fa-money-check fa-3x"></i>
                                 <span class="name">내역</span>

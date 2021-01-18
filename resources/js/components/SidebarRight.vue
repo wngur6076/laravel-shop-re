@@ -5,16 +5,34 @@
             <div class="g-mb-50">
                 <h3 class="h5 g-color-black g-font-weight-600 mb-4">Links</h3>
                 <ul class="list-unstyled g-font-size-13 mb-0">
-                    <li v-for="(link, key) in currentLinks" :key="key"><a class="d-block u-link-v5 g-color-gray-dark-v4 rounded g-px-20 g-py-8" href="#"><i
-                                class="mr-2 fa fa-angle-right"></i> {{ link }}</a>
-                    </li>
-                    <li><a class="d-block active u-link-v5 g-color-black g-bg-gray-light-v5 g-font-weight-600 g-rounded-50 g-px-20 g-py-8"
-                            href="#"><i class="mr-2 fa fa-angle-right"></i> Untold Stories</a>
-                    </li>
+                    <router-link v-for="(link, key) in currentLinks" :key="key" tag="li" :to="{ name: link.path }">
+                        <a :class="linkClasses(link.active)" @click="linkActive(key)">
+                        <i class="mr-2 fa fa-angle-right"></i> {{ link.name }}</a>
+                    </router-link>
+
                 </ul>
+                <!-- Modal -->
+                <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1"
+                    aria-labelledby="staticBackdropLabel" aria-hidden="true" ref="noticeModal">
+                    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+                        <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="staticBackdropLabel">공지</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close" @click="linkActive()">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <img :src="noticeImageUrl" class="card-img-top" @click="imgPop(noticeImageUrl)" style='cursor:pointer;'>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-dismiss="modal" @click="linkActive()">확인</button>
+                        </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <!-- End Links -->
-
             <hr class="g-brd-gray-light-v4 g-mt-50 mb-0">
 
             <div id="stickyblock-start">
@@ -133,54 +151,116 @@
 
 <script>
 export default {
+    computed: {
+
+    },
+
     data() {
         return {
             links: {
                 shop: [
-                    '상점',
-                    '공지'
+                    {
+                        name: '상점',
+                        path: 'home',
+                        active: true
+                    },
+                    {
+                        name: '공지',
+                        path: '',
+                        active:  false
+                    },
                 ],
                 charge: [
-                    '입금 요청',
-                    '상품권 충전',
-                    '휴대폰 인증'
+                    {
+                        name: '입금 요청',
+                        path: 'charge.deposit',
+                        active: true
+                    },
+                    {
+                        name: '상품권 충전',
+                        path: 'charge.voucher',
+                        active:  false
+                    },
                 ],
-                chargeHistory: [
-                    '충전 내역',
-                    '구매 내역'
+                history: [
+                    {
+                        name: '충전 내역',
+                        path: 'history.charge',
+                        active: true
+                    },
+                    {
+                        name: '구매 내역',
+                        path: 'history.buy',
+                        active:  false
+                    },
                 ]
             },
 
-            currentLinks: {},
+            currentLinks: null,
+
+            noticeImageUrl: '/files/notice.gif',
         }
 
     },
 
     watch: {
-        "$route": 'fetchQuestions'
+        "$route": 'fetchlinks'
     },
 
     mounted() {
-        this.fetchQuestions();
+        this.fetchlinks();
 
     },
 
     methods: {
-        fetchQuestions () {
+        fetchlinks() {
             switch (this.$router.currentRoute.name) {
                 case 'home':
-                    this.currentLinks = this.links.shop
+                    this.initActive(this.links.shop)
+                case 'notice':
+                    this.currentLinks = Object.assign({}, this.links.shop);
                     break;
-                case 'charge':
-                    this.currentLinks = this.links.charge
+                case 'charge.index':
+                    this.initActive(this.links.charge)
+                case 'charge.deposit':
+                case 'charge.voucher':
+                    this.currentLinks = Object.assign({}, this.links.charge);
                     break;
+                case 'history.index':
+                    this.initActive(this.links.history)
+                case 'history.buy':
                 case 'history.charge':
-                    this.currentLinks = this.links.chargeHistory
+                    this.currentLinks = Object.assign({}, this.links.history);
                     break;
-                default:
-                    break;
+            }  
+        },
+
+        initActive(link) {
+            link[0].active = true;
+            link[1].active = false;
+        },
+
+        linkClasses(active) {
+            return [
+                'd-block u-link-v5 g-px-20 g-py-8',
+                active ? 'g-color-black g-bg-gray-light-v5 g-font-weight-600 g-rounded-50' : 'g-color-gray-dark-v4 rounded'
+            ]
+        },
+
+        linkActive(key = 0) {
+            if (this.currentLinks[key].name == '공지') {
+                $(this.$refs.noticeModal).modal('show');
             }
 
+            for (const i in this.currentLinks) {
+                this.currentLinks[i].active = false;
+                if (i == key)
+                    this.currentLinks[i].active = true;
+            }
+        },
+
+        imgPop(url){
+            window.open(url,'_blank','toolbar=no,directories=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=500,height=750,left=0,top=0')
         }
     }
 }
