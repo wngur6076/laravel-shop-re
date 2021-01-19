@@ -27,9 +27,17 @@ class Product extends Model
         return Str::limit(strip_tags($this->bodyhtml()), $length);
     }
 
-    public function getUrlAttribute()
+    public function getImageUrlAttribute()
     {
         return url('files/' . $this->image);
+    }
+
+    public function getVideoUrlAttribute()
+    {
+        if (!$this->video) return null;
+        
+        $strTok = explode('/', $this->video);
+        return '//www.youtube.com/embed/' . $strTok[3];
     }
 
     public function getCreatedDateAttribute()

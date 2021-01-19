@@ -19,8 +19,8 @@ class ProductResource extends JsonResource
             'title' => $this->title,
             'excerpt' => $this->excerpt,
             'price' => $this->price,
-            'image' => $this->url,
-            'video' => $this->video,
+            'image' => $this->image_url,
+            'video' => $this->video_Url,
             'created_date' => $this->created_date,
             'user' => new UserResource($this->user),
         ];

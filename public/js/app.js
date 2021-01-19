@@ -13272,6 +13272,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
@@ -53126,10 +53132,28 @@ var render = function() {
                 var item = ref.item
                 return [
                   _c("article", { staticClass: "u-shadow-v11" }, [
-                    _c("img", {
-                      staticClass: "img-fluid w-100",
-                      attrs: { src: item.image, alt: "Image Description" }
-                    }),
+                    item.video
+                      ? _c(
+                          "div",
+                          {
+                            staticClass:
+                              "embed-responsive embed-responsive-16by9"
+                          },
+                          [
+                            _c("iframe", {
+                              attrs: {
+                                width: "100%",
+                                src: item.video,
+                                frameborder: "0",
+                                allowfullscreen: ""
+                              }
+                            })
+                          ]
+                        )
+                      : _c("img", {
+                          staticClass: "img-fluid w-100",
+                          attrs: { src: item.image, alt: "Image Description" }
+                        }),
                     _vm._v(" "),
                     _c("div", { staticClass: "g-bg-white g-pa-30" }, [
                       _c(

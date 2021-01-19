@@ -6,8 +6,14 @@
                 <template v-slot:default="{item}">
                     <!-- Blog Classic Blocks -->
                     <article class="u-shadow-v11">
-                        <img class="img-fluid w-100" :src="item.image"
+                        <!-- Youtube Example -->
+                        <div class="embed-responsive embed-responsive-16by9" v-if="item.video">
+                            <iframe width="100%" :src="item.video" frameborder="0" allowfullscreen></iframe>
+                        </div>
+                        <!-- End Youtube Example -->
+                        <img class="img-fluid w-100" :src="item.image" v-else
                             alt="Image Description">
+                            
                         <div class="g-bg-white g-pa-30">
                             <span
                                 class="d-block g-color-gray-dark-v4 g-font-weight-600 g-font-size-12 text-uppercase mb-2">{{ item.created_date }}</span>
