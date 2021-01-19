@@ -13,6 +13,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        \App\Models\User::factory(5)->create();
+        \App\Models\User::factory(8)->create()->each(function($u) {
+            if ($u->role == 2) {
+                $u->products()
+                    ->saveMany(
+                        \App\Models\Product::factory(rand(1, 5))->make()
+                    );
+            }
+        });
     }
 }

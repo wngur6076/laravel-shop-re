@@ -1,9 +1,9 @@
 <template>
     <div class="col-lg-3 g-brd-left--lg g-brd-gray-light-v4 g-mb-80">
         <div class="g-pl-20--lg">
-            <!-- Links -->
+            <!-- pages -->
             <div class="g-mb-50">
-                <h3 class="h5 g-color-black g-font-weight-600 mb-4">Links</h3>
+                <h3 class="h5 g-color-black g-font-weight-600 mb-4">Pages</h3>
                 <ul class="list-unstyled g-font-size-13 mb-0">
                     <router-link v-for="(link, key) in currentLinks" :key="key" tag="li" :to="{ name: link.path }">
                         <a :class="linkClasses(link.active)" @click="linkActive(key)">
@@ -32,25 +32,22 @@
                     </div>
                 </div>
             </div>
-            <!-- End Links -->
+            <!-- End pages -->
             <hr class="g-brd-gray-light-v4 g-mt-50 mb-0">
 
             <div id="stickyblock-start">
                 <div class="js-sticky-block g-sticky-block--lg g-pt-50" data-responsive="true"
                     data-start-point="#stickyblock-start" data-end-point="#stickyblock-end">
-                    <!-- Publications -->
+                    <!-- Links -->
                     <div class="g-mb-50">
-                        <h3 class="h5 g-color-black g-font-weight-600 mb-4">Publications</h3>
+                        <h3 class="h5 g-color-black g-font-weight-600 mb-4">Links</h3>
                         <ul class="list-unstyled g-font-size-13 mb-0">
                             <li>
                                 <article class="media g-mb-35">
                                     <img class="d-flex g-width-40 g-height-40 rounded-circle mr-3"
-                                        src="/unify/assets/img-temp/100x100/img1.jpg" alt="Image Description">
+                                        src="/files/logo/KakaoTalk_logo.svg" alt="Image Description">
                                     <div class="media-body">
-                                        <h4 class="h6 g-color-black g-font-weight-600">Htmlstream</h4>
-                                        <p class="g-color-gray-dark-v4">This is where we sit down, grab a
-                                            cup of
-                                            coffee and dial in the details.</p>
+                                        <h4 class="h6 g-color-black g-font-weight-600">카카오톡</h4>
                                         <a class="btn u-btn-outline-primary g-font-size-11 g-rounded-25"
                                             href="#">Follow</a>
                                     </div>
@@ -59,12 +56,9 @@
                             <li>
                                 <article class="media g-mb-35">
                                     <img class="d-flex g-width-40 g-height-40 rounded-circle mr-3"
-                                        src="/unify/assets/img-temp/100x100/img3.jpg" alt="Image Description">
+                                        src="/files/logo/Discord_Logo.svg" alt="Image Description">
                                     <div class="media-body">
-                                        <h4 class="h6 g-color-black g-font-weight-600">Pixeel</h4>
-                                        <p class="g-color-gray-dark-v4">This is where we sit down, grab a
-                                            cup of
-                                            coffee and dial in the details.</p>
+                                        <h4 class="h6 g-color-black g-font-weight-600">디스코드</h4>
                                         <a class="btn u-btn-outline-primary g-font-size-11 g-rounded-25"
                                             href="#">Follow</a>
                                     </div>
@@ -73,12 +67,9 @@
                             <li>
                                 <article class="media">
                                     <img class="d-flex g-width-40 g-height-40 rounded-circle mr-3"
-                                        src="/unify/assets/img-temp/100x100/img2.jpg" alt="Image Description">
+                                        src="/files/logo/Telegram_logo.svg" alt="Image Description">
                                     <div class="media-body">
-                                        <h4 class="h6 g-color-black g-font-weight-600">WrapBootstrap</h4>
-                                        <p class="g-color-gray-dark-v4">This is where we sit down, grab a
-                                            cup of
-                                            coffee and dial in the details.</p>
+                                        <h4 class="h6 g-color-black g-font-weight-600">텔레그램</h4>
                                         <a class="btn u-btn-outline-primary g-font-size-11 g-rounded-25"
                                             href="#">Follow</a>
                                     </div>
@@ -86,7 +77,7 @@
                             </li>
                         </ul>
                     </div>
-                    <!-- End Publications -->
+                    <!-- End Links -->
 
                     <hr class="g-brd-gray-light-v4 g-my-50">
 
@@ -128,9 +119,9 @@
 
                     <hr class="g-brd-gray-light-v4 g-my-50">
 
-                    <!-- Newsletter -->
+                    <!-- Inquiry -->
                     <div class="g-mb-50">
-                        <h3 class="h5 g-color-black g-font-weight-600 mb-4">Newsletter</h3>
+                        <h3 class="h5 g-color-black g-font-weight-600 mb-4">Inquiry</h3>
                         <div class="input-group">
                             <span class="input-group-btn">
                                 <button class="btn u-btn-primary g-rounded-left-50 g-py-13 g-px-20">
@@ -142,7 +133,7 @@
                                 type="email" placeholder="Enter your email ...">
                         </div>
                     </div>
-                    <!-- End Newsletter -->
+                    <!-- End Inquiry -->
                 </div>
             </div>
         </div>
@@ -232,7 +223,7 @@ export default {
                 case 'history.charge':
                     this.currentLinks = Object.assign({}, this.links.history);
                     break;
-            }  
+            }
         },
 
         initActive(link) {

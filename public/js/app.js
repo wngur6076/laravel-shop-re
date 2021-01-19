@@ -12970,15 +12970,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   computed: {},
   data: function data() {
@@ -52271,7 +52262,7 @@ var render = function() {
       _c("div", { staticClass: "g-pl-20--lg" }, [
         _c("div", { staticClass: "g-mb-50" }, [
           _c("h3", { staticClass: "h5 g-color-black g-font-weight-600 mb-4" }, [
-            _vm._v("Links")
+            _vm._v("Pages")
           ]),
           _vm._v(" "),
           _c(
@@ -52422,7 +52413,7 @@ var staticRenderFns = [
             _c(
               "h3",
               { staticClass: "h5 g-color-black g-font-weight-600 mb-4" },
-              [_vm._v("Publications")]
+              [_vm._v("Links")]
             ),
             _vm._v(" "),
             _c("ul", { staticClass: "list-unstyled g-font-size-13 mb-0" }, [
@@ -52432,7 +52423,7 @@ var staticRenderFns = [
                     staticClass:
                       "d-flex g-width-40 g-height-40 rounded-circle mr-3",
                     attrs: {
-                      src: "/unify/assets/img-temp/100x100/img1.jpg",
+                      src: "/files/logo/KakaoTalk_logo.svg",
                       alt: "Image Description"
                     }
                   }),
@@ -52441,14 +52432,8 @@ var staticRenderFns = [
                     _c(
                       "h4",
                       { staticClass: "h6 g-color-black g-font-weight-600" },
-                      [_vm._v("Htmlstream")]
+                      [_vm._v("카카오톡")]
                     ),
-                    _vm._v(" "),
-                    _c("p", { staticClass: "g-color-gray-dark-v4" }, [
-                      _vm._v(
-                        "This is where we sit down, grab a\n                                        cup of\n                                        coffee and dial in the details."
-                      )
-                    ]),
                     _vm._v(" "),
                     _c(
                       "a",
@@ -52469,7 +52454,7 @@ var staticRenderFns = [
                     staticClass:
                       "d-flex g-width-40 g-height-40 rounded-circle mr-3",
                     attrs: {
-                      src: "/unify/assets/img-temp/100x100/img3.jpg",
+                      src: "/files/logo/Discord_Logo.svg",
                       alt: "Image Description"
                     }
                   }),
@@ -52478,14 +52463,8 @@ var staticRenderFns = [
                     _c(
                       "h4",
                       { staticClass: "h6 g-color-black g-font-weight-600" },
-                      [_vm._v("Pixeel")]
+                      [_vm._v("디스코드")]
                     ),
-                    _vm._v(" "),
-                    _c("p", { staticClass: "g-color-gray-dark-v4" }, [
-                      _vm._v(
-                        "This is where we sit down, grab a\n                                        cup of\n                                        coffee and dial in the details."
-                      )
-                    ]),
                     _vm._v(" "),
                     _c(
                       "a",
@@ -52506,7 +52485,7 @@ var staticRenderFns = [
                     staticClass:
                       "d-flex g-width-40 g-height-40 rounded-circle mr-3",
                     attrs: {
-                      src: "/unify/assets/img-temp/100x100/img2.jpg",
+                      src: "/files/logo/Telegram_logo.svg",
                       alt: "Image Description"
                     }
                   }),
@@ -52515,14 +52494,8 @@ var staticRenderFns = [
                     _c(
                       "h4",
                       { staticClass: "h6 g-color-black g-font-weight-600" },
-                      [_vm._v("WrapBootstrap")]
+                      [_vm._v("텔레그램")]
                     ),
-                    _vm._v(" "),
-                    _c("p", { staticClass: "g-color-gray-dark-v4" }, [
-                      _vm._v(
-                        "This is where we sit down, grab a\n                                        cup of\n                                        coffee and dial in the details."
-                      )
-                    ]),
                     _vm._v(" "),
                     _c(
                       "a",
@@ -52641,7 +52614,7 @@ var staticRenderFns = [
             _c(
               "h3",
               { staticClass: "h5 g-color-black g-font-weight-600 mb-4" },
-              [_vm._v("Newsletter")]
+              [_vm._v("Inquiry")]
             ),
             _vm._v(" "),
             _c("div", { staticClass: "input-group" }, [
