@@ -5,7 +5,7 @@
             <vue-masonry-wall :items="items" :options="options" class="row g-mb-70">
                 <template v-slot:default="{item}">
                     <!-- Blog Classic Blocks -->
-                    <article class="u-shadow-v11">
+                    <article class="u-shadow-v11" v-if="item != undefined">
                         <!-- Youtube Example -->
                         <div class="embed-responsive embed-responsive-16by9" v-if="item.video">
                             <iframe width="100%" :src="item.video" frameborder="0" allowfullscreen></iframe>
@@ -46,37 +46,7 @@
                 </template>
             </vue-masonry-wall>
 
-            <!-- Pagination -->
-            <nav id="stickyblock-end" class="text-center" aria-label="Page Navigation">
-                <ul class="list-inline">
-                    <li class="list-inline-item float-left g-hidden-xs-down">
-                        <a class="u-pagination-v1__item u-pagination-v1-4 g-brd-gray-light-v3 g-brd-primary--hover g-rounded-50 g-pa-7-16"
-                            href="#" aria-label="Previous">
-                            <span aria-hidden="true">
-                                <i class="fa fa-angle-left g-mr-5"></i> Previous
-                            </span>
-                            <span class="sr-only">Previous</span>
-                        </a>
-                    </li>
-                    <li class="list-inline-item">
-                        <a class="u-pagination-v1__item u-pagination-v1-4 u-pagination-v1-4--active g-rounded-50 g-pa-7-14"
-                            href="#">1</a>
-                    </li>
-                    <li class="list-inline-item">
-                        <a class="u-pagination-v1__item u-pagination-v1-4 g-rounded-50 g-pa-7-14" href="#">2</a>
-                    </li>
-                    <li class="list-inline-item float-right g-hidden-xs-down">
-                        <a class="u-pagination-v1__item u-pagination-v1-4 g-brd-gray-light-v3 g-brd-primary--hover g-rounded-50 g-pa-7-16"
-                            href="#" aria-label="Next">
-                            <span aria-hidden="true">
-                                Next <i class="fa fa-angle-right g-ml-5"></i>
-                            </span>
-                            <span class="sr-only">Next</span>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-            <!-- End Pagination -->
+            <pagination :meta="meta" :links="links"></pagination>
         </div>
     </div>
     <!-- End Blog Classic Blocks -->
@@ -85,10 +55,11 @@
 
 <script>
     import VueMasonryWall from "vue-masonry-wall";
+    import Pagination from '../components/Pagination'
 
     export default {
         components: {
-            VueMasonryWall
+            VueMasonryWall, Pagination
         },
 
         data() {
@@ -99,7 +70,13 @@
                 },
 
                 items: [],
+                meta: {},
+                links: {},
             }
+        },
+
+        watch: {
+            "$route": 'fetchProducts'
         },
 
         mounted () {
@@ -108,9 +85,10 @@
 
         methods: {
             fetchProducts() {
+                console.log('aa');
                 axios.get('/products', { params: this.$route.query })
                     .then(({ data }) => {
-                        // console.log(data);
+                        console.log(data);
                         this.items = data.data;
                         this.meta = data.meta;
                         this.links = data.links;
