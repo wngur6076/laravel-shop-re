@@ -85,10 +85,9 @@
 
         methods: {
             fetchProducts() {
-                console.log('aa');
                 axios.get('/products', { params: this.$route.query })
                     .then(({ data }) => {
-                        console.log(data);
+                        // console.log(data);
                         this.items = data.data;
                         this.meta = data.meta;
                         this.links = data.links;

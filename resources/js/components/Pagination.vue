@@ -11,9 +11,6 @@
                     <span class="sr-only">Previous</span>
                 </a>
             </li>
-            <!-- <li class="list-inline-item">
-                <a class="u-pagination-v1__item u-pagination-v1-4 u-pagination-v1-4--active g-rounded-50 g-pa-7-14">1</a>
-            </li> -->
             <li class="list-inline-item" v-for="(page, index) in meta.last_page" :key="index">
                 <a class="u-pagination-v1__item u-pagination-v1-4 g-rounded-50 g-pa-7-14" @click="switchPage(page)" :class="meta.current_page === page ? 'u-pagination-v1-4--active' : ''"><span>{{ page }}</span></a>
             </li>

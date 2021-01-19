@@ -12658,6 +12658,7 @@ __webpack_require__.r(__webpack_exports__);
     return {
       credit: null,
       creditClass: null,
+      currentRouteName: null,
       routes: {
         // UNLOGGED
         unlogged: [{
@@ -12679,6 +12680,12 @@ __webpack_require__.r(__webpack_exports__);
         }]
       }
     };
+  },
+  watch: {
+    "$route": 'currentRouteCheck'
+  },
+  mounted: function mounted() {
+    this.currentRouteCheck();
   },
   computed: {
     creditCheck: function creditCheck() {
@@ -12707,6 +12714,9 @@ __webpack_require__.r(__webpack_exports__);
       setTimeout(function () {
         _this.$router.go(_this.$router.currentRoute);
       }, 100);
+    },
+    currentRouteCheck: function currentRouteCheck() {
+      this.currentRouteName = this.$router.currentRoute.name;
     }
   }
 });
@@ -12724,9 +12734,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
-//
-//
-//
 //
 //
 //
@@ -13053,6 +13060,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   computed: {},
   data: function data() {
@@ -13098,6 +13106,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     fetchlinks: function fetchlinks() {
+      // console.log(this.$router.currentRoute.name)
       switch (this.$router.currentRoute.name) {
         case 'home':
           this.initActive(this.links.shop);
@@ -13360,12 +13369,11 @@ __webpack_require__.r(__webpack_exports__);
     fetchProducts: function fetchProducts() {
       var _this = this;
 
-      console.log('aa');
       axios.get('/products', {
         params: this.$route.query
       }).then(function (_ref) {
         var data = _ref.data;
-        console.log(data);
+        // console.log(data);
         _this.items = data.data;
         _this.meta = data.meta;
         _this.links = data.links;
@@ -52100,6 +52108,7 @@ var render = function() {
                         "router-link",
                         {
                           staticClass: "nav-item g-mx-10--lg g-mx-15--xl",
+                          class: _vm.currentRouteName == "home" ? "active" : "",
                           attrs: { tag: "li", to: { name: "home" }, exact: "" }
                         },
                         [
@@ -52677,7 +52686,16 @@ var render = function() {
             _vm._l(_vm.currentLinks, function(link, key) {
               return _c(
                 "router-link",
-                { key: key, attrs: { tag: "li", to: { name: link.path } } },
+                {
+                  key: key,
+                  attrs: {
+                    tag: "li",
+                    to: {
+                      name: link.path,
+                      query: _vm.$router.currentRoute.query
+                    }
+                  }
+                },
                 [
                   _c(
                     "a",

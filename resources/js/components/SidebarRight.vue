@@ -5,7 +5,8 @@
             <div class="g-mb-50">
                 <h3 class="h5 g-color-black g-font-weight-600 mb-4">Pages</h3>
                 <ul class="list-unstyled g-font-size-13 mb-0">
-                    <router-link v-for="(link, key) in currentLinks" :key="key" tag="li" :to="{ name: link.path }">
+                    <router-link v-for="(link, key) in currentLinks" :key="key" tag="li" :to="{ name: link.path, 
+                    query: $router.currentRoute.query }">
                         <a :class="linkClasses(link.active)" @click="linkActive(key)">
                         <i class="mr-2 fa fa-angle-right"></i> {{ link.name }}</a>
                     </router-link>
@@ -200,11 +201,11 @@ export default {
 
     mounted() {
         this.fetchlinks();
-
     },
 
     methods: {
         fetchlinks() {
+            // console.log(this.$router.currentRoute.name)
             switch (this.$router.currentRoute.name) {
                 case 'home':
                     this.initActive(this.links.shop)

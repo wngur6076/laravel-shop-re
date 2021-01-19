@@ -45,7 +45,7 @@
                     id="navBar">
                     <ul class="navbar-nav text-uppercase g-pos-rel g-font-weight-600 ml-auto">
                         <!-- Intro -->
-                        <router-link class="nav-item g-mx-10--lg g-mx-15--xl" tag="li" :to="{ name: 'home' }" exact>
+                        <router-link class="nav-item g-mx-10--lg g-mx-15--xl" tag="li" :to="{ name: 'home' }" :class="currentRouteName == 'home' ? 'active' : ''" exact>
                             <div class="nav-link g-py-7 g-px-0">
                                 <i class="fas fa-home fa-3x"></i>
                                 <span class="name">홈</span>
@@ -98,6 +98,8 @@
 
                 creditClass: null,
 
+                currentRouteName: null,
+
                 routes: {
                     // UNLOGGED
                     unlogged: [{
@@ -122,6 +124,14 @@
                     }]
                 }
             }
+        },
+
+        watch: {
+            "$route": 'currentRouteCheck'
+        },
+
+        mounted() {
+            this.currentRouteCheck();
         },
 
         computed: {
@@ -159,6 +169,10 @@
                     this.$router.go(this.$router.currentRoute);
                 }, 100);
             },
+
+            currentRouteCheck() {
+                this.currentRouteName = this.$router.currentRoute.name
+            }
         },
     }
 </script>
