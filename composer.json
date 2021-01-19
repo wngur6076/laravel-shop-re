@@ -15,6 +15,7 @@
         "laravel/framework": "^8.0",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^3.2",
+        "mews/purifier": "^3.3",
         "tymon/jwt-auth": "dev-develop"
     },
     "require-dev": {

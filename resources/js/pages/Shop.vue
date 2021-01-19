@@ -6,34 +6,32 @@
                 <template v-slot:default="{item}">
                     <!-- Blog Classic Blocks -->
                     <article class="u-shadow-v11">
-                        <img class="img-fluid w-100" src="/unify/assets/img-temp/500x450/img7.jpg"
+                        <img class="img-fluid w-100" :src="item.image"
                             alt="Image Description">
                         <div class="g-bg-white g-pa-30">
                             <span
-                                class="d-block g-color-gray-dark-v4 g-font-weight-600 g-font-size-12 text-uppercase mb-2">31 MAY 2017</span>
+                                class="d-block g-color-gray-dark-v4 g-font-weight-600 g-font-size-12 text-uppercase mb-2">{{ item.created_date }}</span>
                             <h2 class="h5 g-color-black g-font-weight-600 mb-3">
                                 <a class="u-link-v5 g-color-black g-color-primary--hover g-cursor-pointer"
                                     href="#">{{ item.title }}</a>
                             </h2>
-                            <p class="g-color-gray-dark-v4 g-line-height-1_8">{{ item.content }}Clark Valberg is the founder and CEO of InVision. If you are a designer...</p>
+                            <p class="g-color-gray-dark-v4 g-line-height-1_8">{{ item.excerpt }}</p>
                             <a class="g-font-size-13" href="#">Read more...</a>
 
                             <hr class="g-my-20">
 
-                            <ul class="list-inline d-flex justify-content-between mb-0">
+                            <ul class="list-inline d-flex justify-content-between mb-0 align-items-center">
                                 <li class="list-inline-item g-color-gray-dark-v4">
-                                    <a class="d-inline-block g-color-gray-dark-v4 g-font-size-13 g-cursor-pointer g-text-underline--none--hover"
-                                        href="#">
-                                        <i
-                                            class="align-middle g-font-size-default mr-1 icon-finance-206 u-line-icon-pro"></i>
-                                        10 Comments
+                                    <a class="favorite favorited">
+                                        <i class="fas fa-star fa-2x"></i>
+                                        <span class="d-inline-block g-color-gray-dark-v4 g-font-size-13 g-text-underline--none--hover"
+                                            href="#">57</span>
                                     </a>
                                 </li>
                                 <li class="list-inline-item g-color-gray-dark-v4">
-                                    <i
-                                        class="align-middle g-color-primary g-font-size-default mr-1 icon-medical-022 u-line-icon-pro"></i>
-                                    <a class="d-inline-block g-color-gray-dark-v4 g-font-size-13 g-cursor-pointer g-text-underline--none--hover"
-                                        href="#">57</a>
+                                    <div class="d-inline-block g-pos-rel">
+                                        <a class="btn u-btn-outline-primary g-font-size-13" href="#">구매하기</a>
+                                    </div>
                                 </li>
                             </ul>
                         </div>
@@ -93,25 +91,37 @@
                     width: 387,
                     padding: 15,
                 },
-                items: [
-                    {
-                        title: `In the future, design principles won’t be about design`,
-                        content: 'In an attempt to answer those questions, I poured over the biggest collections of design principles on the internet [1][2], and came to the following conclusion.'
-                    },
-                    {
-                        title: `ItemItem 0Item 0Item 0I0`,
-                        content: 'waasdasdasdasdasda'
-                    },
-                    {
-                        title: `Itemem 0Item 0Item 0`,
-                        content: 'ㄴㅁㅇㅁㅇㅁㄴㅇㅁㄴㅇㅁㄴㅇㅁㅁㅁㅁㅈㅇㅁㅈㅇㅇㅇㅇㅇㅇㅇㅁㅈㅇㄴㅁㅇㅁㅇㅁㄴㅇㅁㄴㅇㅁㄴㅇㅁㅁㅁㅁㅈㅇㅁㅈㅇㅇㅇㅇㅇㅇㅇㅁㅈㅇㄴㅁㅇㅁㅇㅁㄴㅇㅁㄴㅇㅁㄴㅇㅁㅁㅁㅁㅈㅇㅁㅈㅇㅇㅇㅇㅇㅇㅇㅁㅈㅇㄴㅁㅇㅁㅇㅁㄴㅇㅁㄴㅇㅁㄴㅇㅁㅁㅁㅁㅈㅇㅁㅈㅇㅇㅇㅇㅇㅇㅇㅁㅈㅇㄴㅁㅇㅁㅇㅁㄴㅇㅁㄴㅇㅁㄴㅇㅁㅁㅁㅁㅈㅇㅁㅈㅇㅇㅇㅇㅇㅇㅇㅁㅈㅇ'
-                    },
-                    {
-                        title: `ItemItemItem 0Item 0Item 0Item 0Item 0Item 0Item 0`,
-                        content: 'ㄴㅁㅇㅁㅇㅁㄴㅇㅁㄴㅇㅁㄴㅇㅁㅁㅁㅁㅈㅇㅁㅈㅇㅇㅇㅇㅇㅇㅇㅁㅈㅇㄴㅁㅇㅁㅇㅁㄴㅇㅁㄴㅇㅁㄴㅇㅁㅁㅁㅁㅈㅇㅁㅈㅇㅇㅇㅇㅇㅇㅇㅁㅈㅇㄴㅁㅇㅁㅇㅁㄴㅇㅁㄴㅇㅁㄴㅇㅁㅁㅁㅁㅈㅇㅁㅈㅇㅇㅇㅇㅇㅇㅇㅁㅈㅇㄴㅁㅇㅁㅇㅁㄴㅇㅁㄴㅇㅁㄴㅇㅁㅁㅁㅁㅈㅇㅁㅈㅇㅇㅇㅇㅇㅇㅇㅁㅈㅇㄴㅁㅇㅁㅇㅁㄴㅇㅁㄴㅇㅁㄴㅇㅁㅁㅁㅁㅈㅇㅁㅈㅇㅇㅇㅇㅇㅇㅇㅁㅈㅇ'
-                    },
-                ],
+
+                items: [],
             }
+        },
+
+        mounted () {
+            this.fetchProducts();
+        },
+
+        methods: {
+            fetchProducts() {
+                axios.get('/products', { params: this.$route.query })
+                    .then(({ data }) => {
+                        // console.log(data);
+                        this.items = data.data;
+                        this.meta = data.meta;
+                        this.links = data.links;
+                    })
+            },
         },
     }
 </script>
+
+<style lang="scss" scoped>
+@import 'resources/sass/_variables.scss';
+
+    .favorite {
+        cursor: pointer;
+        color: $gray;
+        &.favorited, &.favorited:hover {
+            color: $orange;
+        }
+    }
+</style>
