@@ -12653,6 +12653,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -13586,7 +13596,7 @@ __webpack_require__.r(__webpack_exports__);
 _fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_0__.config.autoReplaceSvg = 'nest';
 
 
-_fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_0__.library.add(_fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_1__.faCaretUp, _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_1__.faCaretDown, _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_1__.faStar, _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_1__.faCheck, _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_1__.faSpinner, _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_1__.faArrowUp, _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_1__.faAngleRight, _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_1__.faSignInAlt, _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_1__.faHome, _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_1__.faCashRegister, _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_1__.faMoneyCheck, _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_1__.faSortDown, _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_1__.faAngleLeft, _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_1__.faShoppingCart); // Kicks off the process of finding <i> tags and replacing with <svg>
+_fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_0__.library.add(_fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_1__.faCaretUp, _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_1__.faCaretDown, _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_1__.faStar, _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_1__.faCheck, _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_1__.faSpinner, _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_1__.faArrowUp, _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_1__.faAngleRight, _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_1__.faSignInAlt, _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_1__.faHome, _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_1__.faCashRegister, _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_1__.faMoneyCheck, _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_1__.faSortDown, _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_1__.faAngleLeft, _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_1__.faShoppingCart, _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_1__.faUserCog, _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_1__.faPlus); // Kicks off the process of finding <i> tags and replacing with <svg>
 
 _fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_0__.dom.watch();
 
@@ -18153,7 +18163,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "/* Font size */\n/* Font weight */\n.u-header__section[data-v-1f42fb90] {\n  margin: 0;\n  padding: 0;\n  box-shadow: 2px 2px 2px 2px gray;\n}\n.u-header__section .nav-item[data-v-1f42fb90] {\n  padding: 0px 30px;\n  border-radius: 10px;\n  cursor: pointer;\n}\n.u-header__section .nav-item[data-v-1f42fb90]:hover {\n  border-color: #fff;\n  background-color: #F0F2F5;\n}\n.u-header__section .nav-item .nav-link[data-v-1f42fb90] {\n  display: block;\n}\n.u-header__section .dropdown-item.pointer-none[data-v-1f42fb90] {\n  pointer-events: none;\n}\n@media screen and (max-width: 992px) {\n.u-header__section .nav-item[data-v-1f42fb90] {\n    padding: 0px;\n}\n.u-header__section .nav-item .nav-link[data-v-1f42fb90] {\n    display: flex;\n    justify-content: flex-end;\n    align-items: center;\n}\n.u-header__section .nav-item .nav-link .name[data-v-1f42fb90] {\n    margin-left: 15px;\n    font-size: 28px;\n}\n.u-header__section .dropdown-button[data-v-1f42fb90] {\n    position: absolute;\n    top: 10px;\n    right: 70px;\n}\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "/* Font size */\n/* Font weight */\n.u-header__section[data-v-1f42fb90] {\n  margin: 0;\n  padding: 0;\n  box-shadow: 2px 2px 2px 2px gray;\n}\n.u-header__section .nav-item[data-v-1f42fb90] {\n  padding: 0px 30px;\n  border-radius: 10px;\n  cursor: pointer;\n}\n.u-header__section .nav-item[data-v-1f42fb90]:hover {\n  border-color: #fff;\n  background-color: #F0F2F5;\n}\n.u-header__section .nav-item .nav-link[data-v-1f42fb90] {\n  display: block;\n}\n.u-header__section .dropdown-item.pointer-none[data-v-1f42fb90] {\n  pointer-events: none;\n}\n@media screen and (max-width: 992px) {\n.u-header__section .nav-item[data-v-1f42fb90] {\n    padding: 0px;\n}\n.u-header__section .nav-item .nav-link[data-v-1f42fb90] {\n    display: flex;\n    justify-content: flex-end;\n    align-items: center;\n}\n.u-header__section .nav-item .nav-link .name[data-v-1f42fb90] {\n    margin-left: 15px;\n    font-size: 28px;\n}\n.u-header__section .dropdown-button[data-v-1f42fb90] {\n    position: absolute;\n    top: 10px;\n    right: 70px;\n}\n.u-header__section .product-add-button[data-v-1f42fb90] {\n    position: absolute;\n    top: 10px;\n    right: 110px;\n}\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -52093,7 +52103,7 @@ var render = function() {
                 "div",
                 {
                   staticClass:
-                    "collapse navbar-collapse align-items-center flex-sm-row g-pt-10 g-pt-5--lg g-mr-40--lg",
+                    "collapse navbar-collapse align-items-center flex-sm-row g-pt-5",
                   attrs: { id: "navBar" }
                 },
                 [
@@ -52101,13 +52111,13 @@ var render = function() {
                     "ul",
                     {
                       staticClass:
-                        "navbar-nav text-uppercase g-pos-rel g-font-weight-600 ml-auto"
+                        "navbar-nav mx-auto text-uppercase g-pos-rel g-font-weight-600 ml-auto"
                     },
                     [
                       _c(
                         "router-link",
                         {
-                          staticClass: "nav-item g-mx-10--lg g-mx-15--xl",
+                          staticClass: "nav-item g-mx-5--lg",
                           class: _vm.currentRouteName == "home" ? "active" : "",
                           attrs: { tag: "li", to: { name: "home" }, exact: "" }
                         },
@@ -52123,7 +52133,7 @@ var render = function() {
                       _c(
                         "router-link",
                         {
-                          staticClass: "nav-item g-mx-10--lg g-mx-15--xl",
+                          staticClass: "nav-item g-mx-5--lg",
                           attrs: { tag: "li", to: { name: "charge.index" } }
                         },
                         [
@@ -52142,7 +52152,7 @@ var render = function() {
                       _c(
                         "router-link",
                         {
-                          staticClass: "nav-item g-mx-10--lg g-mx-15--xl",
+                          staticClass: "nav-item g-mx-5--lg",
                           attrs: { tag: "li", to: { name: "history.index" } }
                         },
                         [
@@ -52156,12 +52166,49 @@ var render = function() {
                             ])
                           ])
                         ]
-                      )
+                      ),
+                      _vm._v(" "),
+                      _vm.$auth.check(2)
+                        ? _c(
+                            "router-link",
+                            {
+                              staticClass: "nav-item g-mx-5--lg",
+                              attrs: {
+                                tag: "li",
+                                to: { name: "history.index" }
+                              }
+                            },
+                            [
+                              _c(
+                                "div",
+                                { staticClass: "nav-link g-py-7 g-px-0" },
+                                [
+                                  _c("i", {
+                                    staticClass: "fas fa-user-cog fa-3x"
+                                  }),
+                                  _vm._v(" "),
+                                  _c("span", { staticClass: "name" }, [
+                                    _vm._v("관리")
+                                  ])
+                                ]
+                              )
+                            ]
+                          )
+                        : _vm._e()
                     ],
                     1
                   )
                 ]
               ),
+              _vm._v(" "),
+              _vm.$auth.check(2)
+                ? _c("div", { staticClass: "product-add-button g-mx-10" }, [
+                    _c("i", {
+                      staticClass:
+                        "rounded-circle fas fa-plus btn btn-light g-font-size-18"
+                    })
+                  ])
+                : _vm._e(),
               _vm._v(" "),
               _c("div", { staticClass: "dropdown-group" }, [
                 _vm._m(1),

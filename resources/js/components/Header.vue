@@ -41,34 +41,44 @@
                 </router-link>
 
                 <!-- Navigation -->
-                <div class="collapse navbar-collapse align-items-center flex-sm-row g-pt-10 g-pt-5--lg g-mr-40--lg"
+                <div class="collapse navbar-collapse align-items-center flex-sm-row g-pt-5"
                     id="navBar">
-                    <ul class="navbar-nav text-uppercase g-pos-rel g-font-weight-600 ml-auto">
+                    <ul class="navbar-nav mx-auto text-uppercase g-pos-rel g-font-weight-600 ml-auto">
                         <!-- Intro -->
-                        <router-link class="nav-item g-mx-10--lg g-mx-15--xl" tag="li" :to="{ name: 'home' }" :class="currentRouteName == 'home' ? 'active' : ''" exact>
+                        <router-link class="nav-item g-mx-5--lg" tag="li" :to="{ name: 'home' }" :class="currentRouteName == 'home' ? 'active' : ''" exact>
                             <div class="nav-link g-py-7 g-px-0">
                                 <i class="fas fa-home fa-3x"></i>
                                 <span class="name">홈</span>
                             </div>
                         </router-link>
 
-                        <router-link class="nav-item g-mx-10--lg g-mx-15--xl" tag="li" :to="{ name: 'charge.index' }">
+                        <router-link class="nav-item g-mx-5--lg" tag="li" :to="{ name: 'charge.index' }">
                             <div class="nav-link g-py-7 g-px-0">
                                 <i class="fas fa-cash-register fa-3x"></i>
                                 <span class="name">충전</span>
                             </div>
                         </router-link>
 
-                        <router-link class="nav-item g-mx-10--lg g-mx-15--xl" tag="li" :to="{ name: 'history.index' }">
+                        <router-link class="nav-item g-mx-5--lg" tag="li" :to="{ name: 'history.index' }">
                             <div class="nav-link g-py-7 g-px-0">
                                 <i class="fas fa-money-check fa-3x"></i>
                                 <span class="name">내역</span>
                             </div>
                         </router-link>
 
+                        <router-link class="nav-item g-mx-5--lg" tag="li" :to="{ name: 'history.index' }" v-if="$auth.check(2)">
+                            <div class="nav-link g-py-7 g-px-0">
+                                <i class="fas fa-user-cog fa-3x"></i>
+                                <span class="name">관리</span>
+                            </div>
+                        </router-link>
                     </ul>
                 </div>
                 <!-- End Navigation -->
+
+                <div class="product-add-button g-mx-10" v-if="$auth.check(2)">
+                    <i class="rounded-circle fas fa-plus btn btn-light g-font-size-18"></i>
+                </div>
 
                 <!-- dropdown-group -->
                 <div class="dropdown-group">
@@ -198,6 +208,7 @@
                 display: block;
             }
         }
+
         .dropdown-item {
             &.pointer-none { pointer-events: none; }
         }
@@ -223,6 +234,12 @@
                 position: absolute;
                 top: 10px;
                 right: 70px;
+            }
+
+            .product-add-button {
+                position: absolute;
+                top: 10px;
+                right: 110px;
             }
         }
     }

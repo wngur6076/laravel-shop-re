@@ -36,7 +36,7 @@
             pageContainer: $('.container'),
             breakpoint: 991
         });
-        
+
     });
 </script>
 <!-- ================== END BASE JS ================== -->
