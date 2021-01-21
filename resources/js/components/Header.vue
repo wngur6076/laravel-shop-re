@@ -16,9 +16,9 @@
                 <!-- End Responsive Toggle Button -->
 
                 <router-link class="navbar-brand" :to="{ name: 'home' }">
-                    <!-- Logo -->
+                    <!-- Logo 120, 50 -->
                     <a href="../../index.html" class="navbar-brand d-flex">
-                        <svg width="120px" height="50px" viewBox="0 0 86 32" version="1.1" xmlns="http://www.w3.org/2000/svg"
+                        <svg width="90px" height="30px" viewBox="0 0 86 32" version="1.1" xmlns="http://www.w3.org/2000/svg"
                             xmlns:xlink="http://www.w3.org/1999/xlink">
                             <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                                 <g transform="translate(-78.000000, -19.000000)">
@@ -47,28 +47,28 @@
                         <!-- Intro -->
                         <router-link class="nav-item g-mx-5--lg" tag="li" :to="{ name: 'home' }" :class="currentRouteName == 'home' ? 'active' : ''" exact>
                             <div class="nav-link g-py-7 g-px-0">
-                                <i class="fas fa-home fa-3x"></i>
+                                <i class="fas fa-home fa-2x"></i>
                                 <span class="name">홈</span>
                             </div>
                         </router-link>
 
                         <router-link class="nav-item g-mx-5--lg" tag="li" :to="{ name: 'charge.index' }">
                             <div class="nav-link g-py-7 g-px-0">
-                                <i class="fas fa-cash-register fa-3x"></i>
+                                <i class="fas fa-cash-register fa-2x"></i>
                                 <span class="name">충전</span>
                             </div>
                         </router-link>
 
                         <router-link class="nav-item g-mx-5--lg" tag="li" :to="{ name: 'history.index' }">
                             <div class="nav-link g-py-7 g-px-0">
-                                <i class="fas fa-money-check fa-3x"></i>
+                                <i class="fas fa-money-check fa-2x"></i>
                                 <span class="name">내역</span>
                             </div>
                         </router-link>
 
                         <router-link class="nav-item g-mx-5--lg" tag="li" :to="{ name: 'history.index' }" v-if="$auth.check(2)">
                             <div class="nav-link g-py-7 g-px-0">
-                                <i class="fas fa-user-cog fa-3x"></i>
+                                <i class="fas fa-user-cog fa-2x"></i>
                                 <span class="name">관리</span>
                             </div>
                         </router-link>
@@ -76,7 +76,7 @@
                 </div>
                 <!-- End Navigation -->
 
-                <div class="product-add-button g-mx-10" v-if="$auth.check(2)">
+                <div class="product-add-button g-mx-10" v-if="$auth.check(2)" data-toggle="modal" data-target="#createProduct" data-placement="bottom" title="Tooltip on bottom">
                     <i class="rounded-circle fas fa-plus btn btn-light g-font-size-18"></i>
                 </div>
 
@@ -101,94 +101,95 @@
 </template>
 
 <script>
-    export default {
-        data() {
-            return {
-                credit: null,
+export default {
+    data() {
+        return {
+            credit: null,
 
-                creditClass: null,
+            creditClass: null,
 
-                currentRouteName: null,
+            currentRouteName: null,
 
-                routes: {
-                    // UNLOGGED
-                    unlogged: [{
-                            name: 'Inscription',
-                            path: 'register'
-                        },
-                        {
-                            name: 'Connexion',
-                            path: 'login'
-                        }
-                    ],
+            routes: {
+                // UNLOGGED
+                unlogged: [{
+                        name: 'Inscription',
+                        path: 'register'
+                    },
+                    {
+                        name: 'Connexion',
+                        path: 'login'
+                    }
+                ],
 
-                    // LOGGED USER
-                    user: [{
-                        name: 'Dashboard',
-                        path: 'dashboard'
-                    }],
-                    // LOGGED ADMIN
-                    admin: [{
-                        name: 'Dashboard',
-                        path: 'admin.dashboard'
-                    }]
-                }
+                // LOGGED USER
+                user: [{
+                    name: 'Dashboard',
+                    path: 'dashboard'
+                }],
+                // LOGGED ADMIN
+                admin: [{
+                    name: 'Dashboard',
+                    path: 'admin.dashboard'
+                }]
             }
-        },
+        }
+    },
 
-        watch: {
-            "$route": 'currentRouteCheck'
-        },
+    watch: {
+        "$route": 'currentRouteCheck'
+    },
 
-        mounted() {
-            this.currentRouteCheck();
-        },
+    mounted() {
+        this.currentRouteCheck();
+    },
 
-        computed: {
-            creditCheck() {
-                if (this.$auth.check(2)) {
-                    this.credit = '판매자'
-                    this.creditClass = 'badge-success'
-                }
-                else if (this.$auth.check(1) && this.$auth.user().credit) {
-                    this.credit = '구매자'
-                    this.creditClass = 'badge-primary'
-                }
-                else {
-                    this.credit = '비구매자'
-                    this.creditClass = 'badge-secondary'
-                }
-
-
-                return true
-            },
-
-            classes () {
-                return [
-                    'badge', 'pull-right',
-                    this.creditClass
-                ]
-            },
-        },
-
-        methods: {
-            logout() {
-                this.$auth.logout()
-
-                setTimeout(() => {
-                    this.$router.go(this.$router.currentRoute);
-                }, 100);
-            },
-
-            currentRouteCheck() {
-                this.currentRouteName = this.$router.currentRoute.name
+    computed: {
+        creditCheck() {
+            if (this.$auth.check(2)) {
+                this.credit = '판매자'
+                this.creditClass = 'badge-success'
             }
+            else if (this.$auth.check(1) && this.$auth.user().credit) {
+                this.credit = '구매자'
+                this.creditClass = 'badge-primary'
+            }
+            else {
+                this.credit = '비구매자'
+                this.creditClass = 'badge-secondary'
+            }
+
+
+            return true
         },
-    }
+
+        classes () {
+            return [
+                'badge', 'pull-right',
+                this.creditClass
+            ]
+        },
+    },
+
+    methods: {
+        logout() {
+            this.$auth.logout()
+
+            setTimeout(() => {
+                this.$router.go(this.$router.currentRoute);
+            }, 100);
+        },
+
+        currentRouteCheck() {
+            this.currentRouteName = this.$router.currentRoute.name
+        },
+    },
+}
 </script>
 
 <style lang="scss" scoped>
     @import 'resources/sass/_variables.scss';
+
     .u-header__section {
         margin: 0;
         padding: 0;
@@ -232,13 +233,13 @@
 
             .dropdown-button {
                 position: absolute;
-                top: 10px;
+                top: 5px;
                 right: 70px;
             }
 
             .product-add-button {
                 position: absolute;
-                top: 10px;
+                top: 5px;
                 right: 110px;
             }
         }

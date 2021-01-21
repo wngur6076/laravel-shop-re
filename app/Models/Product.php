@@ -35,7 +35,7 @@ class Product extends Model
     public function getVideoUrlAttribute()
     {
         if (!$this->video) return null;
-        
+
         $strTok = explode('/', $this->video);
         return '//www.youtube.com/embed/' . $strTok[3];
     }

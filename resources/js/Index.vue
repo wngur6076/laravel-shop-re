@@ -17,16 +17,24 @@
             <router-view></router-view>
         </div>
 
+        <!-- 새 게시글 작성 -->
+        <create-product></create-product>
     </div>
 </template>
 
 <script>
-    import navigationMenu from './components/Header.vue'
-    import sidebarRight from './components/SidebarRight.vue'
+import navigationMenu from './components/Header.vue'
+import sidebarRight from './components/SidebarRight.vue'
+import CreateProduct from './components/CreateProduct'
+import autosize from 'autosize';
 
-    export default {
-        components: {
-            navigationMenu, sidebarRight
-        },
-    }
+export default {
+    components: {
+        navigationMenu, sidebarRight, CreateProduct
+    },
+
+    updated () {
+        autosize(this.$el.querySelector('textarea'))
+    },
+}
 </script>

@@ -15,6 +15,8 @@
 <script src="{{ asset('unify/assets/js/components/hs.sticky-block.js') }}"></script>
 <script src="{{ asset('unify/assets/js/components/hs.go-to.js') }}"></script>
 
+<script src="{{ asset('unify/assets/js/helpers/hs.file-attachments.js') }}"></script>
+
 <!-- JS Plugins Init. -->
 <script>
     $(document).ready(function () {
@@ -23,6 +25,9 @@
         // initialization of go to
         $.HSCore.components.HSGoTo.init('.js-go-to');
 
+
+        // initialization of forms
+        $.HSCore.helpers.HSFileAttachments.init();
     });
 
     $(window).on('load', function () {
