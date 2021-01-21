@@ -52698,7 +52698,7 @@ var staticRenderFns = [
               staticClass: "btn btn-md h-100 u-btn-primary rounded-0",
               attrs: { type: "submit" }
             },
-            [_vm._v("검색")]
+            [_vm._v("찾기")]
           ),
           _vm._v(" "),
           _c("input", { attrs: { type: "file" } })

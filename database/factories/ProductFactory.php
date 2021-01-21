@@ -21,12 +21,20 @@ class ProductFactory extends Factory
      */
     public function definition()
     {
+        if (random_int(0, 1)) {
+            $video = 'https://youtu.be/S4DEFCf5p-Q';
+            $image = null;
+        } else {
+            $video = null;
+            $image = basename(public_path('files', 500, 450) . '/apple.jpg');
+        }
         return [
             'title' => rtrim($this->faker->sentence(rand(5, 10)), "."),
             'body' => $this->faker->paragraphs(rand(3, 7), true),
             'price' => $this->faker->randomNumber(4),
             // 'image' => basename($this->faker->image(public_path('files', 500, 450))),
-            'image' => basename(public_path('files', 500, 450) . '/apple.jpg'),
+            'video' => $video,
+            'image' => $image,
         ];
     }
 }

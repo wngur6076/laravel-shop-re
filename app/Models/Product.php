@@ -10,6 +10,16 @@ class Product extends Model
 {
     use HasFactory;
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class);
+    }
+
     protected $fillable = ['title', 'body'];
 
     public function getBodyHtmlAttribute()
@@ -50,10 +60,5 @@ class Product extends Model
         $markdown = new \League\CommonMark\CommonMarkConverter(['allow_unsafe_links' => false]);
 
         return $markdown->convertToHtml($this->body);
-    }
-
-    public function user()
-    {
-        return $this->belongsTo(User::class);
     }
 }

@@ -58,7 +58,7 @@
                                 readonly="" type="text">
 
                             <div class="input-group-btn">
-                                <button class="btn btn-md h-100 u-btn-primary rounded-0" type="submit">검색</button>
+                                <button class="btn btn-md h-100 u-btn-primary rounded-0" type="submit">찾기</button>
                                 <input type="file">
                             </div>
                         </div>
