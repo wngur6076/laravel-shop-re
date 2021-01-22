@@ -55,6 +55,9 @@
 
             <pagination :meta="meta" :links="links"></pagination>
         </div>
+
+        <!-- 새 게시글 작성 Modal -->
+        <create-product @created="add"></create-product>
     </div>
     <!-- End Blog Classic Blocks -->
 
@@ -63,10 +66,12 @@
 <script>
 import VueMasonryWall from "vue-masonry-wall";
 import Pagination from '../components/Pagination'
+import CreateProduct from '../components/CreateProduct'
+import autosize from 'autosize';
 
 export default {
     components: {
-        VueMasonryWall, Pagination
+        VueMasonryWall, Pagination, CreateProduct
     },
 
     data() {
@@ -92,6 +97,10 @@ export default {
         this.fetchProducts();
     },
 
+    updated() {
+        autosize(this.$el.querySelector('textarea'))
+    },
+
     methods: {
         fetchProducts() {
             if (this.$route.name == 'tags.shop')
@@ -107,6 +116,10 @@ export default {
                     this.links = data.links;
                 })
         },
+
+        add(product) {
+            this.items.unshift(product);
+        }
     },
 }
 </script>

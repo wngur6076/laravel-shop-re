@@ -56,8 +56,8 @@ class ProductsController extends Controller
         $product->tags()->sync($request->input('data.tagsSelect'));
 
         return response()->json([
-            'status' => 'success',
-            'product' => $product
+            'message' => '게시글이 등록되었습니다.',
+            'product' => new ProductResource($product)
         ], 200);
     }
 

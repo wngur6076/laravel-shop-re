@@ -12809,9 +12809,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _components_Header_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./components/Header.vue */ "./resources/js/components/Header.vue");
 /* harmony import */ var _components_SidebarRight_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/SidebarRight.vue */ "./resources/js/components/SidebarRight.vue");
-/* harmony import */ var _components_CreateProduct__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/CreateProduct */ "./resources/js/components/CreateProduct.vue");
-/* harmony import */ var autosize__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! autosize */ "./node_modules/autosize/dist/autosize.js");
-/* harmony import */ var autosize__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(autosize__WEBPACK_IMPORTED_MODULE_3__);
 //
 //
 //
@@ -12833,21 +12830,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-
-
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
     navigationMenu: _components_Header_vue__WEBPACK_IMPORTED_MODULE_0__.default,
-    sidebarRight: _components_SidebarRight_vue__WEBPACK_IMPORTED_MODULE_1__.default,
-    CreateProduct: _components_CreateProduct__WEBPACK_IMPORTED_MODULE_2__.default
-  },
-  updated: function updated() {
-    autosize__WEBPACK_IMPORTED_MODULE_3___default()(this.$el.querySelector('textarea'));
+    sidebarRight: _components_SidebarRight_vue__WEBPACK_IMPORTED_MODULE_1__.default
   }
 });
 
@@ -12962,6 +12950,8 @@ __webpack_require__.r(__webpack_exports__);
       window.open(this.video, "_blank");
     },
     handleSubmit: function handleSubmit() {
+      var _this = this;
+
       var data = new FormData();
       data.append('title', this.title);
       data.append('body', this.body);
@@ -12979,7 +12969,10 @@ __webpack_require__.r(__webpack_exports__);
 
       axios.post('/products', data).then(function (_ref) {
         var data = _ref.data;
-        console.log(data.product);
+
+        _this.$toast.success(data.message, "Success");
+
+        _this.$emit('created', data.product);
       })["catch"](function (_ref2) {
         var response = _ref2.response;
         console.log(response.data.errors);
@@ -13770,6 +13763,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var vue_masonry_wall__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-masonry-wall */ "./node_modules/vue-masonry-wall/dist/vue-masonry-wall.esm.js");
 /* harmony import */ var _components_Pagination__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/Pagination */ "./resources/js/components/Pagination.vue");
+/* harmony import */ var _components_CreateProduct__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/CreateProduct */ "./resources/js/components/CreateProduct.vue");
+/* harmony import */ var autosize__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! autosize */ "./node_modules/autosize/dist/autosize.js");
+/* harmony import */ var autosize__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(autosize__WEBPACK_IMPORTED_MODULE_3__);
 //
 //
 //
@@ -13832,12 +13828,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+
+
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
     VueMasonryWall: vue_masonry_wall__WEBPACK_IMPORTED_MODULE_0__.default,
-    Pagination: _components_Pagination__WEBPACK_IMPORTED_MODULE_1__.default
+    Pagination: _components_Pagination__WEBPACK_IMPORTED_MODULE_1__.default,
+    CreateProduct: _components_CreateProduct__WEBPACK_IMPORTED_MODULE_2__.default
   },
   data: function data() {
     return {
@@ -13857,6 +13859,9 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     this.fetchProducts();
   },
+  updated: function updated() {
+    autosize__WEBPACK_IMPORTED_MODULE_3___default()(this.$el.querySelector('textarea'));
+  },
   methods: {
     fetchProducts: function fetchProducts() {
       var _this = this;
@@ -13871,6 +13876,9 @@ __webpack_require__.r(__webpack_exports__);
         _this.meta = data.meta;
         _this.links = data.links;
       });
+    },
+    add: function add(product) {
+      this.items.unshift(product);
     }
   }
 });
@@ -58879,21 +58887,14 @@ var render = function() {
     ),
     _vm._v(" "),
     _vm.$auth.check()
-      ? _c(
-          "div",
-          { staticClass: "container g-pt-100 g-pb-20" },
-          [
-            _c(
-              "div",
-              { staticClass: "row justify-content-between" },
-              [_c("router-view"), _vm._v(" "), _c("sidebar-right")],
-              1
-            ),
-            _vm._v(" "),
-            _c("create-product")
-          ],
-          1
-        )
+      ? _c("div", { staticClass: "container g-pt-100 g-pb-20" }, [
+          _c(
+            "div",
+            { staticClass: "row justify-content-between" },
+            [_c("router-view"), _vm._v(" "), _c("sidebar-right")],
+            1
+          )
+        ])
       : _c("div", { attrs: { id: "container" } }, [_c("router-view")], 1)
   ])
 }
@@ -61034,202 +61035,211 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "col-lg-9 g-mb-80" }, [
-    _c(
-      "div",
-      { staticClass: "g-pr-20--lg" },
-      [
-        _c("vue-masonry-wall", {
-          staticClass: "row g-mb-70",
-          attrs: { items: _vm.items, options: _vm.options },
-          scopedSlots: _vm._u([
-            {
-              key: "default",
-              fn: function(ref) {
-                var item = ref.item
-                return [
-                  item != undefined
-                    ? _c("article", { staticClass: "u-shadow-v11" }, [
-                        item.video
-                          ? _c(
-                              "div",
+  return _c(
+    "div",
+    { staticClass: "col-lg-9 g-mb-80" },
+    [
+      _c(
+        "div",
+        { staticClass: "g-pr-20--lg" },
+        [
+          _c("vue-masonry-wall", {
+            staticClass: "row g-mb-70",
+            attrs: { items: _vm.items, options: _vm.options },
+            scopedSlots: _vm._u([
+              {
+                key: "default",
+                fn: function(ref) {
+                  var item = ref.item
+                  return [
+                    item != undefined
+                      ? _c("article", { staticClass: "u-shadow-v11" }, [
+                          item.video
+                            ? _c(
+                                "div",
+                                {
+                                  staticClass:
+                                    "embed-responsive embed-responsive-16by9"
+                                },
+                                [
+                                  _c("iframe", {
+                                    attrs: {
+                                      width: "100%",
+                                      src: item.video,
+                                      frameborder: "0",
+                                      allowfullscreen: ""
+                                    }
+                                  })
+                                ]
+                              )
+                            : _c("img", {
+                                staticClass: "img-fluid w-100",
+                                attrs: {
+                                  src: item.image,
+                                  alt: "Image Description"
+                                }
+                              }),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "g-bg-white g-pa-30" }, [
+                            _c(
+                              "span",
                               {
                                 staticClass:
-                                  "embed-responsive embed-responsive-16by9"
+                                  "d-block g-color-gray-dark-v4 g-font-weight-600 g-font-size-12 text-uppercase mb-2"
+                              },
+                              [_vm._v(_vm._s(item.created_date))]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "h2",
+                              {
+                                staticClass:
+                                  "h5 g-color-black g-font-weight-600 mb-3"
                               },
                               [
-                                _c("iframe", {
-                                  attrs: {
-                                    width: "100%",
-                                    src: item.video,
-                                    frameborder: "0",
-                                    allowfullscreen: ""
-                                  }
-                                })
+                                _c(
+                                  "a",
+                                  {
+                                    staticClass:
+                                      "u-link-v5 g-color-black g-color-primary--hover g-cursor-pointer",
+                                    attrs: { href: "#" }
+                                  },
+                                  [_vm._v(_vm._s(item.title))]
+                                )
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "p",
+                              {
+                                staticClass:
+                                  "g-color-gray-dark-v4 g-line-height-1_8"
+                              },
+                              [_vm._v(_vm._s(item.excerpt))]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "ul",
+                              { staticClass: "u-list-inline mb-0" },
+                              _vm._l(item.tags, function(tag, key) {
+                                return _c(
+                                  "li",
+                                  {
+                                    key: key,
+                                    staticClass: "list-inline-item g-mb-5"
+                                  },
+                                  [
+                                    _c(
+                                      "router-link",
+                                      {
+                                        staticClass:
+                                          "u-tags-v1 g-color-gray-dark-v4 g-color-white--hover g-bg-gray-light-v5 g-bg-primary--hover g-font-size-10 g-py-4 g-px-10",
+                                        attrs: {
+                                          to: {
+                                            name: "tags.shop",
+                                            params: { slug: tag.slug }
+                                          }
+                                        }
+                                      },
+                                      [
+                                        _vm._v(
+                                          "\n                                    " +
+                                            _vm._s(tag.text) +
+                                            "\n                                "
+                                        )
+                                      ]
+                                    )
+                                  ],
+                                  1
+                                )
+                              }),
+                              0
+                            ),
+                            _vm._v(" "),
+                            _c("hr", { staticClass: "g-mt-0 g-mb-20" }),
+                            _vm._v(" "),
+                            _c(
+                              "ul",
+                              {
+                                staticClass:
+                                  "list-inline d-flex justify-content-between mb-0 align-items-center"
+                              },
+                              [
+                                _c(
+                                  "li",
+                                  {
+                                    staticClass:
+                                      "list-inline-item g-color-gray-dark-v4"
+                                  },
+                                  [
+                                    _c(
+                                      "a",
+                                      { staticClass: "favorite favorited" },
+                                      [
+                                        _c("i", {
+                                          staticClass: "fas fa-star fa-2x"
+                                        }),
+                                        _vm._v(" "),
+                                        _c(
+                                          "span",
+                                          {
+                                            staticClass:
+                                              "d-inline-block g-color-gray-dark-v4 g-font-size-13 g-text-underline--none--hover",
+                                            attrs: { href: "#" }
+                                          },
+                                          [_vm._v("57")]
+                                        )
+                                      ]
+                                    )
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "li",
+                                  {
+                                    staticClass:
+                                      "list-inline-item g-color-gray-dark-v4"
+                                  },
+                                  [
+                                    _c(
+                                      "div",
+                                      {
+                                        staticClass: "d-inline-block g-pos-rel"
+                                      },
+                                      [
+                                        _c(
+                                          "a",
+                                          {
+                                            staticClass:
+                                              "btn u-btn-outline-primary g-font-size-13",
+                                            attrs: { href: "#" }
+                                          },
+                                          [_vm._v("구매하기")]
+                                        )
+                                      ]
+                                    )
+                                  ]
+                                )
                               ]
                             )
-                          : _c("img", {
-                              staticClass: "img-fluid w-100",
-                              attrs: {
-                                src: item.image,
-                                alt: "Image Description"
-                              }
-                            }),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "g-bg-white g-pa-30" }, [
-                          _c(
-                            "span",
-                            {
-                              staticClass:
-                                "d-block g-color-gray-dark-v4 g-font-weight-600 g-font-size-12 text-uppercase mb-2"
-                            },
-                            [_vm._v(_vm._s(item.created_date))]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "h2",
-                            {
-                              staticClass:
-                                "h5 g-color-black g-font-weight-600 mb-3"
-                            },
-                            [
-                              _c(
-                                "a",
-                                {
-                                  staticClass:
-                                    "u-link-v5 g-color-black g-color-primary--hover g-cursor-pointer",
-                                  attrs: { href: "#" }
-                                },
-                                [_vm._v(_vm._s(item.title))]
-                              )
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "p",
-                            {
-                              staticClass:
-                                "g-color-gray-dark-v4 g-line-height-1_8"
-                            },
-                            [_vm._v(_vm._s(item.excerpt))]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "ul",
-                            { staticClass: "u-list-inline mb-0" },
-                            _vm._l(item.tags, function(tag, key) {
-                              return _c(
-                                "li",
-                                {
-                                  key: key,
-                                  staticClass: "list-inline-item g-mb-5"
-                                },
-                                [
-                                  _c(
-                                    "router-link",
-                                    {
-                                      staticClass:
-                                        "u-tags-v1 g-color-gray-dark-v4 g-color-white--hover g-bg-gray-light-v5 g-bg-primary--hover g-font-size-10 g-py-4 g-px-10",
-                                      attrs: {
-                                        to: {
-                                          name: "tags.shop",
-                                          params: { slug: tag.slug }
-                                        }
-                                      }
-                                    },
-                                    [
-                                      _vm._v(
-                                        "\n                                    " +
-                                          _vm._s(tag.text) +
-                                          "\n                                "
-                                      )
-                                    ]
-                                  )
-                                ],
-                                1
-                              )
-                            }),
-                            0
-                          ),
-                          _vm._v(" "),
-                          _c("hr", { staticClass: "g-mt-0 g-mb-20" }),
-                          _vm._v(" "),
-                          _c(
-                            "ul",
-                            {
-                              staticClass:
-                                "list-inline d-flex justify-content-between mb-0 align-items-center"
-                            },
-                            [
-                              _c(
-                                "li",
-                                {
-                                  staticClass:
-                                    "list-inline-item g-color-gray-dark-v4"
-                                },
-                                [
-                                  _c(
-                                    "a",
-                                    { staticClass: "favorite favorited" },
-                                    [
-                                      _c("i", {
-                                        staticClass: "fas fa-star fa-2x"
-                                      }),
-                                      _vm._v(" "),
-                                      _c(
-                                        "span",
-                                        {
-                                          staticClass:
-                                            "d-inline-block g-color-gray-dark-v4 g-font-size-13 g-text-underline--none--hover",
-                                          attrs: { href: "#" }
-                                        },
-                                        [_vm._v("57")]
-                                      )
-                                    ]
-                                  )
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "li",
-                                {
-                                  staticClass:
-                                    "list-inline-item g-color-gray-dark-v4"
-                                },
-                                [
-                                  _c(
-                                    "div",
-                                    { staticClass: "d-inline-block g-pos-rel" },
-                                    [
-                                      _c(
-                                        "a",
-                                        {
-                                          staticClass:
-                                            "btn u-btn-outline-primary g-font-size-13",
-                                          attrs: { href: "#" }
-                                        },
-                                        [_vm._v("구매하기")]
-                                      )
-                                    ]
-                                  )
-                                ]
-                              )
-                            ]
-                          )
+                          ])
                         ])
-                      ])
-                    : _vm._e()
-                ]
+                      : _vm._e()
+                  ]
+                }
               }
-            }
-          ])
-        }),
-        _vm._v(" "),
-        _c("pagination", { attrs: { meta: _vm.meta, links: _vm.links } })
-      ],
-      1
-    )
-  ])
+            ])
+          }),
+          _vm._v(" "),
+          _c("pagination", { attrs: { meta: _vm.meta, links: _vm.links } })
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c("create-product", { on: { created: _vm.add } })
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true

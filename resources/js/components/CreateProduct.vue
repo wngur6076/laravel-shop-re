@@ -114,7 +114,8 @@ export default {
 
             axios.post('/products', data)
                 .then(({ data }) => {
-                    console.log(data.product)
+                    this.$toast.success(data.message, "Success")
+                    this.$emit('created', data.product)
                 })
                 .catch(({ response }) => {
                     console.log(response.data.errors)

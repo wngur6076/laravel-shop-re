@@ -11,9 +11,6 @@
 
                 <sidebar-right></sidebar-right>
             </div>
-
-            <!-- 새 게시글 작성 Modal -->
-            <create-product></create-product>
         </div>
 
         <div id="container" v-else>
@@ -25,16 +22,10 @@
 <script>
 import navigationMenu from './components/Header.vue'
 import sidebarRight from './components/SidebarRight.vue'
-import CreateProduct from './components/CreateProduct'
-import autosize from 'autosize';
 
 export default {
     components: {
-        navigationMenu, sidebarRight, CreateProduct
-    },
-
-    updated() {
-        autosize(this.$el.querySelector('textarea'))
+        navigationMenu, sidebarRight
     },
 }
 </script>
