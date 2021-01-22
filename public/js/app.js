@@ -13197,35 +13197,8 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       credit: null,
-      creditClass: null,
-      currentRouteName: null,
-      routes: {
-        // UNLOGGED
-        unlogged: [{
-          name: 'Inscription',
-          path: 'register'
-        }, {
-          name: 'Connexion',
-          path: 'login'
-        }],
-        // LOGGED USER
-        user: [{
-          name: 'Dashboard',
-          path: 'dashboard'
-        }],
-        // LOGGED ADMIN
-        admin: [{
-          name: 'Dashboard',
-          path: 'admin.dashboard'
-        }]
-      }
+      creditClass: null
     };
-  },
-  watch: {
-    "$route": 'currentRouteCheck'
-  },
-  mounted: function mounted() {
-    this.currentRouteCheck();
   },
   computed: {
     creditCheck: function creditCheck() {
@@ -13254,9 +13227,6 @@ __webpack_require__.r(__webpack_exports__);
       setTimeout(function () {
         _this.$router.go(_this.$router.currentRoute);
       }, 100);
-    },
-    currentRouteCheck: function currentRouteCheck() {
-      this.currentRouteName = this.$router.currentRoute.name;
     }
   }
 });
@@ -13318,7 +13288,7 @@ __webpack_require__.r(__webpack_exports__);
     switchPage: function switchPage() {
       var currentPage = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.meta.current_page;
       this.$router.push({
-        name: 'home',
+        name: this.$route.name,
         query: {
           page: currentPage
         }
@@ -13576,7 +13546,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -13621,9 +13590,9 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     fetchlinks: function fetchlinks() {
-      // console.log(this.$router.currentRoute.name)
-      switch (this.$router.currentRoute.name) {
+      switch (this.$route.name) {
         case 'home':
+        case 'tags.shop':
           this.initActive(this.links.shop);
 
         case 'notice':
@@ -13862,6 +13831,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -13877,7 +13847,8 @@ __webpack_require__.r(__webpack_exports__);
       },
       items: [],
       meta: {},
-      links: {}
+      links: {},
+      endpoint: null
     };
   },
   watch: {
@@ -13890,7 +13861,8 @@ __webpack_require__.r(__webpack_exports__);
     fetchProducts: function fetchProducts() {
       var _this = this;
 
-      axios.get('/products', {
+      if (this.$route.name == 'tags.shop') this.endpoint = "/tags/".concat(this.$route.params.slug, "/products");else this.endpoint = '/products';
+      axios.get(this.endpoint, {
         params: this.$route.query
       }).then(function (_ref) {
         var data = _ref.data;
@@ -14167,6 +14139,19 @@ __webpack_require__.r(__webpack_exports__);
 var routes = [{
   path: '/',
   name: 'home',
+  component: _pages_Shop__WEBPACK_IMPORTED_MODULE_0__.default,
+  meta: {
+    auth: {
+      roles: true,
+      redirect: {
+        name: 'login'
+      },
+      forbiddenRedirect: '/403'
+    }
+  }
+}, {
+  path: '/tags/:slug',
+  name: 'tags.shop',
   component: _pages_Shop__WEBPACK_IMPORTED_MODULE_0__.default,
   meta: {
     auth: {
@@ -59707,7 +59692,11 @@ var render = function() {
                         "router-link",
                         {
                           staticClass: "nav-item g-mx-5--lg",
-                          class: _vm.currentRouteName == "home" ? "active" : "",
+                          class:
+                            _vm.$route.name == "home" ||
+                            _vm.$route.name == "tags.shop"
+                              ? "active"
+                              : "",
                           attrs: { tag: "li", to: { name: "home" }, exact: "" }
                         },
                         [
@@ -60491,14 +60480,21 @@ var render = function() {
                       { key: key, staticClass: "list-inline-item g-mb-10" },
                       [
                         _c(
-                          "a",
+                          "router-link",
                           {
                             staticClass:
-                              "u-tags-v1 g-color-gray-dark-v4 g-color-white--hover g-bg-gray-light-v5 g-bg-primary--hover g-font-size-12 g-rounded-50 g-py-4 g-px-15"
+                              "u-tags-v1 g-color-gray-dark-v4 g-color-white--hover g-bg-gray-light-v5 g-bg-primary--hover g-font-size-12 g-rounded-50 g-py-4 g-px-15",
+                            attrs: {
+                              to: {
+                                name: "tags.shop",
+                                params: { slug: tag.slug }
+                              }
+                            }
                           },
                           [_vm._v(_vm._s(tag.text))]
                         )
-                      ]
+                      ],
+                      1
                     )
                   }),
                   0
@@ -61126,18 +61122,31 @@ var render = function() {
                                 "li",
                                 {
                                   key: key,
-                                  staticClass: "list-inline-item g-mb-10"
+                                  staticClass: "list-inline-item g-mb-5"
                                 },
                                 [
                                   _c(
-                                    "a",
+                                    "router-link",
                                     {
                                       staticClass:
-                                        "u-tags-v1 g-color-gray-dark-v4 g-color-white--hover g-bg-gray-light-v5 g-bg-primary--hover g-font-size-10 g-py-4 g-px-10"
+                                        "u-tags-v1 g-color-gray-dark-v4 g-color-white--hover g-bg-gray-light-v5 g-bg-primary--hover g-font-size-10 g-py-4 g-px-10",
+                                      attrs: {
+                                        to: {
+                                          name: "tags.shop",
+                                          params: { slug: tag.slug }
+                                        }
+                                      }
                                     },
-                                    [_vm._v(_vm._s(tag.text))]
+                                    [
+                                      _vm._v(
+                                        "\n                                    " +
+                                          _vm._s(tag.text) +
+                                          "\n                                "
+                                      )
+                                    ]
                                   )
-                                ]
+                                ],
+                                1
                               )
                             }),
                             0

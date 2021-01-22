@@ -87,8 +87,7 @@
                         <h3 class="h5 g-color-black g-font-weight-600 mb-4">Tags</h3>
                         <ul class="u-list-inline mb-0">
                             <li v-for="(tag, key) in $root.tags" :key="key" class="list-inline-item g-mb-10">
-                                <a class="u-tags-v1 g-color-gray-dark-v4 g-color-white--hover g-bg-gray-light-v5 g-bg-primary--hover g-font-size-12 g-rounded-50 g-py-4 g-px-15"
-                                >{{ tag.text }}</a>
+                                <router-link :to="{ name: 'tags.shop', params: { slug: tag.slug } }" class="u-tags-v1 g-color-gray-dark-v4 g-color-white--hover g-bg-gray-light-v5 g-bg-primary--hover g-font-size-12 g-rounded-50 g-py-4 g-px-15">{{ tag.text }}</router-link>
                             </li>
                         </ul>
                     </div>
@@ -177,9 +176,9 @@ export default {
 
     methods: {
         fetchlinks() {
-            // console.log(this.$router.currentRoute.name)
-            switch (this.$router.currentRoute.name) {
+            switch (this.$route.name) {
                 case 'home':
+                case 'tags.shop':
                     this.initActive(this.links.shop)
                 case 'notice':
                     this.currentLinks = Object.assign({}, this.links.shop);

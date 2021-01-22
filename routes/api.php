@@ -19,6 +19,8 @@ use App\Http\Controllers\ProductsController;
 */
 
 Route::get('/products', [ProductsController::class, 'index']);
+Route::get('/tags/{slug}/products', [ProductsController::class, 'index']);
+
 Route::get('/tags', TagsController::class);
 
 Route::prefix('auth')->group(function () {

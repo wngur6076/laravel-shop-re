@@ -6,6 +6,7 @@ use App\Http\Requests\ProductsRequest;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Http\Resources\ProductResource;
+use App\Models\Tag;
 
 class ProductsController extends Controller
 {
@@ -14,9 +15,13 @@ class ProductsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($slug = null)
     {
-        $products = Product::latest()->Paginate(4);
+        $query = $slug
+        ? Tag::whereSlug($slug)->firstOrFail()->products()
+        : new Product;
+
+        $products = $query->latest()->Paginate(4);
 
         return ProductResource::collection($products);
     }

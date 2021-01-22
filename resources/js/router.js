@@ -29,6 +29,20 @@ const routes = [
         },
     },
     {
+        path: '/tags/:slug',
+        name: 'tags.shop',
+        component: Shop,
+        meta: {
+            auth: {
+                roles: true,
+                redirect: {
+                    name: 'login'
+                },
+                forbiddenRedirect: '/403'
+            }
+        },
+    },
+    {
         path: '/charge',
         component: Charge,
         meta: {

@@ -24,9 +24,10 @@
                             <p class="g-color-gray-dark-v4 g-line-height-1_8">{{ item.excerpt }}</p>
                             <!-- <a class="g-font-size-13" href="#">Read more...</a> -->
                             <ul class="u-list-inline mb-0">
-                                <li v-for="(tag, key) in item.tags" :key="key" class="list-inline-item g-mb-10">
-                                    <a class="u-tags-v1 g-color-gray-dark-v4 g-color-white--hover g-bg-gray-light-v5 g-bg-primary--hover g-font-size-10 g-py-4 g-px-10"
-                                    >{{ tag.text }}</a>
+                                <li v-for="(tag, key) in item.tags" :key="key" class="list-inline-item g-mb-5">
+                                    <router-link :to="{ name: 'tags.shop', params: { slug: tag.slug } }" class="u-tags-v1 g-color-gray-dark-v4 g-color-white--hover g-bg-gray-light-v5 g-bg-primary--hover g-font-size-10 g-py-4 g-px-10">
+                                        {{ tag.text }}
+                                    </router-link>
                                 </li>
                             </ul>
 
@@ -78,6 +79,8 @@ export default {
             items: [],
             meta: {},
             links: {},
+
+            endpoint: null
         }
     },
 
@@ -91,7 +94,12 @@ export default {
 
     methods: {
         fetchProducts() {
-            axios.get('/products', { params: this.$route.query })
+            if (this.$route.name == 'tags.shop')
+                this.endpoint = `/tags/${this.$route.params.slug}/products`
+            else
+                this.endpoint = '/products'
+
+            axios.get(this.endpoint, { params: this.$route.query })
                 .then(({ data }) => {
                     // console.log(data);
                     this.items = data.data;

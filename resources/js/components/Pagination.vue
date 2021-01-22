@@ -45,7 +45,7 @@ export default {
     methods: {
         switchPage (currentPage = this.meta.current_page) {
             this.$router.push({
-                name: 'home',
+                name: this.$route.name,
                 query: {
                     page: currentPage
                 },
