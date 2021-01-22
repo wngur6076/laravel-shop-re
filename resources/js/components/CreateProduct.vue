@@ -59,7 +59,7 @@
                         <!-- End File Input -->
                         <div class="form-group">
                             <h4 class="h6 g-font-weight-600 g-color-black g-mb-15">Tags</h4>
-                            <select2-multiple-control v-model="tagsSelect" :options="tags"/>
+                            <select2-multiple-control v-model="tagsSelect" :options="$root.tags"/>
                         </div>
 
                         <div class="modal-footer form-group">
@@ -77,8 +77,6 @@ import Select2MultipleControl from 'v-select2-multiple-component';
 import FileSelect from './FileSelect.vue'
 
 export default {
-    props: ['tags'],
-
     components: { Select2MultipleControl, FileSelect },
 
     data() {

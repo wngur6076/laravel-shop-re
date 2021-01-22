@@ -11,11 +11,10 @@ class UserController extends Controller
     {
         $users = User::all();
 
-        return response()->json(
-            [
-                'status' => 'success',
-                'users' => $users->toArray()
-            ], 200);
+        return response()->json([
+            'status' => 'success',
+            'users' => $users->toArray()
+        ], 200);
     }
 
     public function show(Request $request, $id)

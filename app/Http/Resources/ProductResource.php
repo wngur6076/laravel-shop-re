@@ -23,6 +23,7 @@ class ProductResource extends JsonResource
             'video' => $this->video_Url,
             'created_date' => $this->created_date,
             'user' => new UserResource($this->user),
+            'tags' => TagResource::collection($this->tags)
         ];
     }
 }

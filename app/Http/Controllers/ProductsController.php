@@ -48,12 +48,12 @@ class ProductsController extends Controller
             'price' => 6000
         ]);
         $product = $request->user()->products()->create($data);
+        $product->tags()->sync($request->input('data.tagsSelect'));
 
-        return response()->json(
-            [
-                'status' => 'success',
-                'product' => $product
-            ], 200);
+        return response()->json([
+            'status' => 'success',
+            'product' => $product
+        ], 200);
     }
 
     /**

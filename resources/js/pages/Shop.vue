@@ -22,9 +22,15 @@
                                     href="#">{{ item.title }}</a>
                             </h2>
                             <p class="g-color-gray-dark-v4 g-line-height-1_8">{{ item.excerpt }}</p>
-                            <a class="g-font-size-13" href="#">Read more...</a>
+                            <!-- <a class="g-font-size-13" href="#">Read more...</a> -->
+                            <ul class="u-list-inline mb-0">
+                                <li v-for="(tag, key) in item.tags" :key="key" class="list-inline-item g-mb-10">
+                                    <a class="u-tags-v1 g-color-gray-dark-v4 g-color-white--hover g-bg-gray-light-v5 g-bg-primary--hover g-font-size-10 g-py-4 g-px-10"
+                                    >{{ tag.text }}</a>
+                                </li>
+                            </ul>
 
-                            <hr class="g-my-20">
+                            <hr class="g-mt-0 g-mb-20">
 
                             <ul class="list-inline d-flex justify-content-between mb-0 align-items-center">
                                 <li class="list-inline-item g-color-gray-dark-v4">

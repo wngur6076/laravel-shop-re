@@ -20,7 +20,6 @@ import 'izitoast/dist/css/iziToast.min.css'
 import LoadScript from 'vue-plugin-load-script';
 
 window.Vue = require('vue').default;
-
 // Set Vue router
 Vue.router = router
 Vue.use(VueRouter)
@@ -56,5 +55,25 @@ Vue.component('index', Index);
 
 const app = new Vue({
     el: '#app',
+
+    data() {
+        return {
+            tags: [],
+        }
+    },
+
+    mounted() {
+        this.fetch('/tags');
+    },
+
+    methods: {
+        fetch(endpoint) {
+            axios.get(endpoint)
+            .then(({data}) => {
+                this.tags = data.data
+            })
+        }
+    },
+
     router
 });

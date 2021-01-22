@@ -12846,26 +12846,8 @@ __webpack_require__.r(__webpack_exports__);
     sidebarRight: _components_SidebarRight_vue__WEBPACK_IMPORTED_MODULE_1__.default,
     CreateProduct: _components_CreateProduct__WEBPACK_IMPORTED_MODULE_2__.default
   },
-  data: function data() {
-    return {
-      tags: []
-    };
-  },
-  mounted: function mounted() {
-    this.fetch('/tags');
-  },
   updated: function updated() {
     autosize__WEBPACK_IMPORTED_MODULE_3___default()(this.$el.querySelector('textarea'));
-  },
-  methods: {
-    fetch: function fetch(endpoint) {
-      var _this = this;
-
-      axios.get(endpoint).then(function (_ref) {
-        var data = _ref.data;
-        _this.tags = data.data;
-      });
-    }
   }
 });
 
@@ -12961,7 +12943,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ['tags'],
   components: {
     Select2MultipleControl: v_select2_multiple_component__WEBPACK_IMPORTED_MODULE_0__.default,
     FileSelect: _FileSelect_vue__WEBPACK_IMPORTED_MODULE_1__.default
@@ -13597,7 +13578,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ['tags'],
   data: function data() {
     return {
       links: {
@@ -13876,6 +13856,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -13996,6 +13982,24 @@ vue__WEBPACK_IMPORTED_MODULE_12__.default.component('index', _Index__WEBPACK_IMP
 
 var app = new vue__WEBPACK_IMPORTED_MODULE_12__.default({
   el: '#app',
+  data: function data() {
+    return {
+      tags: []
+    };
+  },
+  mounted: function mounted() {
+    this.fetch('/tags');
+  },
+  methods: {
+    fetch: function fetch(endpoint) {
+      var _this = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_1___default().get(endpoint).then(function (_ref) {
+        var data = _ref.data;
+        _this.tags = data.data;
+      });
+    }
+  },
   router: _router__WEBPACK_IMPORTED_MODULE_8__.default
 });
 
@@ -58897,15 +58901,11 @@ var render = function() {
             _c(
               "div",
               { staticClass: "row justify-content-between" },
-              [
-                _c("router-view"),
-                _vm._v(" "),
-                _c("sidebar-right", { attrs: { tags: _vm.tags } })
-              ],
+              [_c("router-view"), _vm._v(" "), _c("sidebar-right")],
               1
             ),
             _vm._v(" "),
-            _c("create-product", { attrs: { tags: _vm.tags } })
+            _c("create-product")
           ],
           1
         )
@@ -59308,7 +59308,7 @@ var render = function() {
                     ),
                     _vm._v(" "),
                     _c("select2-multiple-control", {
-                      attrs: { options: _vm.tags },
+                      attrs: { options: _vm.$root.tags },
                       model: {
                         value: _vm.tagsSelect,
                         callback: function($$v) {
@@ -60485,7 +60485,7 @@ var render = function() {
                 _c(
                   "ul",
                   { staticClass: "u-list-inline mb-0" },
-                  _vm._l(_vm.tags, function(tag, key) {
+                  _vm._l(_vm.$root.tags, function(tag, key) {
                     return _c(
                       "li",
                       { key: key, staticClass: "list-inline-item g-mb-10" },
@@ -61119,15 +61119,31 @@ var render = function() {
                           ),
                           _vm._v(" "),
                           _c(
-                            "a",
-                            {
-                              staticClass: "g-font-size-13",
-                              attrs: { href: "#" }
-                            },
-                            [_vm._v("Read more...")]
+                            "ul",
+                            { staticClass: "u-list-inline mb-0" },
+                            _vm._l(item.tags, function(tag, key) {
+                              return _c(
+                                "li",
+                                {
+                                  key: key,
+                                  staticClass: "list-inline-item g-mb-10"
+                                },
+                                [
+                                  _c(
+                                    "a",
+                                    {
+                                      staticClass:
+                                        "u-tags-v1 g-color-gray-dark-v4 g-color-white--hover g-bg-gray-light-v5 g-bg-primary--hover g-font-size-10 g-py-4 g-px-10"
+                                    },
+                                    [_vm._v(_vm._s(tag.text))]
+                                  )
+                                ]
+                              )
+                            }),
+                            0
                           ),
                           _vm._v(" "),
-                          _c("hr", { staticClass: "g-my-20" }),
+                          _c("hr", { staticClass: "g-mt-0 g-mb-20" }),
                           _vm._v(" "),
                           _c(
                             "ul",

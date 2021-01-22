@@ -9,11 +9,11 @@
             <div class="row justify-content-between">
                 <router-view></router-view>
 
-                <sidebar-right :tags="tags"></sidebar-right>
+                <sidebar-right></sidebar-right>
             </div>
 
             <!-- 새 게시글 작성 Modal -->
-            <create-product :tags="tags"></create-product>
+            <create-product></create-product>
         </div>
 
         <div id="container" v-else>
@@ -33,27 +33,8 @@ export default {
         navigationMenu, sidebarRight, CreateProduct
     },
 
-    data() {
-        return {
-            tags: [],
-        }
-    },
-
-    mounted() {
-        this.fetch('/tags');
-    },
-
     updated() {
         autosize(this.$el.querySelector('textarea'))
     },
-
-    methods: {
-        fetch(endpoint) {
-            axios.get(endpoint)
-            .then(({data}) => {
-                this.tags = data.data
-            })
-        }
-    }
 }
 </script>
