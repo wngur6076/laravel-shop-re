@@ -13,7 +13,7 @@
                         <!-- End Youtube Example -->
                         <img class="img-fluid w-100" :src="item.image" v-else
                             alt="Image Description">
-                            
+
                         <div class="g-bg-white g-pa-30">
                             <span
                                 class="d-block g-color-gray-dark-v4 g-font-weight-600 g-font-size-12 text-uppercase mb-2">{{ item.created_date }}</span>
@@ -54,47 +54,47 @@
 </template>
 
 <script>
-    import VueMasonryWall from "vue-masonry-wall";
-    import Pagination from '../components/Pagination'
+import VueMasonryWall from "vue-masonry-wall";
+import Pagination from '../components/Pagination'
 
-    export default {
-        components: {
-            VueMasonryWall, Pagination
-        },
+export default {
+    components: {
+        VueMasonryWall, Pagination
+    },
 
-        data() {
-            return {
-                options: {
-                    width: 387,
-                    padding: 15,
-                },
-
-                items: [],
-                meta: {},
-                links: {},
-            }
-        },
-
-        watch: {
-            "$route": 'fetchProducts'
-        },
-
-        mounted () {
-            this.fetchProducts();
-        },
-
-        methods: {
-            fetchProducts() {
-                axios.get('/products', { params: this.$route.query })
-                    .then(({ data }) => {
-                        // console.log(data);
-                        this.items = data.data;
-                        this.meta = data.meta;
-                        this.links = data.links;
-                    })
+    data() {
+        return {
+            options: {
+                width: 387,
+                padding: 15,
             },
+
+            items: [],
+            meta: {},
+            links: {},
+        }
+    },
+
+    watch: {
+        "$route": 'fetchProducts'
+    },
+
+    mounted () {
+        this.fetchProducts();
+    },
+
+    methods: {
+        fetchProducts() {
+            axios.get('/products', { params: this.$route.query })
+                .then(({ data }) => {
+                    // console.log(data);
+                    this.items = data.data;
+                    this.meta = data.meta;
+                    this.links = data.links;
+                })
         },
-    }
+    },
+}
 </script>
 
 <style lang="scss" scoped>

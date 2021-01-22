@@ -3,8 +3,9 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\ProductsController;
+use App\Http\Controllers\TagsController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ProductsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,7 +19,7 @@ use App\Http\Controllers\UserController;
 */
 
 Route::get('/products', [ProductsController::class, 'index']);
-
+Route::get('/tags', TagsController::class);
 
 Route::prefix('auth')->group(function () {
     Route::post('register', [AuthController::class, 'register']);
@@ -35,4 +36,6 @@ Route::group(['middleware' => 'auth:api'], function(){
     // Users
     Route::get('users', [UserController::class, 'index'])->middleware('isAdmin');
     Route::get('users/{id}', [UserController::class, 'show'])->middleware('isAdminOrSelf');
+
+    Route::apiResource('/products', ProductsController::class)->except('index')->middleware('isAdmin');
 });

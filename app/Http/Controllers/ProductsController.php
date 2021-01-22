@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ProductsRequest;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Http\Resources\ProductResource;
@@ -26,9 +27,33 @@ class ProductsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(request $request)
     {
-        //
+        $request['data'] = json_decode($request['data'], true);
+        // Validate
+        $request->validate([
+            'title' => 'required|max:255',
+            'body' => 'required',
+            'data.tagsSelect' => 'required|array',
+        ]);
+        $filename = 'apple.jpg';
+        if ($request->hasFile('photo')) {
+            $file = $request->file('photo');
+            $filename = \Str::random() . filter_var($file->getClientOriginalName(), FILTER_SANITIZE_URL);
+            $file->move(public_path('files'), $filename);
+        }
+
+        $data = array_merge($request->only('title', 'body', 'video'), [
+            'image' => $filename,
+            'price' => 6000
+        ]);
+        $product = $request->user()->products()->create($data);
+
+        return response()->json(
+            [
+                'status' => 'success',
+                'product' => $product
+            ], 200);
     }
 
     /**

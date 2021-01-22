@@ -20,7 +20,7 @@ class Product extends Model
         return $this->belongsToMany(Tag::class);
     }
 
-    protected $fillable = ['title', 'body'];
+    protected $fillable = ['title', 'body', 'price', 'video', 'image'];
 
     public function getBodyHtmlAttribute()
     {
