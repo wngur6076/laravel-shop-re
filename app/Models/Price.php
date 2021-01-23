@@ -11,6 +11,8 @@ class Price extends Model
 
     public $table = "price_list";
 
+    protected $fillable = ['period', 'code', 'price'];
+
     public function product()
     {
         return $this->belongsTo(product::class);

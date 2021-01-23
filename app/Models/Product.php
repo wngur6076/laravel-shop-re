@@ -10,6 +10,8 @@ class Product extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['title', 'body', 'price', 'video', 'image', 'file_link'];
+
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -24,8 +26,6 @@ class Product extends Model
     {
         return $this->hasMany(Price::class);
     }
-
-    protected $fillable = ['title', 'body', 'price', 'video', 'image'];
 
     public function getBodyHtmlAttribute()
     {

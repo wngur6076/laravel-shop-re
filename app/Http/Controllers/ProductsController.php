@@ -6,6 +6,7 @@ use App\Http\Requests\ProductsRequest;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Http\Resources\ProductResource;
+use App\Models\Price;
 use App\Models\Tag;
 
 class ProductsController extends Controller
@@ -39,8 +40,14 @@ class ProductsController extends Controller
         $request->validate([
             'title' => 'required|max:255',
             'body' => 'required',
+            'file_link' => 'required',
             'data.tagsSelect' => 'required|array',
+            'data.priceList' => 'required|array',
+            'data.priceList.*.period' => 'required|int',
+            'data.priceList.*.code' => 'required',
+            'data.priceList.*.price' => 'required|int',
         ]);
+
         $filename = 'apple.jpg';
         if ($request->hasFile('photo')) {
             $file = $request->file('photo');
@@ -48,11 +55,13 @@ class ProductsController extends Controller
             $file->move(public_path('files'), $filename);
         }
 
-        $data = array_merge($request->only('title', 'body', 'video'), [
+        $data = array_merge($request->only('title', 'body', 'video', 'file_link'), [
             'image' => $filename,
-            // 'price' => 6000
         ]);
         $product = $request->user()->products()->create($data);
+        // 상품에 가격리스트 추가
+        $product->priceList()->createMany($request->input('data.priceList'));
+        // 상품에 태그추가
         $product->tags()->sync($request->input('data.tagsSelect'));
 
         return response()->json([

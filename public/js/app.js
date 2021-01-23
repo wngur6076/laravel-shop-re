@@ -12986,7 +12986,7 @@ __webpack_require__.r(__webpack_exports__);
       photo: '',
       tagsSelect: [],
       fileLink: '',
-      inputs: [{
+      priceList: [{
         period: '',
         code: '',
         price: ''
@@ -12995,21 +12995,33 @@ __webpack_require__.r(__webpack_exports__);
   },
   computed: {
     isInvalid: function isInvalid() {
-      return this.body.length < 10 || this.title.length < 5 || !Object.keys(this.tagsSelect).length;
+      return this.body.length < 10 || this.title.length < 5 || !Object.keys(this.tagsSelect).length || this.isInPrice() || this.fileLink == '';
     }
   },
   methods: {
     redirect: function redirect(url) {
       window.open(url, "_blank");
     },
+    isInPrice: function isInPrice() {
+      return this.priceList[this.priceList.length - 1].period == '' || this.priceList[this.priceList.length - 1].code == '' || this.priceList[this.priceList.length - 1].price == '' || isNaN(this.priceList[this.priceList.length - 1].price);
+    },
+    periodConvert: function periodConvert() {
+      this.priceList.forEach(function (element) {
+        console.log(element.period);
+        if (element.period == '영구제') element.period = '-1';
+      });
+    },
     handleSubmit: function handleSubmit() {
       var _this = this;
 
+      this.periodConvert();
       var data = new FormData();
       data.append('title', this.title);
       data.append('body', this.body);
+      data.append('file_link', this.fileLink);
       var json = JSON.stringify({
-        tagsSelect: this.tagsSelect
+        tagsSelect: this.tagsSelect,
+        priceList: this.priceList
       });
       data.append('data', json);
 
@@ -13025,11 +13037,15 @@ __webpack_require__.r(__webpack_exports__);
 
         _this.dataClear();
 
+        _this.priceListClear();
+
         $(_this.$refs.modal).modal('hide');
 
         _this.$toast.success(data.message, "Success");
 
         _this.$emit('created', data.product);
+
+        console.log(data.product);
       })["catch"](function (_ref2) {
         var response = _ref2.response;
         console.log(response.data.errors);
@@ -13037,16 +13053,24 @@ __webpack_require__.r(__webpack_exports__);
     },
     dataClear: function dataClear() {
       this.title = '', this.body = '', this.thumbnail = 'video', this.video = '', this.photo = '', this.tagsSelect = [];
+      this.fileLink = '';
     },
-    add: function add(index) {
-      this.inputs.push({
+    priceListClear: function priceListClear() {
+      this.priceList = [{
+        period: '',
+        code: '',
+        price: ''
+      }];
+    },
+    add: function add() {
+      this.priceList.push({
         period: '',
         code: '',
         price: ''
       });
     },
     remove: function remove(index) {
-      this.inputs.splice(index, 1);
+      this.priceList.splice(index, 1);
     }
   }
 });
@@ -59493,7 +59517,7 @@ var render = function() {
                   1
                 ),
                 _vm._v(" "),
-                _vm._l(_vm.inputs, function(input, k) {
+                _vm._l(_vm.priceList, function(price, k) {
                   return _c("div", { key: k, staticClass: "form-group" }, [
                     _c(
                       "h4",
@@ -59514,8 +59538,8 @@ var render = function() {
                                 {
                                   name: "model",
                                   rawName: "v-model",
-                                  value: input.period,
-                                  expression: "input.period"
+                                  value: price.period,
+                                  expression: "price.period"
                                 }
                               ],
                               staticClass: "form-control",
@@ -59531,7 +59555,7 @@ var render = function() {
                                       return val
                                     })
                                   _vm.$set(
-                                    input,
+                                    price,
                                     "period",
                                     $event.target.multiple
                                       ? $$selectedVal
@@ -59566,19 +59590,19 @@ var render = function() {
                               {
                                 name: "model",
                                 rawName: "v-model",
-                                value: input.code,
-                                expression: "input.code"
+                                value: price.code,
+                                expression: "price.code"
                               }
                             ],
                             staticClass: "form-control",
                             attrs: { type: "text", placeholder: "코드 입력" },
-                            domProps: { value: input.code },
+                            domProps: { value: price.code },
                             on: {
                               input: function($event) {
                                 if ($event.target.composing) {
                                   return
                                 }
-                                _vm.$set(input, "code", $event.target.value)
+                                _vm.$set(price, "code", $event.target.value)
                               }
                             }
                           })
@@ -59591,20 +59615,20 @@ var render = function() {
                                 {
                                   name: "model",
                                   rawName: "v-model",
-                                  value: input.price,
-                                  expression: "input.price"
+                                  value: price.price,
+                                  expression: "price.price"
                                 },
                                 { name: "int", rawName: "v-int" }
                               ],
                               staticClass: "form-control",
                               attrs: { type: "text", placeholder: "가격 입력" },
-                              domProps: { value: input.price },
+                              domProps: { value: price.price },
                               on: {
                                 input: function($event) {
                                   if ($event.target.composing) {
                                     return
                                   }
-                                  _vm.$set(input, "price", $event.target.value)
+                                  _vm.$set(price, "price", $event.target.value)
                                 }
                               }
                             }),
@@ -59621,8 +59645,8 @@ var render = function() {
                           {
                             name: "show",
                             rawName: "v-show",
-                            value: k || (!k && _vm.inputs.length > 1),
-                            expression: "k || ( !k && inputs.length > 1)"
+                            value: k || (!k && _vm.priceList.length > 1),
+                            expression: "k || ( !k && priceList.length > 1)"
                           }
                         ],
                         staticClass: "fas fa-minus-circle",
@@ -59638,8 +59662,8 @@ var render = function() {
                           {
                             name: "show",
                             rawName: "v-show",
-                            value: k == _vm.inputs.length - 1,
-                            expression: "k == inputs.length-1"
+                            value: k == _vm.priceList.length - 1,
+                            expression: "k == priceList.length-1"
                           }
                         ],
                         staticClass: "fas fa-plus-circle",

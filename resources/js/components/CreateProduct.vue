@@ -62,12 +62,12 @@
                             <select2-multiple-control v-model="tagsSelect" :options="$root.tags"/>
                         </div>
 
-                        <div class="form-group" v-for="(input,k) in inputs" :key="k">
+                        <div class="form-group" v-for="(price,k) in priceList" :key="k">
                             <h4 class="h6 g-font-weight-600 g-color-black g-mb-15">Price {{ k+1 }}</h4>
                             <div class="col-md-12">
                                 <div class="row">
                                     <div class="col-md-3">
-                                        <select v-model="input.period" class="form-control">
+                                        <select v-model="price.period" class="form-control">
                                             <option disabled value="">코드 기간 선택</option>
                                             <option>1</option>
                                             <option>7</option>
@@ -77,19 +77,19 @@
                                         </select>
                                     </div>
                                     <div class="col-md-5">
-                                        <input type="text" class="form-control" v-model="input.code" placeholder="코드 입력">
+                                        <input type="text" class="form-control" v-model="price.code" placeholder="코드 입력">
                                     </div>
                                     <div class="col-md-4">
                                         <div class="input-group">
-                                            <input type="text" class="form-control" v-model="input.price" placeholder="가격 입력" v-int>
+                                            <input type="text" class="form-control" v-model="price.price" placeholder="가격 입력" v-int>
                                             <div class="input-group-prepend"><span class="input-group-text">원</span></div>
                                         </div>
                                     </div>
                                 </div>
                         </div>
                             <span>
-                                <i class="fas fa-minus-circle" @click="remove(k)" v-show="k || ( !k && inputs.length > 1)"></i>
-                                <i class="fas fa-plus-circle" @click="add(k)" v-show="k == inputs.length-1"></i>
+                                <i class="fas fa-minus-circle" @click="remove(k)" v-show="k || ( !k && priceList.length > 1)"></i>
+                                <i class="fas fa-plus-circle" @click="add(k)" v-show="k == priceList.length-1"></i>
                             </span>
                         </div>
 
@@ -131,7 +131,7 @@ export default {
             tagsSelect: [],
             fileLink: '',
 
-            inputs: [
+            priceList: [
                 {
                     period: '',
                     code: '',
@@ -143,7 +143,8 @@ export default {
 
     computed: {
         isInvalid () {
-            return this.body.length < 10 || this.title.length < 5 || !Object.keys(this.tagsSelect).length;
+            return this.body.length < 10 || this.title.length < 5 || !Object.keys(this.tagsSelect).length
+            || this.isInPrice() || this.fileLink == ''
         },
     },
 
@@ -152,13 +153,32 @@ export default {
             window.open(url, "_blank");
         },
 
+        isInPrice() {
+            return this.priceList[this.priceList.length-1].period == '' ||
+                this.priceList[this.priceList.length-1].code == '' ||
+                this.priceList[this.priceList.length-1].price == '' ||
+                isNaN(this.priceList[this.priceList.length-1].price)
+        },
+
+        periodConvert() {
+            this.priceList.forEach(element => {
+                console.log(element.period)
+                if (element.period == '영구제')
+                    element.period = '-1'
+            });
+        },
+
         handleSubmit() {
+            this.periodConvert()
+            
             const data = new FormData();
             data.append('title', this.title);
             data.append('body', this.body);
+            data.append('file_link', this.fileLink);
 
             const json = JSON.stringify({
-                tagsSelect: this.tagsSelect
+                tagsSelect: this.tagsSelect,
+                priceList: this.priceList
             });
             data.append('data', json);
 
@@ -172,9 +192,11 @@ export default {
             axios.post('/products', data)
                 .then(({ data }) => {
                     this.dataClear()
+                    this.priceListClear()
                     $(this.$refs.modal).modal('hide')
                     this.$toast.success(data.message, "Success")
                     this.$emit('created', data.product)
+                    console.log(data.product)
                 })
                 .catch(({ response }) => {
                     console.log(response.data.errors)
@@ -188,10 +210,21 @@ export default {
             this.video = '',
             this.photo = '',
             this.tagsSelect = []
+            this.fileLink = ''
         },
 
-        add(index) {
-            this.inputs.push({
+        priceListClear() {
+            this.priceList = [
+                {
+                    period: '',
+                    code: '',
+                    price: '',
+                }
+            ]
+        },
+
+        add() {
+            this.priceList.push({
                 period: '',
                 code: '',
                 price: '',
@@ -199,7 +232,7 @@ export default {
         },
 
         remove(index) {
-            this.inputs.splice(index, 1);
+            this.priceList.splice(index, 1);
         },
     },
 
