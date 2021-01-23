@@ -21,7 +21,7 @@
                                 <a class="u-link-v5 g-color-black g-color-primary--hover g-cursor-pointer"
                                     href="#">{{ item.title }}</a>
                             </h2>
-                            <p class="g-color-gray-dark-v4 g-line-height-1_8">{{ item.excerpt }}</p>
+                            <p class="g-color-gray-dark-v4 g-line-height-1_8 product-body">{{ item.excerpt }}</p>
                             <!-- <a class="g-font-size-13" href="#">Read more...</a> -->
                             <ul class="u-list-inline mb-0">
                                 <li v-for="(tag, key) in item.tags" :key="key" class="list-inline-item g-mb-5">
@@ -133,5 +133,9 @@ export default {
         &.favorited, &.favorited:hover {
             color: $orange;
         }
+    }
+
+    .product-body {
+        word-break: break-all;
     }
 </style>

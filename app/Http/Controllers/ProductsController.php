@@ -50,7 +50,7 @@ class ProductsController extends Controller
 
         $data = array_merge($request->only('title', 'body', 'video'), [
             'image' => $filename,
-            'price' => 6000
+            // 'price' => 6000
         ]);
         $product = $request->user()->products()->create($data);
         $product->tags()->sync($request->input('data.tagsSelect'));

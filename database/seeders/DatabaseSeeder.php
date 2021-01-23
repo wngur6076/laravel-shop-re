@@ -18,7 +18,9 @@ class DatabaseSeeder extends Seeder
                 $u->products()
                     ->saveMany(
                         \App\Models\Product::factory(rand(1, 5))->make()
-                    );
+                    )->each(function($p) {
+                    $p->priceList()->saveMany(\App\Models\Price::factory(rand(1, 3))->make());
+                });
             }
         });
 

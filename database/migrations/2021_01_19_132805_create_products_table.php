@@ -17,7 +17,7 @@ class CreateProductsTable extends Migration
             $table->id();
             $table->string('title');
             $table->text('body');
-            $table->integer('price');
+            $table->string('file_link')->nullable();
             $table->string('image')->nullable();
             $table->string('video')->nullable();
             $table->unsignedBigInteger('user_id')->index();

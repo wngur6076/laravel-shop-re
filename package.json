@@ -36,6 +36,7 @@
         "laravel-mix-alias": "^1.0.2",
         "v-select2-multiple-component": "^0.1.1",
         "vue-axios": "^2.1.5",
+        "vue-input-only-number": "^1.1.0",
         "vue-masonry-wall": "^0.3.1",
         "vue-plugin-load-script": "^1.3.2",
         "vue-router": "^3.4.9"

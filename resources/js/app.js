@@ -18,6 +18,7 @@ import router from './router'
 import VueIziToast from 'vue-izitoast'
 import 'izitoast/dist/css/iziToast.min.css'
 import LoadScript from 'vue-plugin-load-script';
+import onlyInt from 'vue-input-only-number';
 
 window.Vue = require('vue').default;
 // Set Vue router
@@ -29,7 +30,7 @@ Vue.use(VueAxios, axios)
 Vue.use(VueAuth, auth)
 Vue.use(VueIziToast);
 Vue.use(LoadScript);
-
+Vue.use(onlyInt);
 
 axios.defaults.baseURL = 'http://myapp.com:8000/api'
 

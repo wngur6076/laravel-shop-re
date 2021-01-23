@@ -20,6 +20,11 @@ class Product extends Model
         return $this->belongsToMany(Tag::class);
     }
 
+    public function priceList()
+    {
+        return $this->hasMany(Price::class);
+    }
+
     protected $fillable = ['title', 'body', 'price', 'video', 'image'];
 
     public function getBodyHtmlAttribute()
