@@ -21,6 +21,8 @@ class ProductResource extends JsonResource
             'price' => $this->price,
             'image' => $this->image_url,
             'video' => $this->video_Url,
+            'is_favorited'    => $this->is_favorited,
+            'favorites_count' => $this->favorites_count,
             'created_date' => $this->created_date,
             'user' => new UserResource($this->user),
             'tags' => TagResource::collection($this->tags)

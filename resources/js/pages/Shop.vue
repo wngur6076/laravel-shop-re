@@ -35,11 +35,7 @@
 
                             <ul class="list-inline d-flex justify-content-between mb-0 align-items-center">
                                 <li class="list-inline-item g-color-gray-dark-v4">
-                                    <a class="favorite favorited">
-                                        <i class="fas fa-star fa-2x"></i>
-                                        <span class="d-inline-block g-color-gray-dark-v4 g-font-size-13 g-text-underline--none--hover"
-                                            href="#">57</span>
-                                    </a>
+                                    <favorite :product="item"></favorite>
                                 </li>
                                 <li class="list-inline-item g-color-gray-dark-v4">
                                     <div class="d-inline-block g-pos-rel">
@@ -64,6 +60,7 @@
 </template>
 
 <script>
+import Favorite from '../components/Favorite.vue';
 import VueMasonryWall from "vue-masonry-wall";
 import Pagination from '../components/Pagination'
 import CreateProduct from '../components/CreateProduct'
@@ -71,7 +68,7 @@ import autosize from 'autosize';
 
 export default {
     components: {
-        VueMasonryWall, Pagination, CreateProduct
+        VueMasonryWall, Pagination, CreateProduct, Favorite
     },
 
     data() {
@@ -125,16 +122,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import 'resources/sass/_variables.scss';
-
-    .favorite {
-        cursor: pointer;
-        color: $gray;
-        &.favorited, &.favorited:hover {
-            color: $orange;
-        }
-    }
-
     .product-body {
         word-break: break-all;
     }

@@ -64,9 +64,9 @@
 
                         <div class="form-group" v-for="(price,k) in priceList" :key="k">
                             <h4 class="h6 g-font-weight-600 g-color-black g-mb-15">Price {{ k+1 }}</h4>
-                            <div class="col-md-12">
+                            <div class="col-12">
                                 <div class="row">
-                                    <div class="col-md-3">
+                                    <div class="col-3">
                                         <select v-model="price.period" class="form-control">
                                             <option disabled value="">코드 기간 선택</option>
                                             <option>1</option>
@@ -76,10 +76,10 @@
                                             <option>영구제</option>
                                         </select>
                                     </div>
-                                    <div class="col-md-5">
+                                    <div class="col-5">
                                         <input type="text" class="form-control" v-model="price.code" placeholder="코드 입력">
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-4">
                                         <div class="input-group">
                                             <input type="text" class="form-control" v-model="price.price" placeholder="가격 입력" v-int>
                                             <div class="input-group-prepend"><span class="input-group-text">원</span></div>
@@ -162,7 +162,6 @@ export default {
 
         periodConvert() {
             this.priceList.forEach(element => {
-                console.log(element.period)
                 if (element.period == '영구제')
                     element.period = '-1'
             });
@@ -196,7 +195,8 @@ export default {
                     $(this.$refs.modal).modal('hide')
                     this.$toast.success(data.message, "Success")
                     this.$emit('created', data.product)
-                    console.log(data.product)
+                    if (this.$route.name != 'home')
+                        this.$router.push({name: 'home'})
                 })
                 .catch(({ response }) => {
                     console.log(response.data.errors)
