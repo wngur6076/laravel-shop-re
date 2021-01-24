@@ -91,6 +91,11 @@
                                     전체
                                 </router-link>
                             </li>
+                            <li class="list-inline-item g-mb-10">
+                                <router-link :to="{ name: 'tags.shop', params: { slug: 'favorites' } }" class="u-tags-v1 g-color-gray-dark-v4 g-color-white--hover g-bg-gray-light-v5 g-bg-primary--hover g-font-size-12 g-rounded-50 g-py-4 g-px-15">
+                                    즐겨찾기
+                                </router-link>
+                            </li>
                             <li v-for="(tag, key) in $root.tags" :key="key" class="list-inline-item g-mb-10">
                                 <router-link :to="{ name: 'tags.shop', params: { slug: tag.slug } }" class="u-tags-v1 g-color-gray-dark-v4 g-color-white--hover g-bg-gray-light-v5 g-bg-primary--hover g-font-size-12 g-rounded-50 g-py-4 g-px-15">
                                     {{ tag.text }}

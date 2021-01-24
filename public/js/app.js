@@ -13705,6 +13705,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -61179,6 +61184,32 @@ var render = function() {
                           [
                             _vm._v(
                               "\n                                전체\n                            "
+                            )
+                          ]
+                        )
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "li",
+                      { staticClass: "list-inline-item g-mb-10" },
+                      [
+                        _c(
+                          "router-link",
+                          {
+                            staticClass:
+                              "u-tags-v1 g-color-gray-dark-v4 g-color-white--hover g-bg-gray-light-v5 g-bg-primary--hover g-font-size-12 g-rounded-50 g-py-4 g-px-15",
+                            attrs: {
+                              to: {
+                                name: "tags.shop",
+                                params: { slug: "favorites" }
+                              }
+                            }
+                          },
+                          [
+                            _vm._v(
+                              "\n                                즐겨찾기\n                            "
                             )
                           ]
                         )

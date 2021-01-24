@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ProductsRequest;
+use App\Models\Tag;
+use App\Models\User;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use App\Http\Requests\ProductsRequest;
 use App\Http\Resources\ProductResource;
-use App\Models\Price;
-use App\Models\Tag;
 
 class ProductsController extends Controller
 {
@@ -18,9 +18,15 @@ class ProductsController extends Controller
      */
     public function index($slug = null)
     {
-        $query = $slug
-        ? Tag::whereSlug($slug)->firstOrFail()->products()
-        : new Product;
+        if ($slug == 'favorites') {
+            // $user = User::where('id', auth()->user()->id)->first();
+            $user = User::find(auth()->id());
+            $query = $user->favorites();
+        } else {
+            $query = $slug
+            ? Tag::whereSlug($slug)->firstOrFail()->products()
+            : new Product;
+        }
 
         $products = $query->latest()->Paginate(4);
 
