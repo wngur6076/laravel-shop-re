@@ -76,7 +76,7 @@
                 </div>
                 <!-- End Navigation -->
 
-                <div class="product-add-button g-mx-10" v-if="$auth.check(2)" data-toggle="modal" data-target="#createProduct" data-placement="bottom" title="Tooltip on bottom">
+                <div class="product-add-button g-mx-10" v-if="$auth.check(2)" data-toggle="modal" data-target="#createProduct">
                     <i class="rounded-circle fas fa-plus btn btn-light g-font-size-18"></i>
                 </div>
 

@@ -16,7 +16,7 @@
                                 placeholder="임팩트 있는 제목 입력하세요." v-model="title">
                             <textarea id="inputGroup-2_3"
                                 class="form-control form-control-md g-brd-none g-brd-gray-light-v7 g-brd-gray-light-v3--focus rounded-0 g-resize-none"
-                                placeholder="상품에 대한 소개 해주세요." v-model="body"></textarea>
+                                placeholder="상품에 대한 소개 해주세요. (마크다운 문법 가능)" v-model="body"></textarea>
                         </div>
 
                         <div class="form-group g-mb-15">

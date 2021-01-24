@@ -15,11 +15,12 @@
                             alt="Image Description">
 
                         <div class="g-bg-white g-pa-30">
-                            <span
-                                class="d-block g-color-gray-dark-v4 g-font-weight-600 g-font-size-12 text-uppercase mb-2">{{ item.created_date }}</span>
+                            <span class="d-block g-color-gray-dark-v4 g-font-weight-600 g-font-size-12 text-uppercase mb-2">{{ item.created_date }}</span>
                             <h2 class="h5 g-color-black g-font-weight-600 mb-3">
-                                <a class="u-link-v5 g-color-black g-color-primary--hover g-cursor-pointer"
-                                    href="#">{{ item.title }}</a>
+                                <a class="u-link-v5 g-color-black g-color-primary--hover g-cursor-pointer" data-toggle="modal" data-target="#ReadProduct"
+                                @click="sendInfo(item)">
+                                    {{ item.title }}
+                                </a>
                             </h2>
                             <p class="g-color-gray-dark-v4 g-line-height-1_8 product-body">{{ item.excerpt }}</p>
                             <!-- <a class="g-font-size-13" href="#">Read more...</a> -->
@@ -54,6 +55,8 @@
 
         <!-- 새 게시글 작성 Modal -->
         <create-product @created="add"></create-product>
+        <!-- 게시글 읽기 Modal -->
+        <read-product :product="selectedProduct"></read-product>
     </div>
     <!-- End Blog Classic Blocks -->
 
@@ -64,11 +67,12 @@ import Favorite from '../components/Favorite.vue';
 import VueMasonryWall from "vue-masonry-wall";
 import Pagination from '../components/Pagination'
 import CreateProduct from '../components/CreateProduct'
+import ReadProduct from '../components/ReadProduct'
 import autosize from 'autosize';
 
 export default {
     components: {
-        VueMasonryWall, Pagination, CreateProduct, Favorite
+        VueMasonryWall, Pagination, CreateProduct, Favorite, ReadProduct
     },
 
     data() {
@@ -82,7 +86,9 @@ export default {
             meta: {},
             links: {},
 
-            endpoint: null
+            endpoint: '',
+
+            selectedProduct: ''
         }
     },
 
@@ -116,6 +122,10 @@ export default {
 
         add(product) {
             this.items.unshift(product);
+        },
+
+        sendInfo(item) {
+            this.selectedProduct = item
         }
     },
 }
