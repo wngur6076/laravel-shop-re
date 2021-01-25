@@ -13634,7 +13634,31 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ['product']
+  props: ['id'],
+  data: function data() {
+    return {
+      product: []
+    };
+  },
+  mounted: function mounted() {
+    $(this.$refs.modal).on("hidden.bs.modal", this.doSomethingOnHidden);
+    this.fetchProduct();
+  },
+  methods: {
+    fetchProduct: function fetchProduct() {
+      var _this = this;
+
+      axios.get("products/".concat(this.id)).then(function (_ref) {
+        var data = _ref.data;
+        _this.product = data.product;
+      })["catch"](function (error) {
+        console.log(error.response);
+      });
+    },
+    doSomethingOnHidden: function doSomethingOnHidden() {
+      this.$root.isShowModal = -1;
+    }
+  }
 });
 
 /***/ }),
@@ -14219,7 +14243,6 @@ __webpack_require__.r(__webpack_exports__);
       meta: {},
       links: {},
       endpoint: '',
-      selectedProduct: '',
       selectedId: ''
     };
   },
@@ -14257,9 +14280,6 @@ __webpack_require__.r(__webpack_exports__);
         return product.id == _this2.selectedId;
       });
       this.items.splice(index, 1, product);
-    },
-    sendInfo: function sendInfo(item) {
-      this.selectedProduct = item;
     },
     sendId: function sendId(item, val) {
       this.selectedId = item.id;
@@ -61330,7 +61350,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "modal fade", attrs: { id: "readProduct" } },
+    { ref: "modal", staticClass: "modal fade", attrs: { id: "readProduct" } },
     [
       _c("div", { staticClass: "modal-dialog modal-dialog-centered" }, [
         _c("div", { staticClass: "modal-content u-shadow-v11" }, [
@@ -62668,7 +62688,7 @@ var render = function() {
                                     },
                                     on: {
                                       click: function($event) {
-                                        return _vm.sendInfo(item)
+                                        return _vm.sendId(item, 2)
                                       }
                                     }
                                   },
@@ -62804,7 +62824,9 @@ var render = function() {
           })
         : _vm._e(),
       _vm._v(" "),
-      _c("read-product", { attrs: { product: _vm.selectedProduct } })
+      _vm.$root.isShowModal == 2
+        ? _c("read-product", { attrs: { id: _vm.selectedId } })
+        : _vm._e()
     ],
     1
   )

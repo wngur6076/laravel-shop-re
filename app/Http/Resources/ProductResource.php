@@ -23,10 +23,10 @@ class ProductResource extends JsonResource
             'is_favorited'    => $this->is_favorited,
             'favorites_count' => $this->favorites_count,
             'created_date' => $this->created_date,
-            'body_html' => $this->body_html,
             'file_link' => $this->file_link,
             'user' => new UserResource($this->user),
-            'tags' => TagResource::collection($this->tags)
+            'tags' => TagResource::collection($this->tags),
+            'price_list' => PriceResource::collection($this->priceList)
         ];
     }
 }

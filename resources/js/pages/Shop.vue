@@ -17,7 +17,7 @@
                         <div class="g-bg-white g-pa-30">
                             <div class="list-inline d-flex justify-content-between mb-0 align-items-center">
                                 <span class="d-block g-color-gray-dark-v4 g-font-weight-600 g-font-size-12 text-uppercase mb-2">{{ item.created_date }}</span>
-                                
+
                                 <div class="dropdown-group" v-if="authorization.accept($auth.user(), item)">
                                     <div class="dropdown-button btn-more rounded-circle" data-toggle="dropdown">
                                         <i class="fas fa-ellipsis-v"></i>
@@ -29,10 +29,10 @@
                                         <button class="dropdown-item"><i class="fas fa-trash"></i> 게시물 삭제</button>
                                     </div>
                                 </div>
-                            </div>                            
+                            </div>
                             <h2 class="h5 g-color-black g-font-weight-600 mb-3">
                                 <a class="u-link-v5 g-color-black g-color-primary--hover g-cursor-pointer product-title" data-toggle="modal" data-target="#readProduct"
-                                @click="sendInfo(item)">
+                                @click="sendId(item, 2)">
                                     {{ item.title }}
                                 </a>
                             </h2>
@@ -71,7 +71,7 @@
         <!-- 게시글 수정 Modal -->
         <edit-product v-if="$root.isShowModal == 1" :id="selectedId" @updated="edit"></edit-product>
         <!-- 게시글 읽기 Modal -->
-        <read-product :product="selectedProduct"></read-product>
+        <read-product v-if="$root.isShowModal == 2" :id="selectedId"></read-product>
     </div>
     <!-- End Blog Classic Blocks -->
 
@@ -88,7 +88,7 @@ import autosize from 'autosize';
 
 export default {
     components: {
-        VueMasonryWall, Pagination, Favorite, 
+        VueMasonryWall, Pagination, Favorite,
         CreateProduct, ReadProduct, EditProduct
     },
 
@@ -105,7 +105,6 @@ export default {
 
             endpoint: '',
 
-            selectedProduct: '',
             selectedId: '',
         }
     },
@@ -145,10 +144,6 @@ export default {
         edit(product) {
             let index = this.items.findIndex(product => product.id == this.selectedId)
             this.items.splice(index, 1, product);
-        },
-
-        sendInfo(item) {
-            this.selectedProduct = item
         },
 
         sendId(item, val) {

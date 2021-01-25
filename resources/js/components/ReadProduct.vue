@@ -1,6 +1,6 @@
 <template>
     <!-- #modal-alert -->
-    <div class="modal fade" id="readProduct">
+    <div class="modal fade" id="readProduct" ref="modal">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content u-shadow-v11">
                 <div class="modal-header g-pa-0">
@@ -35,7 +35,35 @@
 
 <script>
 export default {
-    props: ['product'],
+    props: ['id'],
+
+    data() {
+        return {
+            product: [],
+        }
+    },
+
+    mounted(){
+        $(this.$refs.modal).on("hidden.bs.modal", this.doSomethingOnHidden)
+
+        this.fetchProduct();
+    },
+
+    methods: {
+        fetchProduct() {
+            axios.get(`products/${this.id}`)
+            .then(({ data }) => {
+                this.product = data.product
+            })
+            .catch(error => {
+                console.log(error.response);
+            })
+        },
+
+        doSomethingOnHidden() {
+            this.$root.isShowModal = -1
+        }
+    },
 }
 </script>
 
