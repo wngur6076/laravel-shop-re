@@ -15,15 +15,29 @@
                             alt="Image Description">
 
                         <div class="g-bg-white g-pa-30">
-                            <span class="d-block g-color-gray-dark-v4 g-font-weight-600 g-font-size-12 text-uppercase mb-2">{{ item.created_date }}</span>
+                            <div class="list-inline d-flex justify-content-between mb-0 align-items-center">
+                                <span class="d-block g-color-gray-dark-v4 g-font-weight-600 g-font-size-12 text-uppercase mb-2">{{ item.created_date }}</span>
+                                
+                                <!-- <div class="dropdown-group" v-if="authorization.accept($auth.user(), item)"> -->
+                                <div class="dropdown-group">
+                                    <div class="dropdown-button btn-more rounded-circle" data-toggle="dropdown">
+                                        <i class="fas fa-ellipsis-v"></i>
+                                    </div>
+                                    <div class="dropdown-menu dropdown-menu-right">
+                                        <button class="dropdown-item pointer-none">{{ $auth.user().name }}</button>
+                                        <div class="dropdown-divider"></div>
+                                        <button class="dropdown-item" data-toggle="modal" data-target="#editProduct" @click="sendId(item, 1)"><i class="fas fa-pencil-alt"></i> 게시물 수정</button>
+                                        <button class="dropdown-item"><i class="fas fa-trash"></i> 게시물 삭제</button>
+                                    </div>
+                                </div>
+                            </div>                            
                             <h2 class="h5 g-color-black g-font-weight-600 mb-3">
-                                <a class="u-link-v5 g-color-black g-color-primary--hover g-cursor-pointer" data-toggle="modal" data-target="#ReadProduct"
+                                <a class="u-link-v5 g-color-black g-color-primary--hover g-cursor-pointer product-title" data-toggle="modal" data-target="#readProduct"
                                 @click="sendInfo(item)">
                                     {{ item.title }}
                                 </a>
                             </h2>
                             <p class="g-color-gray-dark-v4 g-line-height-1_8 product-body">{{ item.excerpt }}</p>
-                            <!-- <a class="g-font-size-13" href="#">Read more...</a> -->
                             <ul class="u-list-inline mb-0">
                                 <li v-for="(tag, key) in item.tags" :key="key" class="list-inline-item g-mb-5">
                                     <router-link :to="{ name: 'tags.shop', params: { slug: tag.slug } }" class="u-tags-v1 g-color-gray-dark-v4 g-color-white--hover g-bg-gray-light-v5 g-bg-primary--hover g-font-size-10 g-py-4 g-px-10">
@@ -54,7 +68,9 @@
         </div>
 
         <!-- 새 게시글 작성 Modal -->
-        <create-product @created="add"></create-product>
+        <create-product v-if="$root.isShowModal == 0" @created="add"></create-product>
+        <!-- 게시글 수정 Modal -->
+        <edit-product v-if="$root.isShowModal == 1" :id="selectedId"></edit-product>
         <!-- 게시글 읽기 Modal -->
         <read-product :product="selectedProduct"></read-product>
     </div>
@@ -68,11 +84,13 @@ import VueMasonryWall from "vue-masonry-wall";
 import Pagination from '../components/Pagination'
 import CreateProduct from '../components/CreateProduct'
 import ReadProduct from '../components/ReadProduct'
+import EditProduct from '../components/EditProduct'
 import autosize from 'autosize';
 
 export default {
     components: {
-        VueMasonryWall, Pagination, CreateProduct, Favorite, ReadProduct
+        VueMasonryWall, Pagination, Favorite, 
+        CreateProduct, ReadProduct, EditProduct
     },
 
     data() {
@@ -88,7 +106,8 @@ export default {
 
             endpoint: '',
 
-            selectedProduct: ''
+            selectedProduct: '',
+            selectedId: '',
         }
     },
 
@@ -126,13 +145,32 @@ export default {
 
         sendInfo(item) {
             this.selectedProduct = item
-        }
+        },
+
+        sendId(item, val) {
+            this.selectedId = item.id
+            this.$root.isShowModal = val
+        },
     },
 }
 </script>
 
 <style lang="scss" scoped>
-    .product-body {
+@import 'resources/sass/_variables.scss';
+
+    .product-body, .product-title {
         word-break: break-all;
+    }
+
+    .dropdown-item {
+        &.pointer-none { pointer-events: none; }
+    }
+
+    .btn-more {
+        cursor: pointer;
+        padding: 0 10px;
+        &:hover {
+            background-color: $light-white;
+        }
     }
 </style>

@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class CheckIsAdminOrSelf
+class CheckIsSelf
 {
     /**
      * Handle an incoming request.
@@ -19,10 +19,7 @@ class CheckIsAdminOrSelf
     {
         $requestedUserId = $request->route()->parameter('id');
 
-        if(
-            Auth::user()->role === 2 ||
-            Auth::user()->id == $requestedUserId
-        ) {
+        if (Auth::user()->id == $requestedUserId) {
             return $next($request);
         }
 

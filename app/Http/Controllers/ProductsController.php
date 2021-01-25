@@ -2,15 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ProductsRequest;
 use App\Models\Tag;
 use App\Models\User;
 use App\Models\Product;
 use Illuminate\Http\Request;
-use App\Http\Requests\ProductsRequest;
+use App\Http\Resources\ProductDetailsResource;
 use App\Http\Resources\ProductResource;
 
 class ProductsController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('isSelf')->only(['update', 'destroy']);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -19,7 +25,6 @@ class ProductsController extends Controller
     public function index($slug = null)
     {
         if ($slug == 'favorites') {
-            // $user = User::where('id', auth()->user()->id)->first();
             $user = User::find(auth()->id());
             $query = $user->favorites();
         } else {
@@ -39,21 +44,9 @@ class ProductsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(request $request)
+    public function store(ProductsRequest $request)
     {
-        $request['data'] = json_decode($request['data'], true);
-        // Validate
-        $request->validate([
-            'title' => 'required|max:255',
-            'body' => 'required',
-            'file_link' => 'required',
-            'data.tagsSelect' => 'required|array',
-            'data.priceList' => 'required|array',
-            'data.priceList.*.period' => 'required|int',
-            'data.priceList.*.code' => 'required',
-            'data.priceList.*.price' => 'required|int',
-        ]);
-
+        // 파일객체가 존재하면 public/files 파일 생성
         $filename = 'apple.jpg';
         if ($request->hasFile('photo')) {
             $file = $request->file('photo');
@@ -82,9 +75,11 @@ class ProductsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Product $product)
     {
-        //
+        return response()->json([
+            'product' => new ProductDetailsResource($product)
+        ], 200);
     }
 
     /**
@@ -94,9 +89,9 @@ class ProductsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Product $product)
     {
-        //
+        
     }
 
     /**

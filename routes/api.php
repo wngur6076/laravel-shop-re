@@ -38,7 +38,6 @@ Route::prefix('auth')->group(function () {
 Route::group(['middleware' => 'auth:api'], function(){
     // Users
     Route::get('users', [UserController::class, 'index'])->middleware('isAdmin');
-    Route::get('users/{id}', [UserController::class, 'show'])->middleware('isAdminOrSelf');
 
     Route::apiResource('/products', ProductsController::class)->except('index')->middleware('isAdmin');
 

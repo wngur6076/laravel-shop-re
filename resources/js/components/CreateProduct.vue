@@ -1,6 +1,6 @@
 <template>
     <!-- #modal-alert -->
-    <div class="modal fade" id="createProduct" ref="modal">
+    <div class="modal fade" id="createProduct" ref="modal" data-backdrop="static">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -8,106 +8,7 @@
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                 </div>
                 <div class="modal-body">
-                    <form @submit.prevent="handleSubmit" enctype="multipart/form-data">
-                        <div class="form-group mb-0">
-                            <h4 class="h6 g-font-weight-600 g-color-black g-mb-0">Info</h4>
-                            <input type="text"
-                                class="form-control form-control-md g-resize-none g-brd-none g-brd-bottom g-brd-gray-light-v7 g-brd-gray-light-v3 rounded-0"
-                                placeholder="임팩트 있는 제목 입력하세요." v-model="title">
-                            <textarea id="inputGroup-2_3"
-                                class="form-control form-control-md g-brd-none g-brd-gray-light-v7 g-brd-gray-light-v3--focus rounded-0 g-resize-none"
-                                placeholder="상품에 대한 소개 해주세요. (마크다운 문법 가능)" v-model="body"></textarea>
-                        </div>
-
-                        <div class="form-group g-mb-15">
-                            <h4 class="h6 g-font-weight-600 g-color-black g-mb-15">Thumbnail</h4>
-                            <label class="form-check-inline u-check g-pl-25 ml-0 g-mr-25">
-                                <input class="g-hidden-xs-up g-pos-abs g-top-0 g-left-0" name="radInline1_1"
-                                    type="radio" value="video" v-model="thumbnail">
-                                <div class="u-check-icon-radio-v4 g-absolute-centered--y g-left-0 g-width-18 g-height-18">
-                                    <i class="g-absolute-centered d-block g-width-10 g-height-10 g-bg-primary--checked"></i>
-                                </div>
-                                유튜브
-                            </label>
-
-                            <label class="form-check-inline u-check g-pl-25 ml-0 g-mr-25">
-                                <input class="g-hidden-xs-up g-pos-abs g-top-0 g-left-0" name="radInline1_1" type="radio"
-                                    value="image" v-model="thumbnail">
-                                <div class="u-check-icon-radio-v4 g-absolute-centered--y g-left-0 g-width-18 g-height-18">
-                                    <i class="g-absolute-centered d-block g-width-10 g-height-10 g-bg-primary--checked"></i>
-                                </div>
-                                이미지
-                            </label>
-                        </div>
-
-                        <div class="form-group" v-if="thumbnail=='video'">
-                            <h4 class="h6 g-font-weight-600 g-color-black g-mb-15">Video</h4>
-                            <div class="input-group g-brd-gray-light-v2">
-                                <input class="form-control form-control-md rounded-0" placeholder="https://youtu.be/동영상번호" v-model="video" type="text">
-
-                                <div class="input-group-btn">
-                                    <div class="btn btn-md h-100 u-btn-primary rounded-0" @click="redirect(video)">확인</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- File Input -->
-                        <div class="form-group" v-else>
-                            <h4 class="h6 g-font-weight-600 g-color-black g-mb-15">Image</h4>
-                            <file-select v-model="photo"></file-select>
-                        </div>
-                        <!-- End File Input -->
-                        <div class="form-group">
-                            <h4 class="h6 g-font-weight-600 g-color-black g-mb-15">Tags</h4>
-                            <select2-multiple-control v-model="tagsSelect" :options="$root.tags"/>
-                        </div>
-
-                        <div class="form-group" v-for="(price,k) in priceList" :key="k">
-                            <h4 class="h6 g-font-weight-600 g-color-black g-mb-15">Price {{ k+1 }}</h4>
-                            <div class="col-12">
-                                <div class="row">
-                                    <div class="col-3">
-                                        <select v-model="price.period" class="form-control">
-                                            <option disabled value="">코드 기간 선택</option>
-                                            <option>1</option>
-                                            <option>7</option>
-                                            <option>15</option>
-                                            <option>30</option>
-                                            <option>영구제</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-5">
-                                        <input type="text" class="form-control" v-model="price.code" placeholder="코드 입력">
-                                    </div>
-                                    <div class="col-4">
-                                        <div class="input-group">
-                                            <input type="text" class="form-control" v-model="price.price" placeholder="가격 입력" v-int>
-                                            <div class="input-group-prepend"><span class="input-group-text">원</span></div>
-                                        </div>
-                                    </div>
-                                </div>
-                        </div>
-                            <span>
-                                <i class="fas fa-minus-circle" @click="remove(k)" v-show="k || ( !k && priceList.length > 1)"></i>
-                                <i class="fas fa-plus-circle" @click="add(k)" v-show="k == priceList.length-1"></i>
-                            </span>
-                        </div>
-
-                        <div class="form-group">
-                            <h4 class="h6 g-font-weight-600 g-color-black g-mb-15">FileLink</h4>
-                            <div class="input-group g-brd-gray-light-v2">
-                                <input class="form-control form-control-md rounded-0" placeholder="파일 다운로드 주소 입력 해주세요." v-model="fileLink" type="text">
-
-                                <div class="input-group-btn">
-                                    <div class="btn btn-md h-100 u-btn-primary rounded-0" @click="redirect(fileLink)">확인</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="modal-footer form-group">
-                            <button type="submit" :disabled="isInvalid" class="btn btn-primary btn-block">게시</button>
-                        </div>
-                    </form>
+                    <product-form @submitted="create"></product-form>
                 </div>
             </div>
         </div>
@@ -115,138 +16,34 @@
 </template>
 
 <script>
-import Select2MultipleControl from 'v-select2-multiple-component';
-import FileSelect from './FileSelect.vue'
+import ProductForm from './ProductForm.vue'
 
 export default {
-    components: { Select2MultipleControl, FileSelect },
+    components: { ProductForm },
 
-    data() {
-        return {
-            title: '',
-            body: '',
-            thumbnail: 'video',
-            video: '',
-            photo: '',
-            tagsSelect: [],
-            fileLink: '',
-
-            priceList: [
-                {
-                    period: '',
-                    code: '',
-                    price: '',
-                }
-            ]
-        }
+    mounted(){
+        $(this.$refs.modal).on("hidden.bs.modal", this.doSomethingOnHidden)
     },
-
-    computed: {
-        isInvalid () {
-            return this.body.length < 10 || this.title.length < 5 || !Object.keys(this.tagsSelect).length
-            || this.isInPrice() || this.fileLink == ''
-        },
-    },
-
-    methods:{
-        redirect(url) {
-            window.open(url, "_blank");
-        },
-
-        isInPrice() {
-            return this.priceList[this.priceList.length-1].period == '' ||
-                this.priceList[this.priceList.length-1].code == '' ||
-                this.priceList[this.priceList.length-1].price == '' ||
-                isNaN(this.priceList[this.priceList.length-1].price)
-        },
-
-        periodConvert() {
-            this.priceList.forEach(element => {
-                if (element.period == '영구제')
-                    element.period = '-1'
-            });
-        },
-
-        handleSubmit() {
-            this.periodConvert()
-            
-            const data = new FormData();
-            data.append('title', this.title);
-            data.append('body', this.body);
-            data.append('file_link', this.fileLink);
-
-            const json = JSON.stringify({
-                tagsSelect: this.tagsSelect,
-                priceList: this.priceList
-            });
-            data.append('data', json);
-
-            if (this.thumbnail == 'video') {
-                data.append('video', this.video)
-                this.photo = ''
-            } else {
-                data.append('photo', this.photo);
-            }
-
+    
+    methods: {
+        create(data) {
             axios.post('/products', data)
                 .then(({ data }) => {
-                    this.dataClear()
-                    this.priceListClear()
                     $(this.$refs.modal).modal('hide')
                     this.$toast.success(data.message, "Success")
-                    this.$emit('created', data.product)
                     if (this.$route.name != 'home')
                         this.$router.push({name: 'home'})
+                    // 배열첫번째에 상품 추가 위한 이벤트
+                    this.$emit('created', data.product)
                 })
                 .catch(({ response }) => {
                     console.log(response.data.errors)
                 })
         },
 
-        dataClear() {
-            this.title = '',
-            this.body = '',
-            this.thumbnail = 'video',
-            this.video = '',
-            this.photo = '',
-            this.tagsSelect = []
-            this.fileLink = ''
-        },
-
-        priceListClear() {
-            this.priceList = [
-                {
-                    period: '',
-                    code: '',
-                    price: '',
-                }
-            ]
-        },
-
-        add() {
-            this.priceList.push({
-                period: '',
-                code: '',
-                price: '',
-            });
-        },
-
-        remove(index) {
-            this.priceList.splice(index, 1);
+        doSomethingOnHidden() {
+            this.$root.isShowModal = -1
         },
     },
-
 }
 </script>
-
-<style lang="scss">
-@import 'resources/sass/_variables.scss';
-
-    .fa-minus-circle {
-        color: $red;
-    }
-
-    .fa-plus-circle {
-        color: $green;
-    }
-</style>
