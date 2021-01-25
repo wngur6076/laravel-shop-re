@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Product;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -17,9 +18,9 @@ class CheckIsSelf
      */
     public function handle(Request $request, Closure $next)
     {
-        $requestedUserId = $request->route()->parameter('id');
+        $product = $request->route('product');
 
-        if (Auth::user()->id == $requestedUserId) {
+        if (Auth::user()->id == $product->user->id) {
             return $next($request);
         }
 

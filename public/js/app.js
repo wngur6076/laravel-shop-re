@@ -12945,7 +12945,24 @@ __webpack_require__.r(__webpack_exports__);
     $(this.$refs.modal).on("hidden.bs.modal", this.doSomethingOnHidden);
   },
   methods: {
-    update: function update() {},
+    update: function update(data) {
+      var _this = this;
+
+      // 그냥 axios.put으로 보내면 폼데이터가 []로 가서 해결 위해
+      data.append('_method', 'put');
+      axios.post("products/".concat(this.id), data).then(function (_ref) {
+        var data = _ref.data;
+        $(_this.$refs.modal).modal('hide');
+
+        _this.$toast.success(data.message, "Success"); // 배열첫번째에 상품 추가 위한 이벤트
+
+
+        _this.$emit('updated', data.product);
+      })["catch"](function (_ref2) {
+        var response = _ref2.response;
+        console.log(response.data.errors);
+      });
+    },
     doSomethingOnHidden: function doSomethingOnHidden() {
       this.$root.isShowModal = -1;
     }
@@ -13498,8 +13515,8 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   computed: {
-    isInvalid: function isInvalid() {// return this.body.length < 10 || this.title.length < 5 || !Object.keys(this.tagsSelect).length
-      // || this.isInPrice() || this.fileLink == ''
+    isInvalid: function isInvalid() {
+      return this.body.length < 10 || this.title.length < 5 || !Object.keys(this.tagsSelect).length || this.isInPrice() || this.fileLink == '';
     },
     buttonText: function buttonText() {
       return this.isEdit ? '저장' : '게시';
@@ -13511,7 +13528,6 @@ __webpack_require__.r(__webpack_exports__);
 
       axios.get("products/".concat(this.id)).then(function (_ref) {
         var data = _ref.data;
-        console.log(data.product);
         _this.title = data.product.title;
         _this.body = data.product.body;
         _this.video = data.product.video_name;
@@ -13541,7 +13557,6 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     handleSubmit: function handleSubmit() {
-      console.log(this.photo);
       this.periodConvert();
       var data = new FormData();
       data.append('title', this.title);
@@ -13552,14 +13567,9 @@ __webpack_require__.r(__webpack_exports__);
         priceList: this.priceList
       });
       data.append('data', json);
-
-      if (this.thumbnail == 'video') {
-        data.append('video', this.video);
-        this.photo = '';
-      } else {
-        data.append('photo', this.photo);
-      }
-
+      if (this.thumbnail == 'video') this.photo = '';else this.video = '';
+      data.append('photo', this.photo);
+      data.append('video', this.video);
       this.$emit('submitted', data);
     },
     add: function add() {
@@ -14183,7 +14193,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 
 
@@ -14240,6 +14249,14 @@ __webpack_require__.r(__webpack_exports__);
     },
     add: function add(product) {
       this.items.unshift(product);
+    },
+    edit: function edit(product) {
+      var _this2 = this;
+
+      var index = this.items.findIndex(function (product) {
+        return product.id == _this2.selectedId;
+      });
+      this.items.splice(index, 1, product);
     },
     sendInfo: function sendInfo(item) {
       this.selectedProduct = item;
@@ -62549,76 +62566,87 @@ var render = function() {
                                   [_vm._v(_vm._s(item.created_date))]
                                 ),
                                 _vm._v(" "),
-                                _c("div", { staticClass: "dropdown-group" }, [
-                                  _c(
-                                    "div",
-                                    {
-                                      staticClass:
-                                        "dropdown-button btn-more rounded-circle",
-                                      attrs: { "data-toggle": "dropdown" }
-                                    },
-                                    [
-                                      _c("i", {
-                                        staticClass: "fas fa-ellipsis-v"
-                                      })
-                                    ]
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "div",
-                                    {
-                                      staticClass:
-                                        "dropdown-menu dropdown-menu-right"
-                                    },
-                                    [
-                                      _c(
-                                        "button",
-                                        {
-                                          staticClass:
-                                            "dropdown-item pointer-none"
-                                        },
-                                        [_vm._v(_vm._s(_vm.$auth.user().name))]
-                                      ),
-                                      _vm._v(" "),
-                                      _c("div", {
-                                        staticClass: "dropdown-divider"
-                                      }),
-                                      _vm._v(" "),
-                                      _c(
-                                        "button",
-                                        {
-                                          staticClass: "dropdown-item",
-                                          attrs: {
-                                            "data-toggle": "modal",
-                                            "data-target": "#editProduct"
+                                _vm.authorization.accept(_vm.$auth.user(), item)
+                                  ? _c(
+                                      "div",
+                                      { staticClass: "dropdown-group" },
+                                      [
+                                        _c(
+                                          "div",
+                                          {
+                                            staticClass:
+                                              "dropdown-button btn-more rounded-circle",
+                                            attrs: { "data-toggle": "dropdown" }
                                           },
-                                          on: {
-                                            click: function($event) {
-                                              return _vm.sendId(item, 1)
-                                            }
-                                          }
-                                        },
-                                        [
-                                          _c("i", {
-                                            staticClass: "fas fa-pencil-alt"
-                                          }),
-                                          _vm._v(" 게시물 수정")
-                                        ]
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
-                                        "button",
-                                        { staticClass: "dropdown-item" },
-                                        [
-                                          _c("i", {
-                                            staticClass: "fas fa-trash"
-                                          }),
-                                          _vm._v(" 게시물 삭제")
-                                        ]
-                                      )
-                                    ]
-                                  )
-                                ])
+                                          [
+                                            _c("i", {
+                                              staticClass: "fas fa-ellipsis-v"
+                                            })
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "div",
+                                          {
+                                            staticClass:
+                                              "dropdown-menu dropdown-menu-right"
+                                          },
+                                          [
+                                            _c(
+                                              "button",
+                                              {
+                                                staticClass:
+                                                  "dropdown-item pointer-none"
+                                              },
+                                              [
+                                                _vm._v(
+                                                  _vm._s(_vm.$auth.user().name)
+                                                )
+                                              ]
+                                            ),
+                                            _vm._v(" "),
+                                            _c("div", {
+                                              staticClass: "dropdown-divider"
+                                            }),
+                                            _vm._v(" "),
+                                            _c(
+                                              "button",
+                                              {
+                                                staticClass: "dropdown-item",
+                                                attrs: {
+                                                  "data-toggle": "modal",
+                                                  "data-target": "#editProduct"
+                                                },
+                                                on: {
+                                                  click: function($event) {
+                                                    return _vm.sendId(item, 1)
+                                                  }
+                                                }
+                                              },
+                                              [
+                                                _c("i", {
+                                                  staticClass:
+                                                    "fas fa-pencil-alt"
+                                                }),
+                                                _vm._v(" 게시물 수정")
+                                              ]
+                                            ),
+                                            _vm._v(" "),
+                                            _c(
+                                              "button",
+                                              { staticClass: "dropdown-item" },
+                                              [
+                                                _c("i", {
+                                                  staticClass: "fas fa-trash"
+                                                }),
+                                                _vm._v(" 게시물 삭제")
+                                              ]
+                                            )
+                                          ]
+                                        )
+                                      ]
+                                    )
+                                  : _vm._e()
                               ]
                             ),
                             _vm._v(" "),
@@ -62770,7 +62798,10 @@ var render = function() {
         : _vm._e(),
       _vm._v(" "),
       _vm.$root.isShowModal == 1
-        ? _c("edit-product", { attrs: { id: _vm.selectedId } })
+        ? _c("edit-product", {
+            attrs: { id: _vm.selectedId },
+            on: { updated: _vm.edit }
+          })
         : _vm._e(),
       _vm._v(" "),
       _c("read-product", { attrs: { product: _vm.selectedProduct } })

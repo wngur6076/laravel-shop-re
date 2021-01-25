@@ -21,7 +21,7 @@ class ProductDetailsResource extends JsonResource
             'body' => $this->body,
             'image' => $this->image_url,
             'image_name' => $this->image,
-            'video' => $this->video_Url,
+            'video' => $this->video_url,
             'video_name' => $this->video,
             'created_date' => $this->created_date,
             'file_link' => $this->file_link,

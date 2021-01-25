@@ -18,8 +18,7 @@
                             <div class="list-inline d-flex justify-content-between mb-0 align-items-center">
                                 <span class="d-block g-color-gray-dark-v4 g-font-weight-600 g-font-size-12 text-uppercase mb-2">{{ item.created_date }}</span>
                                 
-                                <!-- <div class="dropdown-group" v-if="authorization.accept($auth.user(), item)"> -->
-                                <div class="dropdown-group">
+                                <div class="dropdown-group" v-if="authorization.accept($auth.user(), item)">
                                     <div class="dropdown-button btn-more rounded-circle" data-toggle="dropdown">
                                         <i class="fas fa-ellipsis-v"></i>
                                     </div>
@@ -70,7 +69,7 @@
         <!-- 새 게시글 작성 Modal -->
         <create-product v-if="$root.isShowModal == 0" @created="add"></create-product>
         <!-- 게시글 수정 Modal -->
-        <edit-product v-if="$root.isShowModal == 1" :id="selectedId"></edit-product>
+        <edit-product v-if="$root.isShowModal == 1" :id="selectedId" @updated="edit"></edit-product>
         <!-- 게시글 읽기 Modal -->
         <read-product :product="selectedProduct"></read-product>
     </div>
@@ -141,6 +140,11 @@ export default {
 
         add(product) {
             this.items.unshift(product);
+        },
+
+        edit(product) {
+            let index = this.items.findIndex(product => product.id == this.selectedId)
+            this.items.splice(index, 1, product);
         },
 
         sendInfo(item) {

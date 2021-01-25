@@ -9,6 +9,8 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Http\Resources\ProductDetailsResource;
 use App\Http\Resources\ProductResource;
+use App\Models\Price;
+use File;
 
 class ProductsController extends Controller
 {
@@ -89,9 +91,53 @@ class ProductsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Product $product)
+    public function update(ProductsRequest $request, Product $product)
     {
-        
+        $filename = $product->image;
+        if ($request->hasFile('photo')) {
+            $currentImage = public_path('files/' . $filename);
+            if (File::exists($currentImage)) {
+                File::delete($currentImage);
+            }
+            $file = $request->file('photo');
+            $filename = \Str::random() . filter_var($file->getClientOriginalName(), FILTER_SANITIZE_URL);
+            $file->move(public_path('files'), $filename);
+        }
+        $data = array_merge($request->only('title', 'body', 'video', 'file_link'), [
+            'image' => $filename,
+        ]);
+
+        $priceList = [];
+        $priceIds = [];
+        foreach ($request->input('data.priceList') as $price) {
+            if (isset($price['id'])) {
+                Price::whereId($price['id'])
+                    ->whereProductId($product->id)
+                    ->update($price);
+                $priceIds[] = $price['id'];
+            } else {
+                $priceList[] = new Price($price);
+            }
+        }
+
+        $product->update($data);
+        $product->tags()->sync($request->input('data.tagsSelect'));
+
+        if (count($priceIds)) {
+            Price::whereProductId($product->id)
+                ->whereNotIn('id', $priceIds)
+                ->delete();
+        }
+
+        if (count($priceList)) {
+            $product->priceList()
+                ->saveMany($priceList);
+        }
+
+        return response()->json([
+            'message' => '게시글이 수정되었습니다.',
+            'product' => new ProductResource($product)
+        ], 200);
     }
 
     /**

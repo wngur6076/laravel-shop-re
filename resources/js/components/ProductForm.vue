@@ -150,8 +150,8 @@ export default {
 
     computed: {
         isInvalid () {
-            // return this.body.length < 10 || this.title.length < 5 || !Object.keys(this.tagsSelect).length
-            // || this.isInPrice() || this.fileLink == ''
+            return this.body.length < 10 || this.title.length < 5 || !Object.keys(this.tagsSelect).length
+            || this.isInPrice() || this.fileLink == ''
         },
 
         buttonText() {
@@ -163,7 +163,6 @@ export default {
         fetchProduct() {
             axios.get(`products/${this.id}`)
             .then(({ data }) => {
-                console.log(data.product)
                 this.title = data.product.title
                 this.body = data.product.body
 
@@ -206,8 +205,6 @@ export default {
         },
 
         handleSubmit() {
-            console.log(this.photo)
-
             this.periodConvert()
             
             const data = new FormData();
@@ -221,15 +218,15 @@ export default {
             });
             data.append('data', json);
 
-            if (this.thumbnail == 'video') {
-                data.append('video', this.video)
+            if (this.thumbnail == 'video')
                 this.photo = ''
-            } else {
-                data.append('photo', this.photo);
-            }
-            this.$emit('submitted', data)
+            else
+                this.video = ''
+                
+            data.append('photo', this.photo)
+            data.append('video', this.video)
 
-            
+            this.$emit('submitted', data)
         },
 
         add() {

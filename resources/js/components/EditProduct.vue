@@ -28,8 +28,19 @@ export default {
     },
 
     methods: {
-        update() {
-            
+        update(data) {
+            // 그냥 axios.put으로 보내면 폼데이터가 []로 가서 해결 위해
+            data.append('_method', 'put');
+            axios.post(`products/${this.id}`, data)
+                .then(({ data }) => {
+                    $(this.$refs.modal).modal('hide')
+                    this.$toast.success(data.message, "Success")
+                    // 배열첫번째에 상품 추가 위한 이벤트
+                    this.$emit('updated', data.product)
+                })
+                .catch(({ response }) => {
+                    console.log(response.data.errors)
+                })
         },
 
         doSomethingOnHidden() {
