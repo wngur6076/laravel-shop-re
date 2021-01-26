@@ -12830,6 +12830,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -14217,6 +14225,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -14277,26 +14295,51 @@ __webpack_require__.r(__webpack_exports__);
     edit: function edit(product) {
       this.items.splice(this.findItemIndex(), 1, product);
     },
-    remove: function remove(item) {
+    destroy: function destroy(item) {
       var _this2 = this;
 
       this.getId(item, -1);
+      this.$toast.question('정말 삭제 하시겠습니까?', "확인", {
+        timeout: 20000,
+        close: false,
+        overlay: true,
+        displayMode: 'once',
+        id: 'question',
+        zindex: 999,
+        title: 'Hey',
+        position: 'center',
+        buttons: [['<button><b>YES</b></button>', function (instance, toast) {
+          _this2["delete"]();
+
+          instance.hide({
+            transitionOut: 'fadeOut'
+          }, toast, 'button');
+        }, true], ['<button>NO</button>', function (instance, toast) {
+          instance.hide({
+            transitionOut: 'fadeOut'
+          }, toast, 'button');
+        }]]
+      });
+    },
+    "delete": function _delete() {
+      var _this3 = this;
+
       axios["delete"]("products/".concat(this.selectedId)).then(function (_ref2) {
         var data = _ref2.data;
 
         // this.items.splice(this.findItemIndex(), 1)
-        _this2.fetchProducts();
+        _this3.fetchProducts();
 
-        _this2.$toast.success(data.message, "Success", {
+        _this3.$toast.success(data.message, "Success", {
           timeout: 2000
         });
       });
     },
     findItemIndex: function findItemIndex() {
-      var _this3 = this;
+      var _this4 = this;
 
       return this.items.findIndex(function (item) {
-        return item.id == _this3.selectedId;
+        return item.id == _this4.selectedId;
       });
     },
     getId: function getId(item, val) {
@@ -14394,11 +14437,16 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_14__.default({
   data: function data() {
     return {
       tags: [],
-      isShowModal: -1
+      isShowModal: -1,
+      loading: false,
+      interceptor: null
     };
   },
   mounted: function mounted() {
     this.fetch('/tags');
+  },
+  created: function created() {
+    this.enableInterceptor();
   },
   methods: {
     fetch: function fetch(endpoint) {
@@ -14408,6 +14456,29 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_14__.default({
         var data = _ref.data;
         _this.tags = data.data;
       });
+    },
+    enableInterceptor: function enableInterceptor() {
+      var _this2 = this;
+
+      // Add a request interceptor
+      this.interceptor = axios__WEBPACK_IMPORTED_MODULE_1___default().interceptors.request.use(function (config) {
+        _this2.loading = true;
+        return config;
+      }, function (error) {
+        _this2.loading = false;
+        return Promise.reject(error);
+      }); // Add a response interceptor
+
+      axios__WEBPACK_IMPORTED_MODULE_1___default().interceptors.response.use(function (response) {
+        _this2.loading = false;
+        return response;
+      }, function (error) {
+        _this2.loading = false;
+        return Promise.reject(error);
+      });
+    },
+    disableInterceptor: function disableInterceptor() {
+      axios__WEBPACK_IMPORTED_MODULE_1___default().interceptors.request.eject(this.interceptor);
     }
   },
   router: _router__WEBPACK_IMPORTED_MODULE_8__.default
@@ -59872,10 +59943,33 @@ var render = function() {
             1
           )
         ])
-      : _c("div", { attrs: { id: "container" } }, [_c("router-view")], 1)
+      : _c("div", { attrs: { id: "container" } }, [_c("router-view")], 1),
+    _vm._v(" "),
+    _vm._m(0)
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "a",
+      {
+        staticClass: "js-go-to u-go-to-v1",
+        attrs: {
+          "data-type": "fixed",
+          "data-position":
+            '{\n            "bottom": 15,\n            "right": 15\n        }',
+          "data-offset-top": "400",
+          "data-compensation": "#js-header",
+          "data-show-effect": "zoomIn"
+        }
+      },
+      [_c("i", { staticClass: "hs-icon hs-icon-arrow-top" })]
+    )
+  }
+]
 render._withStripped = true
 
 
@@ -62546,307 +62640,340 @@ var render = function() {
     "div",
     { staticClass: "col-lg-9 g-mb-80" },
     [
-      _c(
-        "div",
-        { staticClass: "g-pr-20--lg" },
-        [
-          _c("vue-masonry-wall", {
-            staticClass: "row g-mb-70",
-            attrs: { items: _vm.items, options: _vm.options },
-            scopedSlots: _vm._u([
-              {
-                key: "default",
-                fn: function(ref) {
-                  var item = ref.item
-                  return [
-                    item != undefined
-                      ? _c("article", { staticClass: "u-shadow-v11" }, [
-                          item.video
-                            ? _c(
-                                "div",
-                                {
-                                  staticClass:
-                                    "embed-responsive embed-responsive-16by9"
-                                },
-                                [
-                                  _c("iframe", {
+      _vm.$root.loading
+        ? _c("div", { staticClass: "spinner" })
+        : _vm.items.length
+        ? _c(
+            "div",
+            { staticClass: "g-pr-20--lg" },
+            [
+              _c("vue-masonry-wall", {
+                staticClass: "row g-mb-70",
+                attrs: { items: _vm.items, options: _vm.options },
+                scopedSlots: _vm._u([
+                  {
+                    key: "default",
+                    fn: function(ref) {
+                      var item = ref.item
+                      return [
+                        item != undefined
+                          ? _c("article", { staticClass: "u-shadow-v11" }, [
+                              item.video
+                                ? _c(
+                                    "div",
+                                    {
+                                      staticClass:
+                                        "embed-responsive embed-responsive-16by9"
+                                    },
+                                    [
+                                      _c("iframe", {
+                                        attrs: {
+                                          width: "100%",
+                                          src: item.video,
+                                          frameborder: "0",
+                                          allowfullscreen: ""
+                                        }
+                                      })
+                                    ]
+                                  )
+                                : _c("img", {
+                                    staticClass: "img-fluid w-100",
                                     attrs: {
-                                      width: "100%",
-                                      src: item.video,
-                                      frameborder: "0",
-                                      allowfullscreen: ""
+                                      src: item.image,
+                                      alt: "Image Description"
                                     }
-                                  })
-                                ]
-                              )
-                            : _c("img", {
-                                staticClass: "img-fluid w-100",
-                                attrs: {
-                                  src: item.image,
-                                  alt: "Image Description"
-                                }
-                              }),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "g-bg-white g-pa-30" }, [
-                            _c(
-                              "div",
-                              {
-                                staticClass:
-                                  "list-inline d-flex justify-content-between mb-0 align-items-center"
-                              },
-                              [
+                                  }),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "g-bg-white g-pa-30" }, [
                                 _c(
-                                  "span",
+                                  "div",
                                   {
                                     staticClass:
-                                      "d-block g-color-gray-dark-v4 g-font-weight-600 g-font-size-12 text-uppercase mb-2"
+                                      "list-inline d-flex justify-content-between mb-0 align-items-center"
                                   },
-                                  [_vm._v(_vm._s(item.created_date))]
-                                ),
-                                _vm._v(" "),
-                                _vm.authorization.accept(_vm.$auth.user(), item)
-                                  ? _c(
-                                      "div",
-                                      { staticClass: "dropdown-group" },
-                                      [
-                                        _c(
+                                  [
+                                    _c(
+                                      "span",
+                                      {
+                                        staticClass:
+                                          "d-block g-color-gray-dark-v4 g-font-weight-600 g-font-size-12 text-uppercase mb-2"
+                                      },
+                                      [_vm._v(_vm._s(item.created_date))]
+                                    ),
+                                    _vm._v(" "),
+                                    _vm.authorization.accept(
+                                      _vm.$auth.user(),
+                                      item
+                                    )
+                                      ? _c(
                                           "div",
-                                          {
-                                            staticClass:
-                                              "dropdown-button btn-more rounded-circle",
-                                            attrs: { "data-toggle": "dropdown" }
-                                          },
-                                          [
-                                            _c("i", {
-                                              staticClass: "fas fa-ellipsis-v"
-                                            })
-                                          ]
-                                        ),
-                                        _vm._v(" "),
-                                        _c(
-                                          "div",
-                                          {
-                                            staticClass:
-                                              "dropdown-menu dropdown-menu-right"
-                                          },
+                                          { staticClass: "dropdown-group" },
                                           [
                                             _c(
-                                              "button",
+                                              "div",
                                               {
                                                 staticClass:
-                                                  "dropdown-item pointer-none"
-                                              },
-                                              [
-                                                _vm._v(
-                                                  _vm._s(_vm.$auth.user().name)
-                                                )
-                                              ]
-                                            ),
-                                            _vm._v(" "),
-                                            _c("div", {
-                                              staticClass: "dropdown-divider"
-                                            }),
-                                            _vm._v(" "),
-                                            _c(
-                                              "button",
-                                              {
-                                                staticClass: "dropdown-item",
+                                                  "dropdown-button btn-more rounded-circle",
                                                 attrs: {
-                                                  "data-toggle": "modal",
-                                                  "data-target": "#editProduct"
-                                                },
-                                                on: {
-                                                  click: function($event) {
-                                                    return _vm.getId(item, 1)
-                                                  }
+                                                  "data-toggle": "dropdown"
                                                 }
                                               },
                                               [
                                                 _c("i", {
                                                   staticClass:
-                                                    "fas fa-pencil-alt"
-                                                }),
-                                                _vm._v(" "),
-                                                _c(
-                                                  "span",
-                                                  { staticClass: "g-ml-3" },
-                                                  [_vm._v("게시물 수정")]
-                                                )
+                                                    "fas fa-ellipsis-v"
+                                                })
                                               ]
                                             ),
                                             _vm._v(" "),
                                             _c(
-                                              "button",
+                                              "div",
                                               {
-                                                staticClass: "dropdown-item",
-                                                on: {
-                                                  click: function($event) {
-                                                    return _vm.remove(item)
-                                                  }
-                                                }
+                                                staticClass:
+                                                  "dropdown-menu dropdown-menu-right"
                                               },
                                               [
-                                                _c("i", {
-                                                  staticClass: "fas fa-trash"
+                                                _c(
+                                                  "button",
+                                                  {
+                                                    staticClass:
+                                                      "dropdown-item pointer-none"
+                                                  },
+                                                  [
+                                                    _vm._v(
+                                                      _vm._s(
+                                                        _vm.$auth.user().name
+                                                      )
+                                                    )
+                                                  ]
+                                                ),
+                                                _vm._v(" "),
+                                                _c("div", {
+                                                  staticClass:
+                                                    "dropdown-divider"
                                                 }),
                                                 _vm._v(" "),
                                                 _c(
-                                                  "span",
-                                                  { staticClass: "g-ml-3" },
-                                                  [_vm._v("게시물 삭제")]
+                                                  "button",
+                                                  {
+                                                    staticClass:
+                                                      "dropdown-item",
+                                                    attrs: {
+                                                      "data-toggle": "modal",
+                                                      "data-target":
+                                                        "#editProduct"
+                                                    },
+                                                    on: {
+                                                      click: function($event) {
+                                                        return _vm.getId(
+                                                          item,
+                                                          1
+                                                        )
+                                                      }
+                                                    }
+                                                  },
+                                                  [
+                                                    _c("i", {
+                                                      staticClass:
+                                                        "fas fa-pencil-alt"
+                                                    }),
+                                                    _vm._v(" "),
+                                                    _c(
+                                                      "span",
+                                                      { staticClass: "g-ml-3" },
+                                                      [_vm._v("게시물 수정")]
+                                                    )
+                                                  ]
+                                                ),
+                                                _vm._v(" "),
+                                                _c(
+                                                  "button",
+                                                  {
+                                                    staticClass:
+                                                      "dropdown-item",
+                                                    on: {
+                                                      click: function($event) {
+                                                        return _vm.destroy(item)
+                                                      }
+                                                    }
+                                                  },
+                                                  [
+                                                    _c("i", {
+                                                      staticClass:
+                                                        "fas fa-trash"
+                                                    }),
+                                                    _vm._v(" "),
+                                                    _c(
+                                                      "span",
+                                                      { staticClass: "g-ml-3" },
+                                                      [_vm._v("게시물 삭제")]
+                                                    )
+                                                  ]
                                                 )
                                               ]
                                             )
                                           ]
                                         )
-                                      ]
-                                    )
-                                  : _vm._e()
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "h2",
-                              {
-                                staticClass:
-                                  "h5 g-color-black g-font-weight-600 mb-3"
-                              },
-                              [
+                                      : _vm._e()
+                                  ]
+                                ),
+                                _vm._v(" "),
                                 _c(
-                                  "a",
+                                  "h2",
                                   {
                                     staticClass:
-                                      "u-link-v5 g-color-black g-color-primary--hover g-cursor-pointer product-title",
-                                    attrs: {
-                                      "data-toggle": "modal",
-                                      "data-target": "#readProduct"
-                                    },
-                                    on: {
-                                      click: function($event) {
-                                        return _vm.getId(item, 2)
-                                      }
-                                    }
-                                  },
-                                  [
-                                    _vm._v(
-                                      "\n                                " +
-                                        _vm._s(item.title) +
-                                        "\n                            "
-                                    )
-                                  ]
-                                )
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "p",
-                              {
-                                staticClass:
-                                  "g-color-gray-dark-v4 g-line-height-1_8 product-body"
-                              },
-                              [_vm._v(_vm._s(item.excerpt))]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "ul",
-                              { staticClass: "u-list-inline mb-0" },
-                              _vm._l(item.tags, function(tag, key) {
-                                return _c(
-                                  "li",
-                                  {
-                                    key: key,
-                                    staticClass: "list-inline-item g-mb-5"
+                                      "h5 g-color-black g-font-weight-600 mb-3"
                                   },
                                   [
                                     _c(
-                                      "router-link",
+                                      "a",
                                       {
                                         staticClass:
-                                          "u-tags-v1 g-color-gray-dark-v4 g-color-white--hover g-bg-gray-light-v5 g-bg-primary--hover g-font-size-10 g-py-4 g-px-10",
+                                          "u-link-v5 g-color-black g-color-primary--hover g-cursor-pointer product-title",
                                         attrs: {
-                                          to: {
-                                            name: "tags.shop",
-                                            params: { slug: tag.slug }
+                                          "data-toggle": "modal",
+                                          "data-target": "#readProduct"
+                                        },
+                                        on: {
+                                          click: function($event) {
+                                            return _vm.getId(item, 2)
                                           }
                                         }
                                       },
                                       [
                                         _vm._v(
-                                          "\n                                    " +
-                                            _vm._s(tag.text) +
-                                            "\n                                "
+                                          "\n                                " +
+                                            _vm._s(item.title) +
+                                            "\n                            "
                                         )
                                       ]
                                     )
-                                  ],
-                                  1
-                                )
-                              }),
-                              0
-                            ),
-                            _vm._v(" "),
-                            _c("hr", { staticClass: "g-mt-0 g-mb-20" }),
-                            _vm._v(" "),
-                            _c(
-                              "ul",
-                              {
-                                staticClass:
-                                  "list-inline d-flex justify-content-between mb-0 align-items-center"
-                              },
-                              [
-                                _c(
-                                  "li",
-                                  {
-                                    staticClass:
-                                      "list-inline-item g-color-gray-dark-v4"
-                                  },
-                                  [
-                                    _c("favorite", { attrs: { product: item } })
-                                  ],
-                                  1
+                                  ]
                                 ),
                                 _vm._v(" "),
                                 _c(
-                                  "li",
+                                  "p",
                                   {
                                     staticClass:
-                                      "list-inline-item g-color-gray-dark-v4"
+                                      "g-color-gray-dark-v4 g-line-height-1_8 product-body"
                                   },
-                                  [
-                                    _c(
-                                      "div",
+                                  [_vm._v(_vm._s(item.excerpt))]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "ul",
+                                  { staticClass: "u-list-inline mb-0" },
+                                  _vm._l(item.tags, function(tag, key) {
+                                    return _c(
+                                      "li",
                                       {
-                                        staticClass: "d-inline-block g-pos-rel"
+                                        key: key,
+                                        staticClass: "list-inline-item g-mb-5"
                                       },
                                       [
                                         _c(
-                                          "a",
+                                          "router-link",
                                           {
                                             staticClass:
-                                              "btn u-btn-outline-primary g-font-size-13",
-                                            attrs: { href: "#" }
+                                              "u-tags-v1 g-color-gray-dark-v4 g-color-white--hover g-bg-gray-light-v5 g-bg-primary--hover g-font-size-10 g-py-4 g-px-10",
+                                            attrs: {
+                                              to: {
+                                                name: "tags.shop",
+                                                params: { slug: tag.slug }
+                                              }
+                                            }
                                           },
-                                          [_vm._v("구매하기")]
+                                          [
+                                            _vm._v(
+                                              "\n                                    " +
+                                                _vm._s(tag.text) +
+                                                "\n                                "
+                                            )
+                                          ]
+                                        )
+                                      ],
+                                      1
+                                    )
+                                  }),
+                                  0
+                                ),
+                                _vm._v(" "),
+                                _c("hr", { staticClass: "g-mt-0 g-mb-20" }),
+                                _vm._v(" "),
+                                _c(
+                                  "ul",
+                                  {
+                                    staticClass:
+                                      "list-inline d-flex justify-content-between mb-0 align-items-center"
+                                  },
+                                  [
+                                    _c(
+                                      "li",
+                                      {
+                                        staticClass:
+                                          "list-inline-item g-color-gray-dark-v4"
+                                      },
+                                      [
+                                        _c("favorite", {
+                                          attrs: { product: item }
+                                        })
+                                      ],
+                                      1
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "li",
+                                      {
+                                        staticClass:
+                                          "list-inline-item g-color-gray-dark-v4"
+                                      },
+                                      [
+                                        _c(
+                                          "div",
+                                          {
+                                            staticClass:
+                                              "d-inline-block g-pos-rel"
+                                          },
+                                          [
+                                            _c(
+                                              "a",
+                                              {
+                                                staticClass:
+                                                  "btn u-btn-outline-primary g-font-size-13",
+                                                attrs: { href: "#" }
+                                              },
+                                              [_vm._v("구매하기")]
+                                            )
+                                          ]
                                         )
                                       ]
                                     )
                                   ]
                                 )
-                              ]
-                            )
-                          ])
-                        ])
-                      : _vm._e()
-                  ]
-                }
-              }
-            ])
-          }),
-          _vm._v(" "),
-          _c("pagination", { attrs: { meta: _vm.meta, links: _vm.links } })
-        ],
-        1
-      ),
+                              ])
+                            ])
+                          : _vm._e()
+                      ]
+                    }
+                  }
+                ])
+              }),
+              _vm._v(" "),
+              _c("pagination", { attrs: { meta: _vm.meta, links: _vm.links } })
+            ],
+            1
+          )
+        : _c("div", { staticClass: "alert alert-warning text-center" }, [
+            _vm.$route.params.slug == "favorites"
+              ? _c("div", [
+                  _c("strong", [_vm._v("즐겨찾기")]),
+                  _vm._v(" 존재하지 않습니다.\n        ")
+                ])
+              : _c("div", [
+                  _c("strong", [_vm._v("죄송합니다.")]),
+                  _vm._v(" 아직 상품 준비 중입니다.\n        ")
+                ])
+          ]),
       _vm._v(" "),
       _vm.$root.isShowModal == 0
         ? _c("create-product", { on: { created: _vm.add } })

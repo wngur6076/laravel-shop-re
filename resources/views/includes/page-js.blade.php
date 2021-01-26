@@ -25,17 +25,16 @@
     });
 
     $(window).on('load', function () {
-        // initialization of header
+    // initialization of header
         $.HSCore.components.HSHeader.init($('#js-header'));
         $.HSCore.helpers.HSHamburgers.init('.hamburger');
 
         // initialization of HSMegaMenu component
         $('.js-mega-menu').HSMegaMenu({
-            event: 'hover',
-            pageContainer: $('.container'),
-            breakpoint: 991
+        event: 'hover',
+        pageContainer: $('.container'),
+        breakpoint: 991
         });
-
     });
 </script>
 <!-- ================== END BASE JS ================== -->

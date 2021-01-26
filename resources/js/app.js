@@ -63,12 +63,19 @@ const app = new Vue({
     data() {
         return {
             tags: [],
-            isShowModal: -1
+            isShowModal: -1,
+
+            loading: false,
+            interceptor: null
         }
     },
 
     mounted() {
         this.fetch('/tags');
+    },
+
+    created () {
+        this.enableInterceptor();
     },
 
     methods: {
@@ -77,6 +84,30 @@ const app = new Vue({
             .then(({data}) => {
                 this.tags = data.data
             })
+        },
+
+        enableInterceptor () {
+            // Add a request interceptor
+            this.interceptor = axios.interceptors.request.use((config) => {
+                this.loading = true
+                return config;
+            }, (error) => {
+                this.loading = false
+                return Promise.reject(error);
+            });
+
+            // Add a response interceptor
+            axios.interceptors.response.use((response) => {
+                this.loading = false
+                return response;
+            }, (error) => {
+                this.loading = false
+                return Promise.reject(error);
+            });
+        },
+
+        disableInterceptor () {
+            axios.interceptors.request.eject(this.interceptor);
         }
     },
 

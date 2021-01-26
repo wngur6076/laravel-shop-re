@@ -1,7 +1,8 @@
 <template>
     <!-- Blog Classic Blocks -->
     <div class="col-lg-9 g-mb-80">
-        <div class="g-pr-20--lg">
+        <div class="spinner" v-if="$root.loading"></div>
+        <div class="g-pr-20--lg" v-else-if="items.length">
             <vue-masonry-wall :items="items" :options="options" class="row g-mb-70">
                 <template v-slot:default="{item}">
                     <!-- Blog Classic Blocks -->
@@ -26,7 +27,7 @@
                                         <button class="dropdown-item pointer-none">{{ $auth.user().name }}</button>
                                         <div class="dropdown-divider"></div>
                                         <button class="dropdown-item" data-toggle="modal" data-target="#editProduct" @click="getId(item, 1)"><i class="fas fa-pencil-alt"></i> <span class="g-ml-3">게시물 수정</span></button>
-                                        <button class="dropdown-item" @click="remove(item)"><i class="fas fa-trash"></i> <span class="g-ml-3">게시물 삭제</span></button>
+                                        <button class="dropdown-item" @click="destroy(item)"><i class="fas fa-trash"></i> <span class="g-ml-3">게시물 삭제</span></button>
                                     </div>
                                 </div>
                             </div>
@@ -64,6 +65,15 @@
             </vue-masonry-wall>
 
             <pagination :meta="meta" :links="links"></pagination>
+        </div>
+
+        <div v-else class="alert alert-warning text-center">
+            <div v-if="$route.params.slug == 'favorites'">
+                <strong>즐겨찾기</strong> 존재하지 않습니다.
+            </div>
+            <div v-else>
+                <strong>죄송합니다.</strong> 아직 상품 준비 중입니다.
+            </div>
         </div>
 
         <!-- 새 게시글 작성 Modal -->
@@ -146,8 +156,36 @@ export default {
             this.items.splice(this.findItemIndex(), 1, product);
         },
 
-        remove(item) {
+        destroy(item) {
             this.getId(item, -1)
+
+            this.$toast.question('정말 삭제 하시겠습니까?', "확인", {
+            timeout: 20000,
+            close: false,
+            overlay: true,
+            displayMode: 'once',
+            id: 'question',
+            zindex: 999,
+            title: 'Hey',
+            position: 'center',
+            buttons: [
+                ['<button><b>YES</b></button>', (instance, toast) => {
+
+                    this.delete();
+
+                    instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+
+                }, true],
+                ['<button>NO</button>', function (instance, toast) {
+
+                    instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+
+                }],
+            ]
+            })
+        },
+
+        delete() {
             axios.delete(`products/${this.selectedId}`)
                 .then(({ data })  => {
                     // this.items.splice(this.findItemIndex(), 1)

@@ -16,6 +16,14 @@
         <div id="container" v-else>
             <router-view></router-view>
         </div>
+
+        <!-- 맨위로가기 버튼 -->
+        <a class="js-go-to u-go-to-v1" data-type="fixed" data-position='{
+                "bottom": 15,
+                "right": 15
+            }' data-offset-top="400" data-compensation="#js-header" data-show-effect="zoomIn">
+                <i class="hs-icon hs-icon-arrow-top"></i>
+        </a>
     </div>
 </template>
 
