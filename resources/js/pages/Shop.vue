@@ -133,6 +133,7 @@ export default {
 
     methods: {
         fetchProducts() {
+            this.$root.loading = true;
             if (this.$route.name == 'tags.shop')
                 this.endpoint = `/tags/${this.$route.params.slug}/products`
             else
@@ -144,6 +145,8 @@ export default {
                     this.items = data.data
                     this.meta = data.meta;
                     this.links = data.links;
+
+                    this.$root.loading = false;
                 })
         },
 

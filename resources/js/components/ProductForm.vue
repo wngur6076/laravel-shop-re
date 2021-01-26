@@ -59,7 +59,7 @@
             <div class="col-12">
                 <div class="row">
                     <div class="col-3">
-                        <select v-model="price.period" class="form-control">
+                        <select v-model="price.period" @change="periodChange(k)" class="form-control">
                             <option disabled value="">코드 기간 선택</option>
                             <option>1</option>
                             <option>7</option>
@@ -73,7 +73,7 @@
                     </div>
                     <div class="col-4">
                         <div class="input-group">
-                            <input type="text" class="form-control" v-model="price.price" placeholder="가격 입력" v-int>
+                            <input type="text" class="form-control" :disabled="price.disabled" v-model="price.price" @change="priceChange(k)" placeholder="가격 입력" v-int>
                             <div class="input-group-prepend"><span class="input-group-text">원</span></div>
                         </div>
                     </div>
@@ -83,6 +83,9 @@
                 <i class="fas fa-minus-circle" @click="remove(k)" v-show="k || ( !k && priceList.length > 1)"></i>
                 <i class="fas fa-plus-circle" @click="add(k)" v-show="k == priceList.length-1"></i>
             </span>
+            <div class="alert alert-danger" v-if="price.has_error">
+                <p>코드기간, 코드입력, 가격입력 모두 작성해주세요.</p>
+            </div>
         </div>
 
         <div class="form-group">
@@ -137,8 +140,10 @@ export default {
                     period: '',
                     code: '',
                     price: '',
+                    disabled: false,
+                    has_error: false
                 }
-            ]
+            ],
         }
     },
 
@@ -183,7 +188,7 @@ export default {
                 console.log(error.response);
             })
         },
-        
+
         redirect(url) {
             window.open(url, "_blank");
         },
@@ -205,8 +210,11 @@ export default {
         },
 
         handleSubmit() {
+            this.priceList.forEach(item => {
+                this.$delete(item, 'has_error')
+            });
             this.periodConvert()
-            
+
             const data = new FormData();
             data.append('title', this.title);
             data.append('body', this.body);
@@ -222,24 +230,64 @@ export default {
                 this.photo = ''
             else
                 this.video = ''
-                
+
             data.append('photo', this.photo)
             data.append('video', this.video)
 
             this.$emit('submitted', data)
         },
 
-        add() {
+        add(index) {
+            if (! this.priceList[index].period || ! this.priceList[index].price) {
+                this.priceList[index].has_error = true
+                return
+            } else {
+                this.priceList[index].has_error = false
+            }
             this.priceList.push({
                 period: '',
                 code: '',
                 price: '',
+                disabled: false,
+                has_error: false
             });
         },
 
         remove(index) {
-            this.priceList.splice(index, 1);
+            let check = false;
+            if (! this.priceList[index].disabled) {
+                this.priceList.forEach(item => {
+                    if (item.period == this.priceList[index].period && item.disabled)
+                        check = true
+                });
+            }
+            if (! check) {
+                this.priceList.splice(index, 1);
+            }
         },
+
+        periodChange(index) {
+            this.priceList[index].price = ''
+            this.priceList[index].disabled = false
+
+            this.priceList.forEach(item => {
+                if (item.period == this.priceList[index].period && item.price) {
+                    this.priceList[index].price = item.price
+                    this.priceList[index].disabled = true;
+                }
+            });
+        },
+
+        /* 가격을 변경하면 같은기간의 현재가격 전체가 변경 */
+        priceChange(index) {
+            if (! this.priceList[index].disabled) {
+                this.priceList.forEach(item => {
+                    if (this.priceList[index].period == item.period) {
+                        item.price = this.priceList[index].price
+                    }
+                });
+            }
+        }
     },
 }
 </script>

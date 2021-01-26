@@ -18,6 +18,7 @@ class CreatePriceListTable extends Migration
             $table->integer('period');
             $table->string('code');
             $table->integer('price');
+            $table->boolean('disabled')->default(false);
             $table->unsignedBigInteger('product_id')->index();
             $table->timestamps();
 

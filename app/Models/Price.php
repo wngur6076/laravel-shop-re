@@ -11,7 +11,9 @@ class Price extends Model
 
     public $table = "price_list";
 
-    protected $fillable = ['period', 'code', 'price'];
+    protected $fillable = ['period', 'code', 'price', 'disabled'];
+
+    protected $casts = ['disabled' => 'boolean',];
 
     public function product()
     {

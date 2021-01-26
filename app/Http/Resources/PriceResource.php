@@ -19,6 +19,7 @@ class PriceResource extends JsonResource
             'period' => $this->period,
             'code' => $this->code,
             'price' => $this->price,
+            'disabled' => $this->disabled
         ];
     }
 }

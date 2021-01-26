@@ -19,7 +19,7 @@ class UsersProductsPriceListTableSeeder extends Seeder
                     ->saveMany(
                         \App\Models\Product::factory(rand(1, 5))->make()
                     )->each(function($p) {
-                    $p->priceList()->saveMany(\App\Models\Price::factory(rand(1, 3))->make());
+                    $p->priceList()->save(\App\Models\Price::factory()->make());
                 });
             }
         });
