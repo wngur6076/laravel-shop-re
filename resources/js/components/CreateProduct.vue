@@ -24,15 +24,15 @@ export default {
     mounted(){
         $(this.$refs.modal).on("hidden.bs.modal", this.doSomethingOnHidden)
     },
-    
+
     methods: {
         create(data) {
             axios.post('/products', data)
                 .then(({ data }) => {
                     $(this.$refs.modal).modal('hide')
                     this.$toast.success(data.message, "Success")
-                    if (this.$route.name != 'home')
-                        this.$router.push({name: 'home'})
+                    /* if (this.$route.name != 'home')
+                        this.$router.push({name: 'home'}) */
                     // 배열첫번째에 상품 추가 위한 이벤트
                     this.$emit('created', data.product)
                 })

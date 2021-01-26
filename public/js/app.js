@@ -12887,10 +12887,10 @@ __webpack_require__.r(__webpack_exports__);
         $(_this.$refs.modal).modal('hide');
 
         _this.$toast.success(data.message, "Success");
+        /* if (this.$route.name != 'home')
+            this.$router.push({name: 'home'}) */
+        // 배열첫번째에 상품 추가 위한 이벤트
 
-        if (_this.$route.name != 'home') _this.$router.push({
-          name: 'home'
-        }); // 배열첫번째에 상품 추가 위한 이벤트
 
         _this.$emit('created', data.product);
       })["catch"](function (_ref2) {
@@ -14271,17 +14271,35 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     add: function add(product) {
-      this.items.unshift(product);
+      // this.items.unshift(product);
+      this.fetchProducts();
     },
     edit: function edit(product) {
+      this.items.splice(this.findItemIndex(), 1, product);
+    },
+    remove: function remove(item) {
       var _this2 = this;
 
-      var index = this.items.findIndex(function (product) {
-        return product.id == _this2.selectedId;
+      this.getId(item, -1);
+      axios["delete"]("products/".concat(this.selectedId)).then(function (_ref2) {
+        var data = _ref2.data;
+
+        // this.items.splice(this.findItemIndex(), 1)
+        _this2.fetchProducts();
+
+        _this2.$toast.success(data.message, "Success", {
+          timeout: 2000
+        });
       });
-      this.items.splice(index, 1, product);
     },
-    sendId: function sendId(item, val) {
+    findItemIndex: function findItemIndex() {
+      var _this3 = this;
+
+      return this.items.findIndex(function (item) {
+        return item.id == _this3.selectedId;
+      });
+    },
+    getId: function getId(item, val) {
       this.selectedId = item.id;
       this.$root.isShowModal = val;
     }
@@ -62639,7 +62657,7 @@ var render = function() {
                                                 },
                                                 on: {
                                                   click: function($event) {
-                                                    return _vm.sendId(item, 1)
+                                                    return _vm.getId(item, 1)
                                                   }
                                                 }
                                               },
@@ -62648,18 +62666,35 @@ var render = function() {
                                                   staticClass:
                                                     "fas fa-pencil-alt"
                                                 }),
-                                                _vm._v(" 게시물 수정")
+                                                _vm._v(" "),
+                                                _c(
+                                                  "span",
+                                                  { staticClass: "g-ml-3" },
+                                                  [_vm._v("게시물 수정")]
+                                                )
                                               ]
                                             ),
                                             _vm._v(" "),
                                             _c(
                                               "button",
-                                              { staticClass: "dropdown-item" },
+                                              {
+                                                staticClass: "dropdown-item",
+                                                on: {
+                                                  click: function($event) {
+                                                    return _vm.remove(item)
+                                                  }
+                                                }
+                                              },
                                               [
                                                 _c("i", {
                                                   staticClass: "fas fa-trash"
                                                 }),
-                                                _vm._v(" 게시물 삭제")
+                                                _vm._v(" "),
+                                                _c(
+                                                  "span",
+                                                  { staticClass: "g-ml-3" },
+                                                  [_vm._v("게시물 삭제")]
+                                                )
                                               ]
                                             )
                                           ]
@@ -62688,7 +62723,7 @@ var render = function() {
                                     },
                                     on: {
                                       click: function($event) {
-                                        return _vm.sendId(item, 2)
+                                        return _vm.getId(item, 2)
                                       }
                                     }
                                   },

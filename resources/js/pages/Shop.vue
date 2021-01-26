@@ -25,14 +25,14 @@
                                     <div class="dropdown-menu dropdown-menu-right">
                                         <button class="dropdown-item pointer-none">{{ $auth.user().name }}</button>
                                         <div class="dropdown-divider"></div>
-                                        <button class="dropdown-item" data-toggle="modal" data-target="#editProduct" @click="sendId(item, 1)"><i class="fas fa-pencil-alt"></i> 게시물 수정</button>
-                                        <button class="dropdown-item"><i class="fas fa-trash"></i> 게시물 삭제</button>
+                                        <button class="dropdown-item" data-toggle="modal" data-target="#editProduct" @click="getId(item, 1)"><i class="fas fa-pencil-alt"></i> <span class="g-ml-3">게시물 수정</span></button>
+                                        <button class="dropdown-item" @click="remove(item)"><i class="fas fa-trash"></i> <span class="g-ml-3">게시물 삭제</span></button>
                                     </div>
                                 </div>
                             </div>
                             <h2 class="h5 g-color-black g-font-weight-600 mb-3">
                                 <a class="u-link-v5 g-color-black g-color-primary--hover g-cursor-pointer product-title" data-toggle="modal" data-target="#readProduct"
-                                @click="sendId(item, 2)">
+                                @click="getId(item, 2)">
                                     {{ item.title }}
                                 </a>
                             </h2>
@@ -131,22 +131,36 @@ export default {
             axios.get(this.endpoint, { params: this.$route.query })
                 .then(({ data }) => {
                     // console.log(data);
-                    this.items = data.data;
+                    this.items = data.data
                     this.meta = data.meta;
                     this.links = data.links;
                 })
         },
 
         add(product) {
-            this.items.unshift(product);
+            // this.items.unshift(product);
+            this.fetchProducts()
         },
 
         edit(product) {
-            let index = this.items.findIndex(product => product.id == this.selectedId)
-            this.items.splice(index, 1, product);
+            this.items.splice(this.findItemIndex(), 1, product);
         },
 
-        sendId(item, val) {
+        remove(item) {
+            this.getId(item, -1)
+            axios.delete(`products/${this.selectedId}`)
+                .then(({ data })  => {
+                    // this.items.splice(this.findItemIndex(), 1)
+                    this.fetchProducts()
+                    this.$toast.success(data.message, "Success", { timeout: 2000 })
+                })
+        },
+
+        findItemIndex() {
+            return this.items.findIndex(item => item.id == this.selectedId)
+        },
+
+        getId(item, val) {
             this.selectedId = item.id
             this.$root.isShowModal = val
         },

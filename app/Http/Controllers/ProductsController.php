@@ -6,11 +6,10 @@ use App\Http\Requests\ProductsRequest;
 use App\Models\Tag;
 use App\Models\User;
 use App\Models\Product;
-use Illuminate\Http\Request;
 use App\Http\Resources\ProductDetailsResource;
 use App\Http\Resources\ProductResource;
 use App\Models\Price;
-use File;
+use App\Http\Utility\File;
 
 class ProductsController extends Controller
 {
@@ -48,12 +47,11 @@ class ProductsController extends Controller
      */
     public function store(ProductsRequest $request)
     {
-        // 파일객체가 존재하면 public/files 파일 생성
-        $filename = 'apple.jpg';
+        // 파일객체가 존재하면 public/files/ 파일 생성
+        $filename = File::BASENAME;
         if ($request->hasFile('photo')) {
             $file = $request->file('photo');
-            $filename = \Str::random() . filter_var($file->getClientOriginalName(), FILTER_SANITIZE_URL);
-            $file->move(public_path('files'), $filename);
+            $filename = File::upload($file);
         }
 
         $data = array_merge($request->only('title', 'body', 'video', 'file_link'), [
@@ -95,13 +93,10 @@ class ProductsController extends Controller
     {
         $filename = $product->image;
         if ($request->hasFile('photo')) {
-            $currentImage = public_path('files/' . $filename);
-            if (File::exists($currentImage)) {
-                File::delete($currentImage);
-            }
+            $filename == File::BASENAME ?: File::delete($filename);
+
             $file = $request->file('photo');
-            $filename = \Str::random() . filter_var($file->getClientOriginalName(), FILTER_SANITIZE_URL);
-            $file->move(public_path('files'), $filename);
+            $filename = File::upload($file);
         }
         $data = array_merge($request->only('title', 'body', 'video', 'file_link'), [
             'image' => $filename,
@@ -146,8 +141,17 @@ class ProductsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Product $product)
     {
-        //
+        if (isset($product->image)) {
+            $filename = $product->image;
+            $filename == File::BASENAME ?: File::delete($filename);
+        }
+
+        $product->delete();
+
+        return response()->json([
+            'message' => "게시글이 삭제되었습니다."
+        ]);
     }
 }
