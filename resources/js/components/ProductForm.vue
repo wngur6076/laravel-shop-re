@@ -54,7 +54,7 @@
             <select2-multiple-control v-model="tagsSelect" :options="$root.tags" />
         </div>
 
-        <div class="form-group" v-for="(price,k) in priceList" :key="k">
+        <div class="form-group" v-for="(price, k) in priceList" :key="k">
             <h4 class="h6 g-font-weight-600 g-color-black g-mb-15">Price {{ k+1 }}</h4>
             <div class="col-12">
                 <div class="row">
@@ -107,7 +107,7 @@
 </template>
 
 <script>
-import Select2MultipleControl from 'v-select2-multiple-component';
+import Select2MultipleControl from 'v-select2-multiple-component'
 import FileSelect from './FileSelect.vue'
 
 export default {

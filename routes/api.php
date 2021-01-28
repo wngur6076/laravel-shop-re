@@ -1,12 +1,13 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\TagsController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\FavoritesController;
+use App\Http\Controllers\PaymentController;
+use App\Models\Product;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,6 +41,8 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::get('users', [UserController::class, 'index'])->middleware('isAdmin');
 
     Route::apiResource('/products', ProductsController::class)->except('index')->middleware('isAdmin');
+
+    Route::get('payment/{product}', [PaymentController::class, 'show']);
 
     Route::post('/{product}/favorites', [FavoritesController::class, 'store']);
     Route::delete('/{product}/favorites', [FavoritesController::class, 'destroy']);

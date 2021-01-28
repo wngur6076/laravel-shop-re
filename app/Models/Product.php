@@ -47,6 +47,11 @@ class Product extends Model
         return $this->favorites->count();
     }
 
+    public function getPaymentOptionAttribute()
+    {
+        return $this->priceList()->whereDisabled(false)->get();
+    }
+
     public function getBodyHtmlAttribute()
     {
         return clean($this->bodyhtml());

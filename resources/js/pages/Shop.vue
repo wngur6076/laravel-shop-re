@@ -52,9 +52,9 @@
                                 <li class="list-inline-item g-color-gray-dark-v4">
                                     <favorite :product="item"></favorite>
                                 </li>
-                                <li class="list-inline-item g-color-gray-dark-v4">
+                                <li class="list-inline-item g-color-gray-dark-v4"  data-toggle="modal" data-target="#payment">
                                     <div class="d-inline-block g-pos-rel">
-                                        <a class="btn u-btn-outline-primary g-font-size-13" href="#">구매하기</a>
+                                        <a class="btn u-btn-outline-primary g-font-size-13 payment" @click="getId(item, 3)"><span>구매하기</span></a>
                                     </div>
                                 </li>
                             </ul>
@@ -82,6 +82,8 @@
         <edit-product v-if="$root.isShowModal == 1" :id="selectedId" @updated="edit"></edit-product>
         <!-- 게시글 읽기 Modal -->
         <read-product v-if="$root.isShowModal == 2" :id="selectedId"></read-product>
+        <!-- 구매하기 Modal -->
+        <payment v-if="$root.isShowModal == 3" :id="selectedId"></payment>
     </div>
     <!-- End Blog Classic Blocks -->
 
@@ -94,12 +96,13 @@ import Pagination from '../components/Pagination'
 import CreateProduct from '../components/CreateProduct'
 import ReadProduct from '../components/ReadProduct'
 import EditProduct from '../components/EditProduct'
+import Payment from '../components/Payment'
 import autosize from 'autosize';
 
 export default {
     components: {
         VueMasonryWall, Pagination, Favorite,
-        CreateProduct, ReadProduct, EditProduct
+        CreateProduct, ReadProduct, EditProduct, Payment
     },
 
     data() {
@@ -225,6 +228,17 @@ export default {
         padding: 0 10px;
         &:hover {
             background-color: $light-white;
+        }
+    }
+
+    .payment {
+        span {
+            color: rgb(114,192,44);
+        }
+        &:hover {
+            span {
+                color: $white;
+            }
         }
     }
 </style>
