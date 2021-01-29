@@ -21,7 +21,7 @@ export default {
         },
 
         endpoint () {
-            return `/${this.product.id}/favorites`;
+            return `/products/${this.product.id}/favorites`;
         },
     },
 

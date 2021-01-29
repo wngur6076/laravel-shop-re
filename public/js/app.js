@@ -13007,7 +13007,7 @@ __webpack_require__.r(__webpack_exports__);
       return ['favorite', !this.$auth.check() ? 'off' : this.product.is_favorited ? 'favorited' : ''];
     },
     endpoint: function endpoint() {
-      return "/".concat(this.product.id, "/favorites");
+      return "/products/".concat(this.product.id, "/favorites");
     }
   },
   methods: {
@@ -13430,6 +13430,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
@@ -13443,7 +13447,9 @@ __webpack_require__.r(__webpack_exports__);
       selected: '',
       selectOptions: [],
       selectIds: [],
-      quantityList: []
+      quantityList: [],
+      has_error: false,
+      error_message: ''
     };
   },
   mounted: function mounted() {
@@ -13466,22 +13472,28 @@ __webpack_require__.r(__webpack_exports__);
     handleSubmit: function handleSubmit() {
       var _this = this;
 
-      this.selectIds = [];
-      this.quantityList = [];
+      this.dataInit();
       this.selectOptions.forEach(function (option) {
         _this.selectIds.push(option.id);
 
         _this.quantityList.push(option.quantity);
       });
-      axios.post('payment', {
+      axios.post("payment/".concat(this.id), {
         selectIds: this.selectIds,
         quantityList: this.quantityList
       }).then(function (_ref) {
         var data = _ref.data;
-        console.log(data.total);
+        console.log(data.totalPrice);
       })["catch"](function (error) {
-        console.log(error.response.data.error);
+        _this.has_error = true;
+        _this.error_message = error.response.data.error;
+        console.log(_this.error_message);
       });
+    },
+    dataInit: function dataInit() {
+      this.has_error = false;
+      this.selectIds = [];
+      this.quantityList = [];
     },
     optionTitle: function optionTitle(price) {
       return this.product.title + " | ".concat(this.getPeriod(price.period), " \uCF54\uB4DC");
@@ -13504,7 +13516,11 @@ __webpack_require__.r(__webpack_exports__);
       axios.get("payment/".concat(this.id)).then(function (_ref2) {
         var data = _ref2.data;
         _this2.product = data.product;
-        _this2.priceList = data.product.price_list;
+        _this2.priceList = _this2.product.price_list;
+
+        for (var i in _this2.priceList) {
+          _this2.priceList[i].maxQuantity = _this2.product.max_quantity_list[i];
+        }
 
         _this2.periodConvert('디코딩');
       })["catch"](function (error) {
@@ -19518,7 +19534,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "/* Font size */\n/* Font weight */\n.favorite[data-v-3982b107] {\n  cursor: pointer;\n  color: gray;\n}\n.favorite.favorited[data-v-3982b107], .favorite.favorited[data-v-3982b107]:hover {\n  color: #f6993f;\n}\n.favorite.off[data-v-3982b107], .favorite.off[data-v-3982b107]:hover {\n  color: #bdbdbd;\n}", "",{"version":3,"sources":["webpack://./resources/sass/_variables.scss","webpack://./resources/js/components/Favorite.vue"],"names":[],"mappings":"AA0BA,cAAA;AAOA,gBAAA;AC4BI;EACI,eAAA;EACA,WD3CD;ACfP;AA2DQ;EACI,cDlDH;ACPT;AA4DQ;EACI,cD7CC;ACbb","sourcesContent":["// Body\r\n$body-bg: #f8fafc;\r\n\r\n// Typography\r\n$font-family-sans-serif: 'Open Sans', sans-serif;\r\n$font-size-base: 0.9rem;\r\n$line-height-base: 1.6;\r\n\r\n// Colors\r\n$white: #fff;\r\n$blue: #3490dc;\r\n$indigo: #6574cd;\r\n$purple: #9561e2;\r\n$pink: #f66d9b;\r\n$red: #e3342f;\r\n$orange: #f6993f;\r\n$yellow: #ffed4a;\r\n$green: #38c172;\r\n$teal: #4dc0b5;\r\n$cyan: #6cb2eb;\r\n$gray: gray;\r\n$black: black;\r\n$background: #F0F2F5;\r\n$light-white: #eeeeee;\r\n$dark-white: #bdbdbd;\r\n\r\n/* Font size */\r\n$font-large: 40px;\r\n$font-medium: 28px;\r\n$font-regular: 18px;\r\n$font-small: 16px;\r\n$font-micro: 14px;\r\n\r\n/* Font weight */\r\n$weight-bold: 600;\r\n$weight-semi-bold: 400;\r\n$weight-regular: 300;\r\n\r\n$size--avatar: 220px;\r\n$size--border-radius: 10px;\r\n","\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\r\n@import 'resources/sass/_variables.scss';\r\n\r\n    .favorite {\r\n        cursor: pointer;\r\n        color: $gray;\r\n        &.favorited, &.favorited:hover {\r\n            color: $orange;\r\n        }\r\n\r\n        &.off, &.off:hover {\r\n            color: $dark-white;\r\n        }\r\n    }\r\n"],"sourceRoot":""}]);
+___CSS_LOADER_EXPORT___.push([module.id, "/* Font size */\n/* Font weight */\n.favorite[data-v-3982b107] {\n  cursor: pointer;\n  color: gray;\n}\n.favorite.favorited[data-v-3982b107], .favorite.favorited[data-v-3982b107]:hover {\n  color: #f6993f;\n}\n.favorite.off[data-v-3982b107], .favorite.off[data-v-3982b107]:hover {\n  color: #bdbdbd;\n}", "",{"version":3,"sources":["webpack://./resources/sass/_variables.scss","webpack://./resources/js/components/Favorite.vue"],"names":[],"mappings":"AA0BA,cAAA;AAOA,gBAAA;AC4BI;EACI,eAAA;EACA,WD3CD;ACfP;AA2DQ;EACI,cDlDH;ACPT;AA4DQ;EACI,cD7CC;ACbb","sourcesContent":["// Body\r\n$body-bg: #f8fafc;\r\n\r\n// Typography\r\n$font-family-sans-serif: 'Open Sans', sans-serif;\r\n$font-size-base: 0.9rem;\r\n$line-height-base: 1.6;\r\n\r\n// Colors\r\n$white: #fff;\r\n$blue: #3490dc;\r\n$indigo: #6574cd;\r\n$purple: #9561e2;\r\n$pink: #f66d9b;\r\n$red: #e3342f;\r\n$orange: #f6993f;\r\n$yellow: #ffed4a;\r\n$green: #38c172;\r\n$teal: #4dc0b5;\r\n$cyan: #6cb2eb;\r\n$gray: gray;\r\n$black: black;\r\n$background: #F0F2F5;\r\n$light-white: #eeeeee;\r\n$dark-white: #bdbdbd;\r\n\r\n/* Font size */\r\n$font-large: 40px;\r\n$font-medium: 28px;\r\n$font-regular: 18px;\r\n$font-small: 16px;\r\n$font-micro: 14px;\r\n\r\n/* Font weight */\r\n$weight-bold: 600;\r\n$weight-semi-bold: 400;\r\n$weight-regular: 300;\r\n\r\n$size--avatar: 220px;\r\n$size--border-radius: 10px;\r\n","\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n@import 'resources/sass/_variables.scss';\n\n    .favorite {\n        cursor: pointer;\n        color: $gray;\n        &.favorited, &.favorited:hover {\n            color: $orange;\n        }\n\n        &.off, &.off:hover {\n            color: $dark-white;\n        }\n    }\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -19626,7 +19642,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".jumbotron[data-v-7bace86b] {\n  padding: 20px 15px;\n}", "",{"version":3,"sources":["webpack://./resources/js/components/Payment.vue"],"names":[],"mappings":"AA+KA;EACI,kBAAA;AA9KJ","sourcesContent":["\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n.jumbotron {\n    padding: 20px 15px;\n}\n"],"sourceRoot":""}]);
+___CSS_LOADER_EXPORT___.push([module.id, ".jumbotron[data-v-7bace86b] {\n  padding: 20px 15px;\n}", "",{"version":3,"sources":["webpack://./resources/js/components/Payment.vue"],"names":[],"mappings":"AAkMA;EACI,kBAAA;AAjMJ","sourcesContent":["\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n.jumbotron {\n    padding: 20px 15px;\n}\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -19653,7 +19669,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "/* Font size */\n/* Font weight */\n.fa-minus-circle {\n  color: #e3342f;\n}\n.fa-plus-circle {\n  color: #38c172;\n}", "",{"version":3,"sources":["webpack://./resources/sass/_variables.scss","webpack://./resources/js/components/ProductForm.vue"],"names":[],"mappings":"AA0BA,cAAA;AAOA,gBAAA;ACyQI;EACI,cD7RF;ACVN;AA0SI;EACI,cD9RA;ACTR","sourcesContent":["// Body\r\n$body-bg: #f8fafc;\r\n\r\n// Typography\r\n$font-family-sans-serif: 'Open Sans', sans-serif;\r\n$font-size-base: 0.9rem;\r\n$line-height-base: 1.6;\r\n\r\n// Colors\r\n$white: #fff;\r\n$blue: #3490dc;\r\n$indigo: #6574cd;\r\n$purple: #9561e2;\r\n$pink: #f66d9b;\r\n$red: #e3342f;\r\n$orange: #f6993f;\r\n$yellow: #ffed4a;\r\n$green: #38c172;\r\n$teal: #4dc0b5;\r\n$cyan: #6cb2eb;\r\n$gray: gray;\r\n$black: black;\r\n$background: #F0F2F5;\r\n$light-white: #eeeeee;\r\n$dark-white: #bdbdbd;\r\n\r\n/* Font size */\r\n$font-large: 40px;\r\n$font-medium: 28px;\r\n$font-regular: 18px;\r\n$font-small: 16px;\r\n$font-micro: 14px;\r\n\r\n/* Font weight */\r\n$weight-bold: 600;\r\n$weight-semi-bold: 400;\r\n$weight-regular: 300;\r\n\r\n$size--avatar: 220px;\r\n$size--border-radius: 10px;\r\n","\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n@import 'resources/sass/_variables.scss';\n\n    .fa-minus-circle {\n        color: $red;\n    }\n\n    .fa-plus-circle {\n        color: $green;\n    }\n"],"sourceRoot":""}]);
+___CSS_LOADER_EXPORT___.push([module.id, "/* Font size */\n/* Font weight */\n.fa-minus-circle {\n  color: #e3342f;\n}\n.fa-plus-circle {\n  color: #38c172;\n}", "",{"version":3,"sources":["webpack://./resources/sass/_variables.scss","webpack://./resources/js/components/ProductForm.vue"],"names":[],"mappings":"AA0BA,cAAA;AAOA,gBAAA;ACyQI;EACI,cD7RF;ACVN;AA0SI;EACI,cD9RA;ACTR","sourcesContent":["// Body\r\n$body-bg: #f8fafc;\r\n\r\n// Typography\r\n$font-family-sans-serif: 'Open Sans', sans-serif;\r\n$font-size-base: 0.9rem;\r\n$line-height-base: 1.6;\r\n\r\n// Colors\r\n$white: #fff;\r\n$blue: #3490dc;\r\n$indigo: #6574cd;\r\n$purple: #9561e2;\r\n$pink: #f66d9b;\r\n$red: #e3342f;\r\n$orange: #f6993f;\r\n$yellow: #ffed4a;\r\n$green: #38c172;\r\n$teal: #4dc0b5;\r\n$cyan: #6cb2eb;\r\n$gray: gray;\r\n$black: black;\r\n$background: #F0F2F5;\r\n$light-white: #eeeeee;\r\n$dark-white: #bdbdbd;\r\n\r\n/* Font size */\r\n$font-large: 40px;\r\n$font-medium: 28px;\r\n$font-regular: 18px;\r\n$font-small: 16px;\r\n$font-micro: 14px;\r\n\r\n/* Font weight */\r\n$weight-bold: 600;\r\n$weight-semi-bold: 400;\r\n$weight-regular: 300;\r\n\r\n$size--avatar: 220px;\r\n$size--border-radius: 10px;\r\n","\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\r\n@import 'resources/sass/_variables.scss';\r\n\r\n    .fa-minus-circle {\r\n        color: $red;\r\n    }\r\n\r\n    .fa-plus-circle {\r\n        color: $green;\r\n    }\r\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -61704,6 +61720,14 @@ var render = function() {
                   )
                 ]),
                 _vm._v(" "),
+                _vm.has_error
+                  ? _c(
+                      "div",
+                      { staticClass: "alert alert-danger text-center" },
+                      [_c("p", [_vm._v(_vm._s(_vm.error_message))])]
+                    )
+                  : _vm._e(),
+                _vm._v(" "),
                 _vm._l(_vm.selectOptions, function(option, k) {
                   return _c("div", { key: k, staticClass: "form-group" }, [
                     _c("div", { staticClass: "jumbotron g-mb-10" }, [
@@ -61722,7 +61746,7 @@ var render = function() {
                         [
                           _c("quantity", {
                             staticClass: "list-inline-item",
-                            attrs: { min: 1, max: option.code_quantity },
+                            attrs: { min: 1, max: option.maxQuantity },
                             model: {
                               value: option.quantity,
                               callback: function($$v) {

@@ -52,6 +52,11 @@ class Product extends Model
         return $this->priceList()->whereDisabled(false)->get();
     }
 
+    public function getCodeQuantity($period)
+    {
+        return $this->priceList()->wherePeriod($period)->count();
+    }
+
     public function getBodyHtmlAttribute()
     {
         return clean($this->bodyhtml());

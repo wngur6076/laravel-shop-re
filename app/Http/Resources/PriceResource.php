@@ -20,7 +20,6 @@ class PriceResource extends JsonResource
             'code' => $this->code,
             'price' => $this->price,
             'disabled' => $this->disabled,
-            'code_quantity' => $this->code_quantity
         ];
     }
 }

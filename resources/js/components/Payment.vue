@@ -19,13 +19,17 @@
                             </select>
                         </div>
 
+                        <div class="alert alert-danger text-center" v-if="has_error">
+                            <p>{{ error_message }}</p>
+                        </div>
+
                         <div class="form-group" v-for="(option, k) in selectOptions" :key="k">
                             <div class="jumbotron g-mb-10">
                                 <p class="g-color-gray">{{ optionTitle(option) }}</p>
                                 <hr class="my-3">
 
                                 <div class="list-inline d-flex justify-content-between mb-0 align-items-center">
-                                        <quantity v-model="option.quantity" class="list-inline-item" :min="1" :max="option.code_quantity"></quantity>
+                                        <quantity v-model="option.quantity" class="list-inline-item" :min="1" :max="option.maxQuantity"></quantity>
 
                                         <div class="list-inline-item d-flex">
                                             <p class="g-font-weight-600 g-color-black mb-0 list-inline-item">{{ numberWithCommas(option.price * option.quantity) }}원</p>
@@ -66,6 +70,9 @@ export default {
             selectOptions: [],
             selectIds: [],
             quantityList: [],
+
+            has_error: false,
+            error_message: ''
         }
     },
 
@@ -91,23 +98,31 @@ export default {
 
     methods: {
         handleSubmit() {
-            this.selectIds = []
-            this.quantityList = []
+            this.dataInit()
+
             this.selectOptions.forEach(option => {
                 this.selectIds.push(option.id)
                 this.quantityList.push(option.quantity)
             });
 
-            axios.post('payment', {
+            axios.post(`payment/${this.id}`, {
                 selectIds: this.selectIds,
-                quantityList: this.quantityList
+                quantityList: this.quantityList,
             })
             .then(({ data }) => {
-                console.log(data.total)
+                console.log(data.totalPrice)
             })
             .catch(error => {
-                console.log(error.response.data.error);
+                this.has_error = true
+                this.error_message = error.response.data.error
+                console.log(this.error_message);
             })
+        },
+
+        dataInit() {
+            this.has_error = false
+            this.selectIds = []
+            this.quantityList = []
         },
 
         optionTitle(price) {
@@ -130,7 +145,11 @@ export default {
             axios.get(`payment/${this.id}`)
             .then(({ data }) => {
                 this.product = data.product
-                this.priceList = data.product.price_list
+                this.priceList = this.product.price_list
+
+                for (const i in this.priceList) {
+                    this.priceList[i].maxQuantity = this.product.max_quantity_list[i]
+                }
                 this.periodConvert('디코딩')
             })
             .catch(error => {
