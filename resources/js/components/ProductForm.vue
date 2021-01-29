@@ -80,8 +80,8 @@
                 </div>
             </div>
             <span>
-                <i class="fas fa-minus-circle" @click="remove(k)" v-show="k || ( !k && priceList.length > 1)"></i>
-                <i class="fas fa-plus-circle" @click="add(k)" v-show="k == priceList.length-1"></i>
+                <i class="fas fa-minus-circle" @click="remove(k)" v-show="k || ( !k && priceList.length > 1)" style="cursor: pointer;"></i>
+                <i class="fas fa-plus-circle" @click="add(k)" v-show="k == priceList.length-1" style="cursor: pointer;"></i>
             </span>
             <div class="alert alert-danger" v-if="price.has_error">
                 <p>코드기간, 코드입력, 가격입력 모두 작성해주세요.</p>
@@ -212,6 +212,7 @@ export default {
         handleSubmit() {
             this.priceList.forEach(item => {
                 this.$delete(item, 'has_error')
+                this.$delete(item, 'code_quantity')
             });
             this.periodConvert()
 

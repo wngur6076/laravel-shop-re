@@ -19,4 +19,10 @@ class Price extends Model
     {
         return $this->belongsTo(product::class);
     }
+
+    public function getCodeQuantityAttribute()
+    {
+        return $this->where('product_id', $this->product_id)->wherePeriod($this->period)->count();
+    }
+
 }

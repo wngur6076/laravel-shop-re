@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ProductsRequest;
 use App\Models\Tag;
 use App\Models\User;
-use App\Models\Product;
-use App\Http\Resources\ProductDetailsResource;
-use App\Http\Resources\ProductResource;
 use App\Models\Price;
+use App\Models\Product;
 use App\Http\Utility\File;
+use App\Http\Requests\ProductsRequest;
+use App\Http\Resources\ProductResource;
+use App\Http\Resources\ProductDetailsResource;
 
 class ProductsController extends Controller
 {

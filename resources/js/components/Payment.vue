@@ -8,7 +8,7 @@
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                 </div>
                 <div class="modal-body">
-                    <form>
+                    <form @submit.prevent="handleSubmit">
                         <div class="form-group">
                             <h4 class="h6 g-font-weight-600 g-color-black g-mb-15">옵션선택</h4>
                             <select class="form-control" v-model="selected" @change="addOption">
@@ -19,15 +19,16 @@
                             </select>
                         </div>
 
-                        <div class="form-group" v-for="(option, k) in options" :key="k">
+                        <div class="form-group" v-for="(option, k) in selectOptions" :key="k">
                             <div class="jumbotron g-mb-10">
                                 <p class="g-color-gray">{{ optionTitle(option) }}</p>
                                 <hr class="my-3">
 
                                 <div class="list-inline d-flex justify-content-between mb-0 align-items-center">
-                                        <quantity v-model="quantity[k]" class="list-inline-item"></quantity>
+                                        <quantity v-model="option.quantity" class="list-inline-item" :min="1" :max="option.code_quantity"></quantity>
+
                                         <div class="list-inline-item d-flex">
-                                            <p class="g-font-weight-600 g-color-black mb-0 list-inline-item">{{ numberWithCommas(option.price * quantity[k]) }}원</p>
+                                            <p class="g-font-weight-600 g-color-black mb-0 list-inline-item">{{ numberWithCommas(option.price * option.quantity) }}원</p>
                                             <i class="fas fa-minus-circle list-inline-item" @click="remove(k)" style="cursor: pointer;"></i>
                                         </div>
                                 </div>
@@ -36,7 +37,7 @@
 
                         <div class="list-inline-item d-flex justify-content-end align-items-center g-mb-10" v-if="isEmptyOptions">
                             <p class="g-font-weight-400 g-color-gray list-inline-item mb-0 mr-4">총 상품금액</p>
-                            <h4 class="g-font-weight-700 g-color-black list-inline-item mb-0 mr-1">{{ totalPrice }}원</h4>
+                            <h4 class="g-font-weight-700 g-color-black list-inline-item mb-0 mr-1">{{ numberWithCommas(totalPrice) }}원</h4>
                         </div>
 
                         <div class="modal-footer form-group">
@@ -62,9 +63,9 @@ export default {
             product: [],
             priceList: [],
             selected: '',
-            options: [],
-            quantity: [],
-            total: 0
+            selectOptions: [],
+            selectIds: [],
+            quantityList: [],
         }
     },
 
@@ -76,19 +77,39 @@ export default {
 
     computed: {
         totalPrice() {
-            this.total = 0;
-            for (const i in this.options) {
-                this.total += this.options[i].price * this.quantity[i]
-            }
-            return this.numberWithCommas(this.total)
+            let result = 0;
+            this.selectOptions.forEach(option => {
+                result += option.price * option.quantity
+            });
+            return result
         },
 
         isEmptyOptions() {
-            return Object.keys(this.options).length
+            return Object.keys(this.selectOptions).length
         }
     },
 
     methods: {
+        handleSubmit() {
+            this.selectIds = []
+            this.quantityList = []
+            this.selectOptions.forEach(option => {
+                this.selectIds.push(option.id)
+                this.quantityList.push(option.quantity)
+            });
+
+            axios.post('payment', {
+                selectIds: this.selectIds,
+                quantityList: this.quantityList
+            })
+            .then(({ data }) => {
+                console.log(data.total)
+            })
+            .catch(error => {
+                console.log(error.response.data.error);
+            })
+        },
+
         optionTitle(price) {
             return this.product.title + ` | ${this.getPeriod(price.period)} 코드`
         },
@@ -128,19 +149,20 @@ export default {
 
         addOption() {
             let check = false;
-            this.options.forEach(option => {
+            this.selectOptions.forEach(option => {
                 if (option.id == this.selected.id)
                     check = true
-
             });
-            if (! check)
-                this.options.push(this.selected);
+
+            if (! check) {
+                this.selectOptions.push(this.selected);
+            }
 
             this.selected = ""
         },
 
         remove(index) {
-            this.options.splice(index, 1);
+            this.selectOptions.splice(index, 1);
         },
 
         numberWithCommas(x) {
@@ -150,7 +172,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
     .jumbotron {
         padding: 20px 15px;
     }

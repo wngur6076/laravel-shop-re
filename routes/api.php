@@ -43,6 +43,7 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::apiResource('/products', ProductsController::class)->except('index')->middleware('isAdmin');
 
     Route::get('payment/{product}', [PaymentController::class, 'show']);
+    Route::post('payment', [PaymentController::class, 'store']);
 
     Route::post('/{product}/favorites', [FavoritesController::class, 'store']);
     Route::delete('/{product}/favorites', [FavoritesController::class, 'destroy']);

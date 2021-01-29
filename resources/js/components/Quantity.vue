@@ -1,41 +1,89 @@
 <template>
     <div class="quantity-toggle">
-        <button @click.prevent="decrement()">&mdash;</button>
-        <input type="text" :value="quantity" readonly>
-        <button @click.prevent="increment()">&#xff0b;</button>
+        <button @click.prevent="decrement()" :disabled="decrementDisabled">&mdash;</button>
+        <input type="text" v-model.number="currentValue" readonly :min="min" :max="max">
+        <button @click.prevent="increment()" :disabled="incrementDisabled">&#xff0b;</button>
     </div>
 </template>
 
 <script>
     export default {
+        props: {
+            disabled: Boolean,
+            max: {
+                type: Number,
+                default: Infinity
+            },
+            min: {
+                type: Number,
+                default: -Infinity
+            },
+            value: {
+                required: true
+            },
+        },
+
         data() {
             return {
-                quantity: 1,
+                currentValue: this.value,
+                decrementDisabled: false,
+                incrementDisabled: false,
+            }
+        },
+
+        watch: {
+            value(val) {
+                this.currentValue = val
             }
         },
 
         mounted() {
-            this.$emit('input', this.quantity)
+            this.$emit('input', 1)
         },
 
         methods: {
             increment() {
-                this.quantity++
-                this.$emit('input', this.quantity)
+                if (this.disabled || this.incrementDisabled) {
+                    return
+                }
+
+                let newVal = this.currentValue + 1
+                this.decrementDisabled = false
+
+                this._updateValue(newVal)
             },
             decrement() {
-                if (this.quantity === 1) {
-                    // alert('Negative quantity not allowed')
-                } else {
-                    this.quantity--
-                    this.$emit('input', this.quantity)
+                if (this.disabled || this.decrementDisabled) {
+                    return
                 }
+
+                let newVal = this.currentValue + -1
+                this.incrementDisabled = false
+
+                this._updateValue(newVal)
+            },
+            _updateValue(newVal) {
+                const oldVal = this.currentValue
+
+                if (oldVal === newVal || typeof this.value !== 'number') {
+                    return
+                }
+                if (newVal <= this.min) {
+                    newVal = this.min
+                    this.decrementDisabled = true
+                }
+                if (newVal >= this.max) {
+                    newVal = this.max
+                    this.incrementDisabled = true
+                }
+                this.currentValue = newVal
+                this.$emit('input', this.currentValue)
             }
         }
     }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
     $border: 2px solid #ddd;
 
     .quantity-toggle {
