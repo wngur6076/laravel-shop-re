@@ -110,12 +110,13 @@ export default {
                 quantityList: this.quantityList,
             })
             .then(({ data }) => {
-                console.log(data.total)
+                this.$auth.user().money -= data.total;
+                $(this.$refs.modal).modal('hide')
+                this.$toast.success(this.numberWithCommas(data.total) + '원 ' + data.message, "Success")
             })
             .catch(error => {
                 this.has_error = true
                 this.error_message = error.response.data.error
-                console.log(this.error_message);
             })
         },
 

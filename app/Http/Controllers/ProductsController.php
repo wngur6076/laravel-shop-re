@@ -148,6 +148,10 @@ class ProductsController extends Controller
             $filename == File::BASENAME ?: File::delete($filename);
         }
 
+        foreach ($product->codeList as $code) {
+            $code->forceDelete();
+        }
+
         $product->delete();
 
         return response()->json([

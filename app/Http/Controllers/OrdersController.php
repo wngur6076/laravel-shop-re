@@ -38,10 +38,13 @@ class OrdersController extends Controller
             return response()->json($message, 403);
 
         $hash = bin2hex(random_bytes(32));
-        $order = $request->user()->order()->create([
+        $order = $request->user()->orders()->create([
             'hash' => $hash,
             'total' => $total,
         ]);
+
+        // 유저돈에서 total만큼 차감
+        $order->payment();
 
         // 구매개수랑 현재보유코드개수랑 같을경우 전체를 다 가져오고 아닐경우에는 Disabled = true만 가져온다. (false는 기준값)
         $codeList = [];
@@ -52,11 +55,15 @@ class OrdersController extends Controller
                 $codeList[$i] = $product->getCodeList($option->period, 1, $option->quantity);
             }
             $order->codeList()->attach($codeList[$i]);
+            foreach ($codeList[$i] as $code) {
+                $code->delete();
+            }
         }
 
 
         return response()->json([
-            'total' => $codeList
+            'message' => '결제 성공했습니다.',
+            'total' => $total
         ], 200);
     }
 

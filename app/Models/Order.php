@@ -20,4 +20,11 @@ class Order extends Model
     {
         return $this->belongsToMany(Code::class, 'orders_code_list');
     }
+
+    public function payment()
+    {
+        $user = User::find(auth()->user()->id);
+        $user->money = $user->money - $this->total;
+        $user->save();
+    }
 }
