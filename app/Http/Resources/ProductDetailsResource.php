@@ -26,7 +26,7 @@ class ProductDetailsResource extends JsonResource
             'created_date' => $this->created_date,
             'file_link' => $this->file_link,
             'tags' => TagResource::collection($this->tags),
-            'price_list' => PriceResource::collection($this->priceList)
+            'code_list' => CodeResource::collection($this->codeList)
         ];
     }
 }

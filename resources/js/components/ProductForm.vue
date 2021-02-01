@@ -54,12 +54,12 @@
             <select2-multiple-control v-model="tagsSelect" :options="$root.tags" />
         </div>
 
-        <div class="form-group" v-for="(price, k) in priceList" :key="k">
+        <div class="form-group" v-for="(code, k) in codeList" :key="k">
             <h4 class="h6 g-font-weight-600 g-color-black g-mb-15">Price {{ k+1 }}</h4>
             <div class="col-12">
                 <div class="row">
                     <div class="col-3">
-                        <select v-model="price.period" @change="periodChange(k)" class="form-control">
+                        <select v-model="code.period" @change="periodChange(k)" class="form-control">
                             <option disabled value="">코드 기간 선택</option>
                             <option>1</option>
                             <option>7</option>
@@ -69,21 +69,21 @@
                         </select>
                     </div>
                     <div class="col-5">
-                        <input type="text" class="form-control" v-model="price.code" placeholder="코드 입력">
+                        <input type="text" class="form-control" v-model="code.code" placeholder="코드 입력">
                     </div>
                     <div class="col-4">
                         <div class="input-group">
-                            <input type="text" class="form-control" :disabled="price.disabled" v-model="price.price" @change="priceChange(k)" placeholder="가격 입력" v-int>
+                            <input type="text" class="form-control" :disabled="code.disabled" v-model="code.price" @change="priceChange(k)" placeholder="가격 입력" v-int>
                             <div class="input-group-prepend"><span class="input-group-text">원</span></div>
                         </div>
                     </div>
                 </div>
             </div>
             <span>
-                <i class="fas fa-minus-circle" @click="remove(k)" v-show="k || ( !k && priceList.length > 1)" style="cursor: pointer;"></i>
-                <i class="fas fa-plus-circle" @click="add(k)" v-show="k == priceList.length-1" style="cursor: pointer;"></i>
+                <i class="fas fa-minus-circle" @click="remove(k)" v-show="k || ( !k && codeList.length > 1)" style="cursor: pointer;"></i>
+                <i class="fas fa-plus-circle" @click="add(k)" v-show="k == codeList.length-1" style="cursor: pointer;"></i>
             </span>
-            <div class="alert alert-danger" v-if="price.has_error">
+            <div class="alert alert-danger text-center" v-if="code.has_error">
                 <p>코드기간, 코드입력, 가격입력 모두 작성해주세요.</p>
             </div>
         </div>
@@ -135,7 +135,7 @@ export default {
             fileLink: '',
             imageName: 'No file choosen',
 
-            priceList: [
+            codeList: [
                 {
                     period: '',
                     code: '',
@@ -156,7 +156,7 @@ export default {
     computed: {
         isInvalid () {
             return this.body.length < 10 || this.title.length < 5 || !Object.keys(this.tagsSelect).length
-            || this.isInPrice() || this.fileLink == ''
+            || this.isInCode() || this.fileLink == ''
         },
 
         buttonText() {
@@ -181,7 +181,8 @@ export default {
                     this.tagsSelect.push(tag.id)
                 });
                 this.fileLink = data.product.file_link
-                this.priceList = data.product.price_list
+                if (data.product.code_list[0].period)
+                    this.codeList = data.product.code_list
                 this.periodConvert('디코딩')
             })
             .catch(error => {
@@ -193,15 +194,16 @@ export default {
             window.open(url, "_blank");
         },
 
-        isInPrice() {
-            return this.priceList[this.priceList.length-1].period == '' ||
-                this.priceList[this.priceList.length-1].code == '' ||
-                this.priceList[this.priceList.length-1].price == '' ||
-                isNaN(this.priceList[this.priceList.length-1].price)
+        isInCode() {
+            let len = this.codeList.length-1
+            return this.codeList[len].period == '' ||
+                this.codeList[len].code == '' ||
+                this.codeList[len].price == '' ||
+                isNaN(this.codeList[len].price)
         },
 
         periodConvert(convert = '인코딩') {
-            this.priceList.forEach(element => {
+            this.codeList.forEach(element => {
                 if (convert == '인코딩' && element.period == '영구제')
                     element.period = '-1'
                 else if (convert == '디코딩' && element.period == '-1')
@@ -210,9 +212,8 @@ export default {
         },
 
         handleSubmit() {
-            this.priceList.forEach(item => {
+            this.codeList.forEach(item => {
                 this.$delete(item, 'has_error')
-                this.$delete(item, 'code_quantity')
             });
             this.periodConvert()
 
@@ -223,7 +224,7 @@ export default {
 
             const json = JSON.stringify({
                 tagsSelect: this.tagsSelect,
-                priceList: this.priceList
+                codeList: this.codeList
             });
             data.append('data', json);
 
@@ -239,13 +240,13 @@ export default {
         },
 
         add(index) {
-            if (! this.priceList[index].period || ! this.priceList[index].price) {
-                this.priceList[index].has_error = true
+            if (! this.codeList[index].period || ! this.codeList[index].price) {
+                this.codeList[index].has_error = true
                 return
             } else {
-                this.priceList[index].has_error = false
+                this.codeList[index].has_error = false
             }
-            this.priceList.push({
+            this.codeList.push({
                 period: '',
                 code: '',
                 price: '',
@@ -256,35 +257,35 @@ export default {
 
         remove(index) {
             let check = false;
-            if (! this.priceList[index].disabled) {
-                this.priceList.forEach(item => {
-                    if (item.period == this.priceList[index].period && item.disabled)
+            if (! this.codeList[index].disabled) {
+                this.codeList.forEach(item => {
+                    if (item.period == this.codeList[index].period && item.disabled)
                         check = true
                 });
             }
             if (! check) {
-                this.priceList.splice(index, 1);
+                this.codeList.splice(index, 1);
             }
         },
 
         periodChange(index) {
-            this.priceList[index].price = ''
-            this.priceList[index].disabled = false
+            this.codeList[index].price = ''
+            this.codeList[index].disabled = false
 
-            this.priceList.forEach(item => {
-                if (item.period == this.priceList[index].period && item.price) {
-                    this.priceList[index].price = item.price
-                    this.priceList[index].disabled = true;
+            this.codeList.forEach(item => {
+                if (item.period == this.codeList[index].period && item.price) {
+                    this.codeList[index].price = item.price
+                    this.codeList[index].disabled = true;
                 }
             });
         },
 
         /* 가격을 변경하면 같은기간의 현재가격 전체가 변경 */
         priceChange(index) {
-            if (! this.priceList[index].disabled) {
-                this.priceList.forEach(item => {
-                    if (this.priceList[index].period == item.period) {
-                        item.price = this.priceList[index].price
+            if (! this.codeList[index].disabled) {
+                this.codeList.forEach(item => {
+                    if (this.codeList[index].period == item.period) {
+                        item.price = this.codeList[index].price
                     }
                 });
             }

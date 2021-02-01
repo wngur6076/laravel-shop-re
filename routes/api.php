@@ -1,13 +1,13 @@
 <?php
 
+use App\Models\Product;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\TagsController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\OrdersController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\FavoritesController;
-use App\Http\Controllers\PaymentController;
-use App\Models\Product;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,9 +19,6 @@ use App\Models\Product;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
-Route::get('/products', [ProductsController::class, 'index']);
-Route::get('/tags/{slug}/products', [ProductsController::class, 'index']);
 
 Route::get('/tags', TagsController::class);
 
@@ -40,10 +37,14 @@ Route::group(['middleware' => 'auth:api'], function(){
     // Users
     Route::get('users', [UserController::class, 'index'])->middleware('isAdmin');
 
-    Route::apiResource('/products', ProductsController::class)->except('index')->middleware('isAdmin');
+    Route::get('/tags/{slug}/products', [ProductsController::class, 'index']);
 
-    Route::get('payment/{product}', [PaymentController::class, 'show']);
-    Route::post('payment/{product}', [PaymentController::class, 'store']);
+    Route::get('/products', [ProductsController::class, 'index']);
+    Route::get('/products/{product}', [ProductsController::class, 'show']);
+    Route::apiResource('/products', ProductsController::class)->except(['index', 'show'])->middleware('isAdmin');
+
+    Route::get('orders/{product}', [OrdersController::class, 'show']);
+    Route::post('orders/{product}', [OrdersController::class, 'store']);
 
     Route::post('/products/{product}/favorites', [FavoritesController::class, 'store']);
     Route::delete('/products/{product}/favorites', [FavoritesController::class, 'destroy']);

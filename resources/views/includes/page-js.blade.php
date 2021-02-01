@@ -30,11 +30,11 @@
         $.HSCore.helpers.HSHamburgers.init('.hamburger');
 
         // initialization of HSMegaMenu component
-        $('.js-mega-menu').HSMegaMenu({
+        /* $('.js-mega-menu').HSMegaMenu({
         event: 'hover',
         pageContainer: $('.container'),
         breakpoint: 991
-        });
+        }); */
     });
 </script>
 <!-- ================== END BASE JS ================== -->

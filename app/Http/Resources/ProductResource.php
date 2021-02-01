@@ -26,7 +26,7 @@ class ProductResource extends JsonResource
             'file_link' => $this->file_link,
             'user' => new UserResource($this->user),
             'tags' => TagResource::collection($this->tags),
-            'price_list' => PriceResource::collection($this->priceList)
+            'code_list' => CodeResource::collection($this->codeList)
         ];
     }
 }

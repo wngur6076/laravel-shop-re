@@ -13,8 +13,8 @@
                             <h4 class="h6 g-font-weight-600 g-color-black g-mb-15">옵션선택</h4>
                             <select class="form-control" v-model="selected" @change="addOption">
                                 <option disabled value="">선택</option>
-                                <option v-for="(price, k) in priceList" :key="k" v-bind:value="price">
-                                    {{ optionTitle(price) + ` | ${numberWithCommas(price.price)}원` }}
+                                <option v-for="(code, k) in codeList" :key="k" v-bind:value="code">
+                                    {{ optionTitle(code) + ` | ${numberWithCommas(code.price)}원` }}
                                 </option>
                             </select>
                         </div>
@@ -65,7 +65,7 @@ export default {
     data() {
         return {
             product: [],
-            priceList: [],
+            codeList: [],
             selected: '',
             selectOptions: [],
             selectIds: [],
@@ -105,12 +105,12 @@ export default {
                 this.quantityList.push(option.quantity)
             });
 
-            axios.post(`payment/${this.id}`, {
+            axios.post(`orders/${this.id}`, {
                 selectIds: this.selectIds,
                 quantityList: this.quantityList,
             })
             .then(({ data }) => {
-                console.log(data.totalPrice)
+                console.log(data.total)
             })
             .catch(error => {
                 this.has_error = true
@@ -125,8 +125,8 @@ export default {
             this.quantityList = []
         },
 
-        optionTitle(price) {
-            return this.product.title + ` | ${this.getPeriod(price.period)} 코드`
+        optionTitle(code) {
+            return this.product.title + ` | ${this.getPeriod(code.period)} 코드`
         },
 
         getPeriod(period) {
@@ -142,13 +142,13 @@ export default {
         },
 
         fetchProduct() {
-            axios.get(`payment/${this.id}`)
+            axios.get(`orders/${this.id}`)
             .then(({ data }) => {
                 this.product = data.product
-                this.priceList = this.product.price_list
+                this.codeList = this.product.code_list
 
-                for (const i in this.priceList) {
-                    this.priceList[i].maxQuantity = this.product.max_quantity_list[i]
+                for (const i in this.codeList) {
+                    this.codeList[i].maxQuantity = this.product.max_quantity_list[i]
                 }
                 this.periodConvert('디코딩')
             })
@@ -158,11 +158,11 @@ export default {
         },
 
         periodConvert(convert = '인코딩') {
-            this.priceList.forEach(element => {
-                if (convert == '인코딩' && element.period == '영구제')
-                    element.period = '-1'
-                else if (convert == '디코딩' && element.period == '-1')
-                    element.period = '영구제'
+            this.codeList.forEach(code => {
+                if (convert == '인코딩' && code.period == '영구제')
+                    code.period = '-1'
+                else if (convert == '디코딩' && code.period == '-1')
+                    code.period = '영구제'
             });
         },
 

@@ -43,10 +43,10 @@ class ProductsRequest extends FormRequest
             'body' => 'required',
             'file_link' => 'required',
             'data.tagsSelect' => 'required|array',
-            'data.priceList' => 'required|array',
-            'data.priceList.*.period' => 'required|int',
-            'data.priceList.*.code' => 'required',
-            'data.priceList.*.price' => 'required|int',
+            'data.codeList' => 'required|array',
+            'data.codeList.*.period' => 'required|int',
+            'data.codeList.*.code' => 'required',
+            'data.codeList.*.price' => 'required|int',
         ];
     }
 }

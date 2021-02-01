@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePriceListTable extends Migration
+class CreateCodeListTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreatePriceListTable extends Migration
      */
     public function up()
     {
-        Schema::create('price_list', function (Blueprint $table) {
+        Schema::create('code_list', function (Blueprint $table) {
             $table->id();
             $table->integer('period');
             $table->string('code');
@@ -21,6 +21,7 @@ class CreatePriceListTable extends Migration
             $table->boolean('disabled')->default(false);
             $table->unsignedBigInteger('product_id')->index();
             $table->timestamps();
+            $table->softDeletes();
 
             $table->foreign('product_id')->references('id')->on('products')
                 ->onUpdate('cascade')->onDelete('cascade');
@@ -34,6 +35,6 @@ class CreatePriceListTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('price_list');
+        Schema::dropIfExists('code_list');
     }
 }

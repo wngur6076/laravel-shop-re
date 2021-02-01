@@ -13443,7 +13443,7 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       product: [],
-      priceList: [],
+      codeList: [],
       selected: '',
       selectOptions: [],
       selectIds: [],
@@ -13478,12 +13478,12 @@ __webpack_require__.r(__webpack_exports__);
 
         _this.quantityList.push(option.quantity);
       });
-      axios.post("payment/".concat(this.id), {
+      axios.post("orders/".concat(this.id), {
         selectIds: this.selectIds,
         quantityList: this.quantityList
       }).then(function (_ref) {
         var data = _ref.data;
-        console.log(data.totalPrice);
+        console.log(data.total);
       })["catch"](function (error) {
         _this.has_error = true;
         _this.error_message = error.response.data.error;
@@ -13495,8 +13495,8 @@ __webpack_require__.r(__webpack_exports__);
       this.selectIds = [];
       this.quantityList = [];
     },
-    optionTitle: function optionTitle(price) {
-      return this.product.title + " | ".concat(this.getPeriod(price.period), " \uCF54\uB4DC");
+    optionTitle: function optionTitle(code) {
+      return this.product.title + " | ".concat(this.getPeriod(code.period), " \uCF54\uB4DC");
     },
     getPeriod: function getPeriod(period) {
       var title = period;
@@ -13513,13 +13513,13 @@ __webpack_require__.r(__webpack_exports__);
     fetchProduct: function fetchProduct() {
       var _this2 = this;
 
-      axios.get("payment/".concat(this.id)).then(function (_ref2) {
+      axios.get("orders/".concat(this.id)).then(function (_ref2) {
         var data = _ref2.data;
         _this2.product = data.product;
-        _this2.priceList = _this2.product.price_list;
+        _this2.codeList = _this2.product.code_list;
 
-        for (var i in _this2.priceList) {
-          _this2.priceList[i].maxQuantity = _this2.product.max_quantity_list[i];
+        for (var i in _this2.codeList) {
+          _this2.codeList[i].maxQuantity = _this2.product.max_quantity_list[i];
         }
 
         _this2.periodConvert('디코딩');
@@ -13529,8 +13529,8 @@ __webpack_require__.r(__webpack_exports__);
     },
     periodConvert: function periodConvert() {
       var convert = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '인코딩';
-      this.priceList.forEach(function (element) {
-        if (convert == '인코딩' && element.period == '영구제') element.period = '-1';else if (convert == '디코딩' && element.period == '-1') element.period = '영구제';
+      this.codeList.forEach(function (code) {
+        if (convert == '인코딩' && code.period == '영구제') code.period = '-1';else if (convert == '디코딩' && code.period == '-1') code.period = '영구제';
       });
     },
     addOption: function addOption() {
@@ -13705,7 +13705,7 @@ __webpack_require__.r(__webpack_exports__);
       tagsSelect: [],
       fileLink: '',
       imageName: 'No file choosen',
-      priceList: [{
+      codeList: [{
         period: '',
         code: '',
         price: '',
@@ -13721,7 +13721,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   computed: {
     isInvalid: function isInvalid() {
-      return this.body.length < 10 || this.title.length < 5 || !Object.keys(this.tagsSelect).length || this.isInPrice() || this.fileLink == '';
+      return this.body.length < 10 || this.title.length < 5 || !Object.keys(this.tagsSelect).length || this.isInCode() || this.fileLink == '';
     },
     buttonText: function buttonText() {
       return this.isEdit ? '저장' : '게시';
@@ -13742,7 +13742,7 @@ __webpack_require__.r(__webpack_exports__);
           _this.tagsSelect.push(tag.id);
         });
         _this.fileLink = data.product.file_link;
-        _this.priceList = data.product.price_list;
+        if (data.product.code_list[0].period) _this.codeList = data.product.code_list;
 
         _this.periodConvert('디코딩');
       })["catch"](function (error) {
@@ -13752,22 +13752,21 @@ __webpack_require__.r(__webpack_exports__);
     redirect: function redirect(url) {
       window.open(url, "_blank");
     },
-    isInPrice: function isInPrice() {
-      return this.priceList[this.priceList.length - 1].period == '' || this.priceList[this.priceList.length - 1].code == '' || this.priceList[this.priceList.length - 1].price == '' || isNaN(this.priceList[this.priceList.length - 1].price);
+    isInCode: function isInCode() {
+      var len = this.codeList.length - 1;
+      return this.codeList[len].period == '' || this.codeList[len].code == '' || this.codeList[len].price == '' || isNaN(this.codeList[len].price);
     },
     periodConvert: function periodConvert() {
       var convert = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '인코딩';
-      this.priceList.forEach(function (element) {
+      this.codeList.forEach(function (element) {
         if (convert == '인코딩' && element.period == '영구제') element.period = '-1';else if (convert == '디코딩' && element.period == '-1') element.period = '영구제';
       });
     },
     handleSubmit: function handleSubmit() {
       var _this2 = this;
 
-      this.priceList.forEach(function (item) {
+      this.codeList.forEach(function (item) {
         _this2.$delete(item, 'has_error');
-
-        _this2.$delete(item, 'code_quantity');
       });
       this.periodConvert();
       var data = new FormData();
@@ -13776,7 +13775,7 @@ __webpack_require__.r(__webpack_exports__);
       data.append('file_link', this.fileLink);
       var json = JSON.stringify({
         tagsSelect: this.tagsSelect,
-        priceList: this.priceList
+        codeList: this.codeList
       });
       data.append('data', json);
       if (this.thumbnail == 'video') this.photo = '';else this.video = '';
@@ -13785,14 +13784,14 @@ __webpack_require__.r(__webpack_exports__);
       this.$emit('submitted', data);
     },
     add: function add(index) {
-      if (!this.priceList[index].period || !this.priceList[index].price) {
-        this.priceList[index].has_error = true;
+      if (!this.codeList[index].period || !this.codeList[index].price) {
+        this.codeList[index].has_error = true;
         return;
       } else {
-        this.priceList[index].has_error = false;
+        this.codeList[index].has_error = false;
       }
 
-      this.priceList.push({
+      this.codeList.push({
         period: '',
         code: '',
         price: '',
@@ -13805,25 +13804,25 @@ __webpack_require__.r(__webpack_exports__);
 
       var check = false;
 
-      if (!this.priceList[index].disabled) {
-        this.priceList.forEach(function (item) {
-          if (item.period == _this3.priceList[index].period && item.disabled) check = true;
+      if (!this.codeList[index].disabled) {
+        this.codeList.forEach(function (item) {
+          if (item.period == _this3.codeList[index].period && item.disabled) check = true;
         });
       }
 
       if (!check) {
-        this.priceList.splice(index, 1);
+        this.codeList.splice(index, 1);
       }
     },
     periodChange: function periodChange(index) {
       var _this4 = this;
 
-      this.priceList[index].price = '';
-      this.priceList[index].disabled = false;
-      this.priceList.forEach(function (item) {
-        if (item.period == _this4.priceList[index].period && item.price) {
-          _this4.priceList[index].price = item.price;
-          _this4.priceList[index].disabled = true;
+      this.codeList[index].price = '';
+      this.codeList[index].disabled = false;
+      this.codeList.forEach(function (item) {
+        if (item.period == _this4.codeList[index].period && item.price) {
+          _this4.codeList[index].price = item.price;
+          _this4.codeList[index].disabled = true;
         }
       });
     },
@@ -13832,10 +13831,10 @@ __webpack_require__.r(__webpack_exports__);
     priceChange: function priceChange(index) {
       var _this5 = this;
 
-      if (!this.priceList[index].disabled) {
-        this.priceList.forEach(function (item) {
-          if (_this5.priceList[index].period == item.period) {
-            item.price = _this5.priceList[index].price;
+      if (!this.codeList[index].disabled) {
+        this.codeList.forEach(function (item) {
+          if (_this5.codeList[index].period == item.period) {
+            item.price = _this5.codeList[index].price;
           }
         });
       }
@@ -19669,7 +19668,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "/* Font size */\n/* Font weight */\n.fa-minus-circle {\n  color: #e3342f;\n}\n.fa-plus-circle {\n  color: #38c172;\n}", "",{"version":3,"sources":["webpack://./resources/sass/_variables.scss","webpack://./resources/js/components/ProductForm.vue"],"names":[],"mappings":"AA0BA,cAAA;AAOA,gBAAA;ACyQI;EACI,cD7RF;ACVN;AA0SI;EACI,cD9RA;ACTR","sourcesContent":["// Body\r\n$body-bg: #f8fafc;\r\n\r\n// Typography\r\n$font-family-sans-serif: 'Open Sans', sans-serif;\r\n$font-size-base: 0.9rem;\r\n$line-height-base: 1.6;\r\n\r\n// Colors\r\n$white: #fff;\r\n$blue: #3490dc;\r\n$indigo: #6574cd;\r\n$purple: #9561e2;\r\n$pink: #f66d9b;\r\n$red: #e3342f;\r\n$orange: #f6993f;\r\n$yellow: #ffed4a;\r\n$green: #38c172;\r\n$teal: #4dc0b5;\r\n$cyan: #6cb2eb;\r\n$gray: gray;\r\n$black: black;\r\n$background: #F0F2F5;\r\n$light-white: #eeeeee;\r\n$dark-white: #bdbdbd;\r\n\r\n/* Font size */\r\n$font-large: 40px;\r\n$font-medium: 28px;\r\n$font-regular: 18px;\r\n$font-small: 16px;\r\n$font-micro: 14px;\r\n\r\n/* Font weight */\r\n$weight-bold: 600;\r\n$weight-semi-bold: 400;\r\n$weight-regular: 300;\r\n\r\n$size--avatar: 220px;\r\n$size--border-radius: 10px;\r\n","\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\r\n@import 'resources/sass/_variables.scss';\r\n\r\n    .fa-minus-circle {\r\n        color: $red;\r\n    }\r\n\r\n    .fa-plus-circle {\r\n        color: $green;\r\n    }\r\n"],"sourceRoot":""}]);
+___CSS_LOADER_EXPORT___.push([module.id, "/* Font size */\n/* Font weight */\n.fa-minus-circle {\n  color: #e3342f;\n}\n.fa-plus-circle {\n  color: #38c172;\n}", "",{"version":3,"sources":["webpack://./resources/sass/_variables.scss","webpack://./resources/js/components/ProductForm.vue"],"names":[],"mappings":"AA0BA,cAAA;AAOA,gBAAA;AC0QI;EACI,cD9RF;ACVN;AA2SI;EACI,cD/RA;ACTR","sourcesContent":["// Body\r\n$body-bg: #f8fafc;\r\n\r\n// Typography\r\n$font-family-sans-serif: 'Open Sans', sans-serif;\r\n$font-size-base: 0.9rem;\r\n$line-height-base: 1.6;\r\n\r\n// Colors\r\n$white: #fff;\r\n$blue: #3490dc;\r\n$indigo: #6574cd;\r\n$purple: #9561e2;\r\n$pink: #f66d9b;\r\n$red: #e3342f;\r\n$orange: #f6993f;\r\n$yellow: #ffed4a;\r\n$green: #38c172;\r\n$teal: #4dc0b5;\r\n$cyan: #6cb2eb;\r\n$gray: gray;\r\n$black: black;\r\n$background: #F0F2F5;\r\n$light-white: #eeeeee;\r\n$dark-white: #bdbdbd;\r\n\r\n/* Font size */\r\n$font-large: 40px;\r\n$font-medium: 28px;\r\n$font-regular: 18px;\r\n$font-small: 16px;\r\n$font-micro: 14px;\r\n\r\n/* Font weight */\r\n$weight-bold: 600;\r\n$weight-semi-bold: 400;\r\n$weight-regular: 300;\r\n\r\n$size--avatar: 220px;\r\n$size--border-radius: 10px;\r\n","\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n@import 'resources/sass/_variables.scss';\n\n    .fa-minus-circle {\n        color: $red;\n    }\n\n    .fa-plus-circle {\n        color: $green;\n    }\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -61697,17 +61696,17 @@ var render = function() {
                         _vm._v("선택")
                       ]),
                       _vm._v(" "),
-                      _vm._l(_vm.priceList, function(price, k) {
+                      _vm._l(_vm.codeList, function(code, k) {
                         return _c(
                           "option",
-                          { key: k, domProps: { value: price } },
+                          { key: k, domProps: { value: code } },
                           [
                             _vm._v(
                               "\n                                " +
                                 _vm._s(
-                                  _vm.optionTitle(price) +
+                                  _vm.optionTitle(code) +
                                     " | " +
-                                    _vm.numberWithCommas(price.price) +
+                                    _vm.numberWithCommas(code.price) +
                                     "원"
                                 ) +
                                 "\n                            "
@@ -62126,7 +62125,7 @@ var render = function() {
         1
       ),
       _vm._v(" "),
-      _vm._l(_vm.priceList, function(price, k) {
+      _vm._l(_vm.codeList, function(code, k) {
         return _c("div", { key: k, staticClass: "form-group" }, [
           _c(
             "h4",
@@ -62144,8 +62143,8 @@ var render = function() {
                       {
                         name: "model",
                         rawName: "v-model",
-                        value: price.period,
-                        expression: "price.period"
+                        value: code.period,
+                        expression: "code.period"
                       }
                     ],
                     staticClass: "form-control",
@@ -62161,7 +62160,7 @@ var render = function() {
                               return val
                             })
                           _vm.$set(
-                            price,
+                            code,
                             "period",
                             $event.target.multiple
                               ? $$selectedVal
@@ -62198,19 +62197,19 @@ var render = function() {
                     {
                       name: "model",
                       rawName: "v-model",
-                      value: price.code,
-                      expression: "price.code"
+                      value: code.code,
+                      expression: "code.code"
                     }
                   ],
                   staticClass: "form-control",
                   attrs: { type: "text", placeholder: "코드 입력" },
-                  domProps: { value: price.code },
+                  domProps: { value: code.code },
                   on: {
                     input: function($event) {
                       if ($event.target.composing) {
                         return
                       }
-                      _vm.$set(price, "code", $event.target.value)
+                      _vm.$set(code, "code", $event.target.value)
                     }
                   }
                 })
@@ -62223,18 +62222,18 @@ var render = function() {
                       {
                         name: "model",
                         rawName: "v-model",
-                        value: price.price,
-                        expression: "price.price"
+                        value: code.price,
+                        expression: "code.price"
                       },
                       { name: "int", rawName: "v-int" }
                     ],
                     staticClass: "form-control",
                     attrs: {
                       type: "text",
-                      disabled: price.disabled,
+                      disabled: code.disabled,
                       placeholder: "가격 입력"
                     },
-                    domProps: { value: price.price },
+                    domProps: { value: code.price },
                     on: {
                       change: function($event) {
                         return _vm.priceChange(k)
@@ -62243,7 +62242,7 @@ var render = function() {
                         if ($event.target.composing) {
                           return
                         }
-                        _vm.$set(price, "price", $event.target.value)
+                        _vm.$set(code, "price", $event.target.value)
                       }
                     }
                   }),
@@ -62260,8 +62259,8 @@ var render = function() {
                 {
                   name: "show",
                   rawName: "v-show",
-                  value: k || (!k && _vm.priceList.length > 1),
-                  expression: "k || ( !k && priceList.length > 1)"
+                  value: k || (!k && _vm.codeList.length > 1),
+                  expression: "k || ( !k && codeList.length > 1)"
                 }
               ],
               staticClass: "fas fa-minus-circle",
@@ -62278,8 +62277,8 @@ var render = function() {
                 {
                   name: "show",
                   rawName: "v-show",
-                  value: k == _vm.priceList.length - 1,
-                  expression: "k == priceList.length-1"
+                  value: k == _vm.codeList.length - 1,
+                  expression: "k == codeList.length-1"
                 }
               ],
               staticClass: "fas fa-plus-circle",
@@ -62292,8 +62291,8 @@ var render = function() {
             })
           ]),
           _vm._v(" "),
-          price.has_error
-            ? _c("div", { staticClass: "alert alert-danger" }, [
+          code.has_error
+            ? _c("div", { staticClass: "alert alert-danger text-center" }, [
                 _c("p", [
                   _vm._v("코드기간, 코드입력, 가격입력 모두 작성해주세요.")
                 ])

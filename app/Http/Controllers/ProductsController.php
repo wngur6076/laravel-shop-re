@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Tag;
 use App\Models\User;
-use App\Models\Price;
+use App\Models\Code;
 use App\Models\Product;
 use App\Http\Utility\File;
 use App\Http\Requests\ProductsRequest;
@@ -59,7 +59,7 @@ class ProductsController extends Controller
         ]);
         $product = $request->user()->products()->create($data);
         // 상품에 가격리스트 추가
-        $product->priceList()->createMany($request->input('data.priceList'));
+        $product->codeList()->createMany($request->input('data.codeList'));
         // 상품에 태그추가
         $product->tags()->sync($request->input('data.tagsSelect'));
 
@@ -102,31 +102,31 @@ class ProductsController extends Controller
             'image' => $filename,
         ]);
 
-        $priceList = [];
-        $priceIds = [];
-        foreach ($request->input('data.priceList') as $price) {
-            if (isset($price['id'])) {
-                Price::whereId($price['id'])
+        $codeList = [];
+        $codeIds = [];
+        foreach ($request->input('data.codeList') as $code) {
+            if (isset($code['id'])) {
+                Code::whereId($code['id'])
                     ->whereProductId($product->id)
-                    ->update($price);
-                $priceIds[] = $price['id'];
+                    ->update($code);
+                $codeIds[] = $code['id'];
             } else {
-                $priceList[] = new Price($price);
+                $codeList[] = new Code($code);
             }
         }
 
         $product->update($data);
         $product->tags()->sync($request->input('data.tagsSelect'));
 
-        if (count($priceIds)) {
-            Price::whereProductId($product->id)
-                ->whereNotIn('id', $priceIds)
+        if (count($codeIds)) {
+            Code::whereProductId($product->id)
+                ->whereNotIn('id', $codeIds)
                 ->delete();
         }
 
-        if (count($priceList)) {
-            $product->priceList()
-                ->saveMany($priceList);
+        if (count($codeList)) {
+            $product->codeList()
+                ->saveMany($codeList);
         }
 
         return response()->json([

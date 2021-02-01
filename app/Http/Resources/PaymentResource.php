@@ -14,17 +14,6 @@ class PaymentResource extends JsonResource
      */
     public function toArray($request)
     {
-        $maxQuantityList = [];
-        $priceList = PriceResource::collection($this->payment_option);
-        foreach ($priceList as $price) {
-            $maxQuantityList[] = $this->getCodeQuantity($price->period);
-        }
-
-        return [
-            'id' => $this->id,
-            'title' => $this->title,
-            'price_list' => $priceList,
-            'max_quantity_list' => $maxQuantityList,
-        ];
+        return null;
     }
 }

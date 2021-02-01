@@ -2,18 +2,17 @@
 
 namespace Database\Factories;
 
-use App\Models\Price;
+use App\Models\Code;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
 
-class PriceFactory extends Factory
+class CodeFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = Price::class;
+    protected $model = Code::class;
 
     /**
      * Define the model's default state.
@@ -24,7 +23,7 @@ class PriceFactory extends Factory
     {
         return [
             'period' => $this->faker->randomElement(array(1, 7, 15, 30, -1)),
-            'code' => Str::random(20),
+            'code' => \Str::random(20),
             'price' => $this->faker->randomNumber(5),
         ];
     }

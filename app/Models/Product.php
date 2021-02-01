@@ -22,9 +22,9 @@ class Product extends Model
         return $this->belongsToMany(Tag::class);
     }
 
-    public function priceList()
+    public function codeList()
     {
-        return $this->hasMany(Price::class);
+        return $this->hasMany(Code::class);
     }
 
     public function favorites()
@@ -49,12 +49,22 @@ class Product extends Model
 
     public function getPaymentOptionAttribute()
     {
-        return $this->priceList()->whereDisabled(false)->get();
+        return $this->codeList()->whereDisabled(false)->get();
+    }
+
+    public function wherePeriod($period)
+    {
+        return $this->codeList()->wherePeriod($period);
     }
 
     public function getCodeQuantity($period)
     {
-        return $this->priceList()->wherePeriod($period)->count();
+        return $this->wherePeriod($period)->count();
+    }
+
+    public function getCodeList($period, $offset, $quantity)
+    {
+        return $this->wherePeriod($period)->offset($offset)->limit($quantity)->get();
     }
 
     public function getBodyHtmlAttribute()
