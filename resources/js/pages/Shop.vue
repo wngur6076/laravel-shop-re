@@ -230,15 +230,4 @@ export default {
             background-color: $light-white;
         }
     }
-
-    .payment {
-        span {
-            color: rgb(114,192,44);
-        }
-        &:hover {
-            span {
-                color: $white;
-            }
-        }
-    }
 </style>

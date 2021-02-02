@@ -22,6 +22,10 @@ class UsersProductsPriceListTableSeeder extends Seeder
                     $p->codeList()->save(\App\Models\Code::factory()->make());
                 });
             }
+            $u->charges()
+                ->saveMany(
+                    \App\Models\Charge::factory(rand(5, 10))->make()
+                );
         });
     }
 }

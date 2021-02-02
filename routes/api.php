@@ -1,10 +1,8 @@
 <?php
 
-use App\Models\Product;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\TagsController;
-use App\Http\Controllers\UserController;
 use App\Http\Controllers\OrdersController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\FavoritesController;
@@ -33,10 +31,7 @@ Route::prefix('auth')->group(function () {
     });
 });
 
-Route::group(['middleware' => 'auth:api'], function(){
-    // Users
-    Route::get('users', [UserController::class, 'index'])->middleware('isAdmin');
-
+Route::group(['middleware' => 'auth:api'], function() {
     Route::get('/tags/{slug}/products', [ProductsController::class, 'index']);
 
     Route::get('/products', [ProductsController::class, 'index']);

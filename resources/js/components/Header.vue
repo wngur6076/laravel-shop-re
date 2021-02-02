@@ -76,7 +76,8 @@
                 </div>
                 <!-- End Navigation -->
 
-                <div class="product-add-button g-mx-10" v-if="$auth.check(2)" data-toggle="modal" data-target="#createProduct" @click="$root.isShowModal = 0">
+                <div class="product-add-button g-mx-10" v-if="$auth.check(2) && ($route.name == 'home' || $route.name == 'tags.shop')"
+                    data-toggle="modal" data-target="#createProduct" @click="$root.isShowModal = 0">
                     <i class="rounded-circle fas fa-plus btn btn-light g-font-size-18"></i>
                 </div>
 

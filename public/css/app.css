@@ -3,6 +3,14 @@
 
 /* Font weight */
 
+.payment span {
+  color: #72c02c;
+}
+
+.payment:hover span {
+  color: #fff;
+}
+
 
 
 /*# sourceMappingURL=app.css.map*/

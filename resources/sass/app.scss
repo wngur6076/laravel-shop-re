@@ -3,3 +3,14 @@
 // Variables
 @import 'variables';
 
+.payment {
+    span {
+        color: rgb(114, 192, 44);
+    }
+
+    &:hover {
+        span {
+            color: $white;
+        }
+    }
+}

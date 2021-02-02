@@ -25,6 +25,7 @@ class Order extends Model
     {
         $user = User::find(auth()->user()->id);
         $user->money = $user->money - $this->total;
+        $user->credit = 1;
         $user->save();
     }
 }
