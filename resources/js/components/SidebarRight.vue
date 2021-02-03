@@ -169,6 +169,18 @@ export default {
                         path: 'history.buy',
                         active:  false
                     },
+                ],
+                admin: [
+                    {
+                        name: '판매 내역',
+                        path: 'admin.sales',
+                        active: true
+                    },
+                    {
+                        name: '나의 상품',
+                        path: 'admin.my-products',
+                        active:  false
+                    },
                 ]
             },
 
@@ -193,27 +205,78 @@ export default {
                 case 'home':
                 case 'tags.shop':
                     this.initActive(this.links.shop)
-                case 'notice':
                     this.currentLinks = Object.assign({}, this.links.shop);
                     break;
                 case 'charge.index':
                     this.initActive(this.links.charge)
                 case 'charge.deposit':
+                    this.assignCharge(0)
+                    break;
                 case 'charge.voucher':
-                    this.currentLinks = Object.assign({}, this.links.charge);
+                    this.assignCharge(1)
                     break;
                 case 'history.index':
                     this.initActive(this.links.history)
-                case 'history.buy':
                 case 'history.charge':
-                    this.currentLinks = Object.assign({}, this.links.history);
+                    this.assignHstory(0)
+                    break;
+                case 'history.buy':
+                    this.assignHstory(1)
+                    break;
+                case 'admin.index':
+                    this.initActive(this.links.admin)
+                case 'admin.sales':
+                    this.assignAdmin(0);
+                    break;
+                case 'admin.my-products':
+                    this.assignAdmin(1);
+                    break;
+                case 'admin.accept':
+                    this.assignAdmin(2);
                     break;
             }
         },
 
+        assignCharge(index) {
+            this.currentLinks = Object.assign({}, this.links.charge);
+            this.linkActive(index)
+        },
+
+        assignHstory(index) {
+            this.currentLinks = Object.assign({}, this.links.history);
+            this.linkActive(index)
+        },
+
+        assignAdmin(index) {
+            this.isSuper();
+            this.currentLinks = Object.assign({}, this.links.admin);
+            this.linkActive(index)
+        },
+
+        isSuper() {
+            if (this.$auth.user().id == 1) {
+                let check = false
+                this.links.admin.forEach(element => {
+                    if (element.path == 'admin.accept')
+                        check = true
+                });
+                if (! check) {
+                    this.links.admin.push({
+                        name: '충전 승인',
+                        path: 'admin.accept',
+                        active:  false,
+                    });
+                }
+            }
+        },
+
         initActive(link) {
-            link[0].active = true;
-            link[1].active = false;
+            for (const i in link) {
+                if (i == 0)
+                    link[i].active = true;
+                else
+                    link[i].active = false;
+            }
         },
 
         linkClasses(active) {

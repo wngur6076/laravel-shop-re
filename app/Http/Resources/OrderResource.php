@@ -15,7 +15,7 @@ class OrderResource extends JsonResource
     public function toArray($request)
     {
         $maxQuantityList = [];
-        $codeList = CodeResource::collection($this->payment_option);
+        $codeList = CodeResource::collection($this->order_option);
         foreach ($codeList as $code) {
             $maxQuantityList[] = $this->getCodeQuantity($code->period);
         }

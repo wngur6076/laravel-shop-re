@@ -47,7 +47,7 @@ class Product extends Model
         return $this->favorites->count();
     }
 
-    public function getPaymentOptionAttribute()
+    public function getOrderOptionAttribute()
     {
         return $this->codeList()->whereDisabled(false)->get();
     }

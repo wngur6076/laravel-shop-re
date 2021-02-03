@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ChargeAcceptController;
 use App\Http\Controllers\TagsController;
 use App\Http\Controllers\OrdersController;
 use App\Http\Controllers\ProductsController;
@@ -17,6 +18,8 @@ use App\Http\Controllers\FavoritesController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+Route::get('/admin/accept', [ChargeAcceptController::class, 'index']);
+Route::post('/admin/accept', [ChargeAcceptController::class, 'store']);
 
 Route::get('/tags', TagsController::class);
 

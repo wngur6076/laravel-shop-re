@@ -66,7 +66,7 @@
                             </div>
                         </router-link>
 
-                        <router-link class="nav-item g-mx-5--lg" tag="li" :to="{ name: 'history.index' }" v-if="$auth.check(2)">
+                        <router-link class="nav-item g-mx-5--lg" tag="li" :to="{ name: 'admin.index' }" v-if="$auth.check(2)">
                             <div class="nav-link g-py-7 g-px-0">
                                 <i class="fas fa-user-cog fa-2x"></i>
                                 <span class="name">관리</span>

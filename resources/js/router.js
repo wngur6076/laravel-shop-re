@@ -3,14 +3,16 @@ import VueRouter from 'vue-router'
 // Pages
 import Shop from './pages/Shop'
 import Login from './pages/Login'
-import Charge from './pages/Charge'
+import Base from './pages/Base'
 import NotFound from './pages/NotFound'
-import History from './pages/History'
 
-import Deposit from './components/Deposit'
-import Voucher from './components/Voucher'
-import ChargeHistory from './components/ChargeHistory'
-import BuyHistory from './components/BuyHistory'
+import Deposit from './pages/Deposit'
+import Voucher from './pages/Voucher'
+import ChargeHistory from './pages/ChargeHistory'
+import BuyHistory from './pages/BuyHistory'
+import SalesHistory from './pages/SalesHistory'
+import MyProducts from './pages/MyProducts'
+import ChargeAccept from './pages/ChargeAccept'
 
 // Routes
 const routes = [
@@ -44,7 +46,7 @@ const routes = [
     },
     {
         path: '/charge',
-        component: Charge,
+        component: Base,
         meta: {
             auth: {
                 roles: true,
@@ -74,7 +76,7 @@ const routes = [
     },
     {
         path: '/history',
-        component: History,
+        component: Base,
         meta: {
             auth: {
                 roles: true,
@@ -99,6 +101,41 @@ const routes = [
                 name: 'history.buy',
                 path: 'buy',
                 component: BuyHistory
+            },
+        ]
+    },
+    {
+        path: '/admin',
+        component: Base,
+        meta: {
+            auth: {
+                roles: true,
+                redirect: {
+                    name: 'login'
+                },
+                forbiddenRedirect: '/403'
+            }
+        },
+        children: [
+            {
+                path: '',
+                name: 'admin.index',
+                component: SalesHistory
+            },
+            {
+                name: 'admin.sales',
+                path: 'sales',
+                component: SalesHistory
+            },
+            {
+                name: 'admin.my-products',
+                path: 'myproducts',
+                component: MyProducts
+            },
+            {
+                name: 'admin.accept',
+                path: 'accept',
+                component: ChargeAccept
             },
         ]
     },

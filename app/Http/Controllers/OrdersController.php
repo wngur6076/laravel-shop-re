@@ -60,7 +60,6 @@ class OrdersController extends Controller
             }
         }
 
-
         return response()->json([
             'message' => '결제 성공했습니다.',
             'total' => $total

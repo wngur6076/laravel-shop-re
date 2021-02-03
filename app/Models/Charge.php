@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Charge extends Model
 {
@@ -19,5 +19,35 @@ class Charge extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function getPinAttribute()
+    {
+        return $this->type ? $this->pinConvert() : $this->user->name;
+    }
+
+    public function pinConvert()
+    {
+        $pin = wordwrap($this->pin_number, 4, '-', true);
+        if (strlen($this->pin_number) == 18) {
+            $pin = substr_replace($pin, \Str::substr($pin, 20, 21), 19);
+        }
+
+        return $pin;
+    }
+
+    public function getCreatedDateAttribute()
+    {
+        return  $this->created_at->format('Y-m-d H:i:s');
+    }
+
+    public function getTypeNameAttribute()
+    {
+        return $this->type ? '상품권' : '입금';
+    }
+
+    public function getAmountConvertAttribute()
+    {
+        return number_format($this->amount);
     }
 }
