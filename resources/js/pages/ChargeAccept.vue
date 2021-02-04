@@ -115,18 +115,17 @@ export default {
                 selectIds.push(row.id)
             });
 
-            console.log(selectIds)
-
-/*                 axios.post('/admin/accept', {
+            axios.post('/admin/accept', {
                 selectIds: selectIds,
             })
             .then(({ data }) => {
-                console.log(data.selectIds)
-                this.$toast.success(data.message, "Success", { timeout: 2000 })
+                this.getRecords();
+                this.$toast.success(data.message, "Success")
             })
             .catch(({ response }) => {
+                this.$toast.error('승인 목록을 확인하세요.', "Error")
                 console.log(response.data.errors)
-            }) */
+            })
         },
     },
 }

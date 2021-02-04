@@ -1,6 +1,6 @@
 <template>
     <div class="u-header__section u-header__section--light g-bg-white g-transition-0_3">
-        <nav class="js-mega-menu navbar navbar-expand-lg hs-menu-initialized hs-menu-horizontal">
+        <nav class="js-mega-menu navbar navbar-expand-lg hs-menu-initialized hs-menu-horizontal g-pt-0 g-pb-0">
             <div class="container">
                 <!-- Responsive Toggle Button -->
                 <button
@@ -17,7 +17,7 @@
 
                 <router-link class="navbar-brand" :to="{ name: 'home' }">
                     <!-- Logo 120, 50 -->
-                    <a href="../../index.html" class="navbar-brand d-flex">
+                    <!-- <a href="../../index.html" class="navbar-brand d-flex">
                         <svg width="90px" height="30px" viewBox="0 0 86 32" version="1.1" xmlns="http://www.w3.org/2000/svg"
                             xmlns:xlink="http://www.w3.org/1999/xlink">
                             <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -36,12 +36,13 @@
                                 </g>
                             </g>
                         </svg>
-                    </a>
+                    </a> -->
+                    <img src="/files/logo/logo.png" class="d-flex g-width-90 g-height-50" alt="">
                     <!-- End Logo -->
                 </router-link>
 
                 <!-- Navigation -->
-                <div class="collapse navbar-collapse align-items-center flex-sm-row g-pt-5"
+                <div class="collapse navbar-collapse align-items-center flex-sm-row"
                     id="navBar">
                     <ul class="navbar-nav mx-auto text-uppercase g-pos-rel g-font-weight-600 ml-auto">
                         <!-- Intro -->

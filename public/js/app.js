@@ -13247,6 +13247,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -14548,21 +14549,27 @@ __webpack_require__.r(__webpack_exports__);
       return false;
     }, 100),
     accept: function accept() {
+      var _this2 = this;
+
       var selectIds = [];
       this.$refs['my-table'].selectedRows.forEach(function (row) {
         selectIds.push(row.id);
       });
-      console.log(selectIds);
-      /*                 axios.post('/admin/accept', {
-                      selectIds: selectIds,
-                  })
-                  .then(({ data }) => {
-                      console.log(data.selectIds)
-                      this.$toast.success(data.message, "Success", { timeout: 2000 })
-                  })
-                  .catch(({ response }) => {
-                      console.log(response.data.errors)
-                  }) */
+      axios.post('/admin/accept', {
+        selectIds: selectIds
+      }).then(function (_ref2) {
+        var data = _ref2.data;
+
+        _this2.getRecords();
+
+        _this2.$toast.success(data.message, "Success");
+      })["catch"](function (_ref3) {
+        var response = _ref3.response;
+
+        _this2.$toast.error('승인 목록을 확인하세요.', "Error");
+
+        console.log(response.data.errors);
+      });
     }
   }
 });
@@ -14710,17 +14717,49 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
       name: this.$auth.user().name,
-      money: ''
+      amount: ''
     };
+  },
+  watch: {
+    amount: function amount(newValue) {
+      var _this = this;
+
+      var result = newValue.replace(/[^0-9]/g, '').replace(/,/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      Vue.nextTick(function () {
+        return _this.amount = result;
+      });
+    }
   },
   computed: {
     disabled: function disabled() {
-      return !this.money || isNaN(this.money);
+      return !this.amount || isNaN(this.uncomma(this.amount));
+    }
+  },
+  methods: {
+    handleSubmit: function handleSubmit() {
+      var _this2 = this;
+
+      axios.post('/charges', {
+        pin_number: this.name,
+        amount: this.uncomma(this.amount),
+        type: false
+      }).then(function (_ref) {
+        var data = _ref.data;
+
+        _this2.$toast.success(data.message, "Success");
+
+        _this2.amount = '';
+      })["catch"](function (_ref2) {
+        var response = _ref2.response;
+        console.log(response.data.errors);
+      });
+    },
+    uncomma: function uncomma(str) {
+      return str.replace(/[^\d]+/g, '');
     }
   }
 });
@@ -19989,7 +20028,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "/* Font size */\n/* Font weight */\n.u-header__section[data-v-1f42fb90] {\n  margin: 0;\n  padding: 0;\n  box-shadow: 2px 2px 2px 2px gray;\n}\n.u-header__section .nav-item[data-v-1f42fb90] {\n  padding: 0px 30px;\n  border-radius: 10px;\n  cursor: pointer;\n}\n.u-header__section .nav-item[data-v-1f42fb90]:hover {\n  border-color: #fff;\n  background-color: #F0F2F5;\n}\n.u-header__section .nav-item .nav-link[data-v-1f42fb90] {\n  display: block;\n}\n.u-header__section .dropdown-item.pointer-none[data-v-1f42fb90] {\n  pointer-events: none;\n}\n@media screen and (max-width: 992px) {\n.u-header__section .nav-item[data-v-1f42fb90] {\n    padding: 0px;\n}\n.u-header__section .nav-item .nav-link[data-v-1f42fb90] {\n    display: flex;\n    justify-content: flex-end;\n    align-items: center;\n}\n.u-header__section .nav-item .nav-link .name[data-v-1f42fb90] {\n    margin-left: 15px;\n    font-size: 28px;\n}\n.u-header__section .dropdown-button[data-v-1f42fb90] {\n    position: absolute;\n    top: 5px;\n    right: 70px;\n}\n.u-header__section .product-add-button[data-v-1f42fb90] {\n    position: absolute;\n    top: 5px;\n    right: 110px;\n}\n}", "",{"version":3,"sources":["webpack://./resources/sass/_variables.scss","webpack://./resources/js/components/Header.vue"],"names":[],"mappings":"AA0BA,cAAA;AAOA,gBAAA;AC0HA;EACI,SAAA;EACA,UAAA;EACA,gCAAA;AAxJJ;AA0JI;EACI,iBAAA;EACA,mBD3Hc;EC4Hd,eAAA;AAxJR;AA0JQ;EACI,kBD7JJ;EC8JI,yBDjJC;ACPb;AA2JQ;EACI,cAAA;AAzJZ;AA8JQ;EAAiB,oBAAA;AA3JzB;AAgKA;AAEQ;IACI,YAAA;AA9JV;AA+JU;IACI,aAAA;IACA,yBAAA;IACA,mBAAA;AA7Jd;AA8Jc;IACI,iBAAA;IACA,eDnKN;ACOZ;AAiKM;IACI,kBAAA;IACA,QAAA;IACA,WAAA;AA/JV;AAkKM;IACI,kBAAA;IACA,QAAA;IACA,YAAA;AAhKV;AACF","sourcesContent":["// Body\r\n$body-bg: #f8fafc;\r\n\r\n// Typography\r\n$font-family-sans-serif: 'Open Sans', sans-serif;\r\n$font-size-base: 0.9rem;\r\n$line-height-base: 1.6;\r\n\r\n// Colors\r\n$white: #fff;\r\n$blue: #3490dc;\r\n$indigo: #6574cd;\r\n$purple: #9561e2;\r\n$pink: #f66d9b;\r\n$red: #e3342f;\r\n$orange: #f6993f;\r\n$yellow: #ffed4a;\r\n$green: #38c172;\r\n$teal: #4dc0b5;\r\n$cyan: #6cb2eb;\r\n$gray: gray;\r\n$black: black;\r\n$background: #F0F2F5;\r\n$light-white: #eeeeee;\r\n$dark-white: #bdbdbd;\r\n\r\n/* Font size */\r\n$font-large: 40px;\r\n$font-medium: 28px;\r\n$font-regular: 18px;\r\n$font-small: 16px;\r\n$font-micro: 14px;\r\n\r\n/* Font weight */\r\n$weight-bold: 600;\r\n$weight-semi-bold: 400;\r\n$weight-regular: 300;\r\n\r\n$size--avatar: 220px;\r\n$size--border-radius: 10px;\r\n","\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n@import 'resources/sass/_variables.scss';\n\n.u-header__section {\n    margin: 0;\n    padding: 0;\n    box-shadow: 2px 2px 2px 2px $gray;\n\n    .nav-item {\n        padding: 0px 30px;\n        border-radius: $size--border-radius;\n        cursor: pointer;\n\n        &:hover {\n            border-color: $white;\n            background-color: $background;\n        }\n\n        .nav-link {\n            display: block;\n        }\n    }\n\n    .dropdown-item {\n        &.pointer-none { pointer-events: none; }\n    }\n}\n\n\n@media screen and (max-width: 992px) {\n    .u-header__section {\n        .nav-item {\n            padding: 0px;\n            .nav-link {\n                display: flex;\n                justify-content: flex-end;\n                align-items: center;\n                .name {\n                    margin-left: 15px;\n                    font-size: $font-medium;\n                }\n            }\n        }\n\n        .dropdown-button {\n            position: absolute;\n            top: 5px;\n            right: 70px;\n        }\n\n        .product-add-button {\n            position: absolute;\n            top: 5px;\n            right: 110px;\n        }\n    }\n}\n"],"sourceRoot":""}]);
+___CSS_LOADER_EXPORT___.push([module.id, "/* Font size */\n/* Font weight */\n.u-header__section[data-v-1f42fb90] {\n  margin: 0;\n  padding: 0;\n  box-shadow: 2px 2px 2px 2px gray;\n}\n.u-header__section .nav-item[data-v-1f42fb90] {\n  padding: 0px 30px;\n  border-radius: 10px;\n  cursor: pointer;\n}\n.u-header__section .nav-item[data-v-1f42fb90]:hover {\n  border-color: #fff;\n  background-color: #F0F2F5;\n}\n.u-header__section .nav-item .nav-link[data-v-1f42fb90] {\n  display: block;\n}\n.u-header__section .dropdown-item.pointer-none[data-v-1f42fb90] {\n  pointer-events: none;\n}\n@media screen and (max-width: 992px) {\n.u-header__section .nav-item[data-v-1f42fb90] {\n    padding: 0px;\n}\n.u-header__section .nav-item .nav-link[data-v-1f42fb90] {\n    display: flex;\n    justify-content: flex-end;\n    align-items: center;\n}\n.u-header__section .nav-item .nav-link .name[data-v-1f42fb90] {\n    margin-left: 15px;\n    font-size: 28px;\n}\n.u-header__section .dropdown-button[data-v-1f42fb90] {\n    position: absolute;\n    top: 5px;\n    right: 70px;\n}\n.u-header__section .product-add-button[data-v-1f42fb90] {\n    position: absolute;\n    top: 5px;\n    right: 110px;\n}\n}", "",{"version":3,"sources":["webpack://./resources/sass/_variables.scss","webpack://./resources/js/components/Header.vue"],"names":[],"mappings":"AA0BA,cAAA;AAOA,gBAAA;AC2HA;EACI,SAAA;EACA,UAAA;EACA,gCAAA;AAzJJ;AA2JI;EACI,iBAAA;EACA,mBD5Hc;EC6Hd,eAAA;AAzJR;AA2JQ;EACI,kBD9JJ;EC+JI,yBDlJC;ACPb;AA4JQ;EACI,cAAA;AA1JZ;AA+JQ;EAAiB,oBAAA;AA5JzB;AAiKA;AAEQ;IACI,YAAA;AA/JV;AAgKU;IACI,aAAA;IACA,yBAAA;IACA,mBAAA;AA9Jd;AA+Jc;IACI,iBAAA;IACA,eDpKN;ACOZ;AAkKM;IACI,kBAAA;IACA,QAAA;IACA,WAAA;AAhKV;AAmKM;IACI,kBAAA;IACA,QAAA;IACA,YAAA;AAjKV;AACF","sourcesContent":["// Body\r\n$body-bg: #f8fafc;\r\n\r\n// Typography\r\n$font-family-sans-serif: 'Open Sans', sans-serif;\r\n$font-size-base: 0.9rem;\r\n$line-height-base: 1.6;\r\n\r\n// Colors\r\n$white: #fff;\r\n$blue: #3490dc;\r\n$indigo: #6574cd;\r\n$purple: #9561e2;\r\n$pink: #f66d9b;\r\n$red: #e3342f;\r\n$orange: #f6993f;\r\n$yellow: #ffed4a;\r\n$green: #38c172;\r\n$teal: #4dc0b5;\r\n$cyan: #6cb2eb;\r\n$gray: gray;\r\n$black: black;\r\n$background: #F0F2F5;\r\n$light-white: #eeeeee;\r\n$dark-white: #bdbdbd;\r\n\r\n/* Font size */\r\n$font-large: 40px;\r\n$font-medium: 28px;\r\n$font-regular: 18px;\r\n$font-small: 16px;\r\n$font-micro: 14px;\r\n\r\n/* Font weight */\r\n$weight-bold: 600;\r\n$weight-semi-bold: 400;\r\n$weight-regular: 300;\r\n\r\n$size--avatar: 220px;\r\n$size--border-radius: 10px;\r\n","\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n@import 'resources/sass/_variables.scss';\n\n.u-header__section {\n    margin: 0;\n    padding: 0;\n    box-shadow: 2px 2px 2px 2px $gray;\n\n    .nav-item {\n        padding: 0px 30px;\n        border-radius: $size--border-radius;\n        cursor: pointer;\n\n        &:hover {\n            border-color: $white;\n            background-color: $background;\n        }\n\n        .nav-link {\n            display: block;\n        }\n    }\n\n    .dropdown-item {\n        &.pointer-none { pointer-events: none; }\n    }\n}\n\n\n@media screen and (max-width: 992px) {\n    .u-header__section {\n        .nav-item {\n            padding: 0px;\n            .nav-link {\n                display: flex;\n                justify-content: flex-end;\n                align-items: center;\n                .name {\n                    margin-left: 15px;\n                    font-size: $font-medium;\n                }\n            }\n        }\n\n        .dropdown-button {\n            position: absolute;\n            top: 5px;\n            right: 70px;\n        }\n\n        .product-add-button {\n            position: absolute;\n            top: 5px;\n            right: 110px;\n        }\n    }\n}\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -76911,7 +76950,7 @@ var render = function() {
         "nav",
         {
           staticClass:
-            "js-mega-menu navbar navbar-expand-lg hs-menu-initialized hs-menu-horizontal"
+            "js-mega-menu navbar navbar-expand-lg hs-menu-initialized hs-menu-horizontal g-pt-0 g-pb-0"
         },
         [
           _c(
@@ -76927,88 +76966,10 @@ var render = function() {
                   attrs: { to: { name: "home" } }
                 },
                 [
-                  _c(
-                    "a",
-                    {
-                      staticClass: "navbar-brand d-flex",
-                      attrs: { href: "../../index.html" }
-                    },
-                    [
-                      _c(
-                        "svg",
-                        {
-                          attrs: {
-                            width: "90px",
-                            height: "30px",
-                            viewBox: "0 0 86 32",
-                            version: "1.1",
-                            xmlns: "http://www.w3.org/2000/svg",
-                            "xmlns:xlink": "http://www.w3.org/1999/xlink"
-                          }
-                        },
-                        [
-                          _c(
-                            "g",
-                            {
-                              attrs: {
-                                stroke: "none",
-                                "stroke-width": "1",
-                                fill: "none",
-                                "fill-rule": "evenodd"
-                              }
-                            },
-                            [
-                              _c(
-                                "g",
-                                {
-                                  attrs: {
-                                    transform:
-                                      "translate(-78.000000, -19.000000)"
-                                  }
-                                },
-                                [
-                                  _c(
-                                    "g",
-                                    {
-                                      attrs: {
-                                        transform:
-                                          "translate(78.000000, 19.000000)"
-                                      }
-                                    },
-                                    [
-                                      _c("path", {
-                                        staticClass: "g-fill-primary",
-                                        attrs: {
-                                          d:
-                                            "M0,0 L19.2941176,0 L19.2941176,0 C23.7123956,-8.11624501e-16 27.2941176,3.581722 27.2941176,8 L27.2941176,27.2941176 L8,27.2941176 L8,27.2941176 C3.581722,27.2941176 5.41083001e-16,23.7123956 0,19.2941176 L0,0 Z"
-                                        }
-                                      }),
-                                      _vm._v(" "),
-                                      _c("path", {
-                                        staticClass: "g-fill-white",
-                                        attrs: {
-                                          d:
-                                            "M21.036662,24.8752523 L20.5338647,22.6659916 L20.3510293,22.6659916 C19.8533083,23.4481246 19.1448284,24.0626484 18.2255681,24.5095816 C17.3063079,24.9565147 16.2575544,25.1799779 15.0792761,25.1799779 C13.0376043,25.1799779 11.5139914,24.672107 10.5083918,23.6563498 C9.50279224,22.6405927 9,21.1017437 9,19.0397567 L9,8.02392554 L12.6109986,8.02392554 L12.6109986,18.4150692 C12.6109986,19.7050808 12.8750915,20.6725749 13.4032852,21.3175807 C13.9314789,21.9625865 14.7593086,22.2850846 15.886799,22.2850846 C17.3901196,22.2850846 18.4947389,21.8356188 19.2006901,20.9366737 C19.9066413,20.0377286 20.2596117,18.5318912 20.2596117,16.4191164 L20.2596117,8.02392554 L23.855374,8.02392554 L23.855374,24.8752523 L21.036662,24.8752523 Z"
-                                        }
-                                      }),
-                                      _vm._v(" "),
-                                      _c("path", {
-                                        staticClass: "g-fill-main",
-                                        attrs: {
-                                          d:
-                                            "M44.4764678,24.4705882 L40.8807055,24.4705882 L40.8807055,14.1099172 C40.8807055,12.809748 40.6191519,11.8397145 40.096037,11.1997875 C39.5729221,10.5598605 38.7425531,10.2399018 37.6049051,10.2399018 C36.0914269,10.2399018 34.9842682,10.6868282 34.2833958,11.5806945 C33.5825234,12.4745608 33.2320924,13.9727801 33.2320924,16.0753974 L33.2320924,24.4705882 L29.6515664,24.4705882 L29.6515664,7.61926145 L32.4550421,7.61926145 L32.9578394,9.8285222 L33.1406747,9.8285222 C33.6485533,9.02607405 34.3697301,8.40647149 35.3042266,7.96969592 C36.2387232,7.53292034 37.27478,7.31453583 38.412428,7.31453583 C42.4551414,7.31453583 44.4764678,9.3714132 44.4764678,13.4852296 L44.4764678,24.4705882 Z M53.7357283,24.4705882 L50.1552023,24.4705882 L50.1552023,7.61926145 L53.7357283,7.61926145 L53.7357283,24.4705882 Z M49.9418944,3.15503112 C49.9418944,2.51510412 50.1171098,2.0224693 50.467546,1.67711187 C50.8179823,1.33175444 51.3182351,1.15907831 51.9683197,1.15907831 C52.5980892,1.15907831 53.0881846,1.33175444 53.4386208,1.67711187 C53.7890571,2.0224693 53.9642725,2.51510412 53.9642725,3.15503112 C53.9642725,3.76448541 53.7890571,4.24442346 53.4386208,4.59485968 C53.0881846,4.94529589 52.5980892,5.12051137 51.9683197,5.12051137 C51.3182351,5.12051137 50.8179823,4.94529589 50.467546,4.59485968 C50.1171098,4.24442346 49.9418944,3.76448541 49.9418944,3.15503112 Z M68.0077253,10.3313195 L63.8939294,10.3313195 L63.8939294,24.4705882 L60.2981671,24.4705882 L60.2981671,10.3313195 L57.525164,10.3313195 L57.525164,8.65532856 L60.2981671,7.55831633 L60.2981671,6.4613041 C60.2981671,4.47042009 60.7654084,2.99505497 61.699905,2.03516447 C62.6344015,1.07527397 64.0615189,0.595335915 65.9812999,0.595335915 C67.2408388,0.595335915 68.4800439,0.803563007 69.6989525,1.22002344 L68.7543031,3.93208145 C67.8705943,3.64766945 67.0275286,3.50546559 66.2250804,3.50546559 C65.4124747,3.50546559 64.820805,3.75686171 64.4500537,4.25966149 C64.0793023,4.76246128 63.8939294,5.51664965 63.8939294,6.52224922 L63.8939294,7.61926145 L68.0077253,7.61926145 L68.0077253,10.3313195 Z M69.0089215,7.61926145 L72.9094094,7.61926145 L76.3375727,17.1724096 C76.8556088,18.5335242 77.2009611,19.813359 77.3736398,21.0119524 L77.49553,21.0119524 C77.5869482,20.453286 77.7545456,19.7752783 77.9983273,18.9779089 C78.242109,18.1805396 79.5321012,14.3943616 81.8683427,7.61926145 L85.738358,7.61926145 L78.5315971,26.7103215 C77.2212704,30.2146837 75.0374253,31.9668385 71.9799963,31.9668385 C71.1877057,31.9668385 70.4157419,31.8805004 69.6640816,31.7078217 L69.6640816,28.8738734 C70.2024329,28.9957643 70.8169567,29.0567088 71.5076716,29.0567088 C73.2344587,29.0567088 74.4482703,28.056203 75.1491427,26.0551615 L75.7738303,24.4705882 L69.0089215,7.61926145 Z"
-                                        }
-                                      })
-                                    ]
-                                  )
-                                ]
-                              )
-                            ]
-                          )
-                        ]
-                      )
-                    ]
-                  )
+                  _c("img", {
+                    staticClass: "d-flex g-width-90 g-height-50",
+                    attrs: { src: "/files/logo/logo.png", alt: "" }
+                  })
                 ]
               ),
               _vm._v(" "),
@@ -77016,7 +76977,7 @@ var render = function() {
                 "div",
                 {
                   staticClass:
-                    "collapse navbar-collapse align-items-center flex-sm-row g-pt-5",
+                    "collapse navbar-collapse align-items-center flex-sm-row",
                   attrs: { id: "navBar" }
                 },
                 [
@@ -79311,93 +79272,106 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "g-pr-20--lg" }, [
     _c("div", { staticClass: "g-bg-white g-pa-30 u-shadow-v11 text-center" }, [
-      _c("div", { staticClass: "form-group g-mb-30" }, [
-        _c(
-          "label",
-          {
-            staticClass: "g-mb-10 g-font-weight-600",
-            attrs: { for: "remitter" }
-          },
-          [_vm._v("입금자명")]
-        ),
-        _vm._v(" "),
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.name,
-              expression: "name"
-            }
-          ],
-          staticClass:
-            "text-center form-control form-control-md g-brd-none g-brd-bottom g-brd-gray-light-v7 g-brd-gray-light-v3--focus rounded-0 px-0 g-py-10",
-          attrs: {
-            id: "remitter",
-            type: "text",
-            placeholder: "입금자 이름을 입력해주세요.",
-            disabled: ""
-          },
-          domProps: { value: _vm.name },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
-              }
-              _vm.name = $event.target.value
-            }
-          }
-        })
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "form-group g-mb-30" }, [
-        _c(
-          "label",
-          {
-            staticClass: "g-mb-10 g-font-weight-600",
-            attrs: { for: "remittance" }
-          },
-          [_vm._v("입금 할 금액")]
-        ),
-        _vm._v(" "),
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.money,
-              expression: "money"
-            },
-            { name: "int", rawName: "v-int" }
-          ],
-          staticClass:
-            "text-center form-control form-control-md g-brd-none g-brd-bottom g-brd-gray-light-v7 g-brd-gray-light-v3--focus rounded-0 px-0 g-py-10",
-          attrs: {
-            id: "remittance",
-            type: "text",
-            placeholder: "충전하실 금액을 입력해주세요."
-          },
-          domProps: { value: _vm.money },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
-              }
-              _vm.money = $event.target.value
-            }
-          }
-        })
-      ]),
-      _vm._v(" "),
-      _vm._m(0),
-      _vm._v(" "),
       _c(
-        "button",
+        "form",
         {
-          staticClass: "btn u-btn-outline-primary btn-lg btn-block",
-          attrs: { disabled: _vm.disabled }
+          attrs: { autocomplete: "off" },
+          on: {
+            submit: function($event) {
+              $event.preventDefault()
+              return _vm.handleSubmit($event)
+            }
+          }
         },
-        [_c("span", [_vm._v("요청하기")])]
+        [
+          _c("div", { staticClass: "form-group g-mb-30" }, [
+            _c(
+              "label",
+              {
+                staticClass: "g-mb-10 g-font-weight-600",
+                attrs: { for: "remitter" }
+              },
+              [_vm._v("입금자명")]
+            ),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.name,
+                  expression: "name"
+                }
+              ],
+              staticClass:
+                "text-center form-control form-control-md g-brd-none g-brd-bottom g-brd-gray-light-v7 g-brd-gray-light-v3--focus rounded-0 px-0 g-py-10",
+              attrs: {
+                id: "remitter",
+                type: "text",
+                placeholder: "입금자 이름을 입력해주세요.",
+                disabled: ""
+              },
+              domProps: { value: _vm.name },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.name = $event.target.value
+                }
+              }
+            })
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-group g-mb-30" }, [
+            _c(
+              "label",
+              {
+                staticClass: "g-mb-10 g-font-weight-600",
+                attrs: { for: "remittance" }
+              },
+              [_vm._v("입금 할 금액")]
+            ),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.amount,
+                  expression: "amount"
+                }
+              ],
+              staticClass:
+                "text-center form-control form-control-md g-brd-none g-brd-bottom g-brd-gray-light-v7 g-brd-gray-light-v3--focus rounded-0 px-0 g-py-10",
+              attrs: {
+                id: "remittance",
+                type: "text",
+                placeholder: "충전하실 금액을 입력해주세요."
+              },
+              domProps: { value: _vm.amount },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.amount = $event.target.value
+                }
+              }
+            })
+          ]),
+          _vm._v(" "),
+          _vm._m(0),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "btn u-btn-outline-primary btn-lg btn-block",
+              attrs: { disabled: _vm.disabled }
+            },
+            [_c("span", [_vm._v("요청하기")])]
+          )
+        ]
       )
     ])
   ])
@@ -79415,7 +79389,7 @@ var staticRenderFns = [
       _vm._v(" "),
       _c("p", [
         _vm._v(
-          "\n                입금자명은 한 번 지정시 변경이 불가능 합니다.\n                입금금액과 입금자명이 정확하다면 3분내로 충전됩니다.\n                24시간 동안 입금이 없을 시 취소됩니다.\n            "
+          "\n                    입금자명은 한 번 지정시 변경이 불가능 합니다.\n                    입금금액과 입금자명이 정확하다면 3분내로 충전됩니다.\n                    24시간 동안 입금이 없을 시 취소됩니다.\n                "
         )
       ])
     ])
