@@ -15,7 +15,7 @@ class CreateChargesTable extends Migration
     {
         Schema::create('charges', function (Blueprint $table) {
             $table->id();
-            $table->string('pin_number')->nullable();
+            $table->string('pin_number');
             $table->integer('amount');
             $table->boolean('type');
             $table->unsignedBigInteger('user_id');

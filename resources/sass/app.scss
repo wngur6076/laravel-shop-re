@@ -14,3 +14,11 @@
         }
     }
 }
+
+.js-go-to {
+    &:hover {
+        i {
+            color: $white;
+        }
+    }
+}

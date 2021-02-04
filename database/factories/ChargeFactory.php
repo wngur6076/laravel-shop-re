@@ -25,7 +25,7 @@ class ChargeFactory extends Factory
         if ($type)
             $pinNumber = $this->faker->unique()->numberBetween(1000000000000000, 9999999999999999);
         else
-            $pinNumber = null;
+            $pinNumber = $this->faker->name;
 
         return [
             'pin_number' => $pinNumber,

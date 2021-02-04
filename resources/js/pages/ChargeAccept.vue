@@ -1,91 +1,134 @@
 <template>
     <div class="g-pr-20--lg">
         <vue-good-table ref="my-table"
+            mode="remote"
             :columns="columns"
             :rows="rows"
+            :globalSearch="true"
             :select-options="{ enabled: true }"
-            :search-options="{ enabled: true }"
-            :pagination-options="pagination">
+            :search-options="{
+                enabled: true,
+                skipDiacritics: true,
+            }"
+            @on-sort-change="onSortChange"
+            @on-search="onSearch" class="g-mb-10">
             <div slot="table-actions">
                 <button class="btn u-btn-primary btn-lg btn-block" @click="accept"><span>승인하기</span></button>
             </div>
         </vue-good-table>
+        <pagination :meta="meta"></pagination>
     </div>
 </template>
 
 <script>
-    import 'vue-good-table/dist/vue-good-table.css'
-    import { VueGoodTable } from 'vue-good-table';
-    export default {
-        components: {
-            VueGoodTable,
-        },
+import Pagination from '../components/Pagination'
+import 'vue-good-table/dist/vue-good-table.css'
+import { VueGoodTable } from 'vue-good-table';
 
-        data() {
-            return {
-                columns: [
-                    {
-                        label: '날짜',
-                        field: 'created_at',
-                        type: 'date',
-                        dateInputFormat: 'yyyy-MM-dd hh:mm:ss',
-                        dateOutputFormat: 'yyyy-MM-dd hh:mm:ss',
-                    },
-                    {
-                        label: '종류',
-                        field: 'type',
-                    },
-                    {
-                        label: '핀번호',
-                        field: 'pin_number',
-                    },
-                    {
-                        label: '금액',
-                        field: 'amount',
-                        type: 'number',
-                    },
-                ],
-                rows: [],
+export default {
+    components: {
+        VueGoodTable, Pagination
+    },
 
-                pagination: {
-                    enabled: true,
-                    mode: 'pages',
-                    perPage: 20
+    data() {
+        return {
+            meta: {
+                searchTerm: '',
+                total: 0,
+                per_page: 20,
+                from: 1,
+                to: 0,
+                current_page: 1,
+            },
+            sort: 'created_at',
+            order: 'desc',
+
+            columns: [
+                {
+                    label: '날짜',
+                    field: 'created_at',
+                    type: 'date',
+                    dateInputFormat: 'yyyy-MM-dd hh:mm:ss',
+                    dateOutputFormat: 'yyyy-MM-dd hh:mm:ss',
                 },
-            };
+                {
+                    label: '종류',
+                    field: 'type',
+                },
+                {
+                    label: '핀번호',
+                    field: 'pin_number',
+                },
+                {
+                    label: '금액',
+                    field: 'amount',
+                    type: 'number',
+                },
+            ],
+            rows: [],
+        };
+    },
+
+    watch: {
+        "$route": 'getRecords'
+    },
+
+    mounted() {
+        this.getRecords();
+    },
+
+    methods: {
+        onSortChange(params) {
+            this.sort = params[0].field;
+            this.order = params[0].type;
+            this.getRecords();
         },
 
-        mounted() {
-            this.fetchChargeAccept();
+        getRecords() {
+            axios.get(`/admin/accept?searchTerm=${this.meta.searchTerm}&per_page=${this.meta.per_page}&sort=${this.sort}&order=${this.order}`,
+            { params: this.$route.query })
+            .then(({ data }) => {
+                this.rows = data.data
+                this.meta = data.meta
+                this.meta.searchTerm = data.searchTerm
+                this.sort = data.sort
+                this.order = data.order
+            })
+            .catch(error => {
+                console.log(error.response);
+            })
         },
 
-        methods: {
-            fetchChargeAccept() {
-                axios.get('/admin/accept')
-                .then(({ data }) => {
-                    this.rows = data.data
-                })
-                .catch(error => {
-                    console.log(error.response);
-                })
-            },
-
-            accept() {
-                let selectIds = []
-                this.$refs['my-table'].selectedRows.forEach(row => {
-                    selectIds.push(row.id)
-                });
-                axios.post('/admin/accept', {
-                    selectIds: selectIds,
-                })
-                .then(({ data }) => {
-                    console.log(data)
-                })
-                .catch(({ response }) => {
-                    console.log(response.data.errors)
-                })
-            },
+        updateParams(newProps) {
+            this.meta = Object.assign({}, this.meta, newProps);
         },
-    }
+
+        onSearch: _.debounce(function (params) {
+            this.updateParams(params);
+            this.getRecords();
+            return false;
+        }, 100),
+
+        accept() {
+            let selectIds = []
+            this.$refs['my-table'].selectedRows.forEach(row => {
+                selectIds.push(row.id)
+            });
+
+            console.log(selectIds)
+
+/*                 axios.post('/admin/accept', {
+                selectIds: selectIds,
+            })
+            .then(({ data }) => {
+                console.log(data.selectIds)
+                this.$toast.success(data.message, "Success", { timeout: 2000 })
+            })
+            .catch(({ response }) => {
+                console.log(response.data.errors)
+            }) */
+        },
+    },
+}
 
 </script>

@@ -22,10 +22,16 @@ class UsersProductsPriceListTableSeeder extends Seeder
                     $p->codeList()->save(\App\Models\Code::factory()->make());
                 });
             }
-            $u->charges()
+            $charges = $u->charges()
                 ->saveMany(
                     \App\Models\Charge::factory(rand(5, 10))->make()
                 );
+            foreach($charges as $charge) {
+                if (!$charge->type) {
+                    $charge->pin_number = $charge->user->name;
+                    $charge->save();
+                }
+            }
         });
     }
 }

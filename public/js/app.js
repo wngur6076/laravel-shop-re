@@ -13329,7 +13329,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ['meta', 'links'],
+  props: {
+    meta: {
+      type: Object,
+      required: true
+    },
+    links: {
+      type: Object,
+      "default": null
+    }
+  },
   computed: {
     isFirst: function isFirst() {
       return this.meta.current_page === 1 ? 'disabled' : '';
@@ -14265,6 +14274,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -14431,8 +14446,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
-/* harmony import */ var vue_good_table_dist_vue_good_table_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-good-table/dist/vue-good-table.css */ "./node_modules/vue-good-table/dist/vue-good-table.css");
-/* harmony import */ var vue_good_table__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-good-table */ "./node_modules/vue-good-table/dist/vue-good-table.esm.js");
+/* harmony import */ var _components_Pagination__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/Pagination */ "./resources/js/components/Pagination.vue");
+/* harmony import */ var vue_good_table_dist_vue_good_table_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-good-table/dist/vue-good-table.css */ "./node_modules/vue-good-table/dist/vue-good-table.css");
+/* harmony import */ var vue_good_table__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-good-table */ "./node_modules/vue-good-table/dist/vue-good-table.esm.js");
 //
 //
 //
@@ -14448,14 +14464,33 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
-    VueGoodTable: vue_good_table__WEBPACK_IMPORTED_MODULE_1__.VueGoodTable
+    VueGoodTable: vue_good_table__WEBPACK_IMPORTED_MODULE_2__.VueGoodTable,
+    Pagination: _components_Pagination__WEBPACK_IMPORTED_MODULE_0__.default
   },
   data: function data() {
     return {
+      meta: {
+        searchTerm: '',
+        total: 0,
+        per_page: 20,
+        from: 1,
+        to: 0,
+        current_page: 1
+      },
+      sort: 'created_at',
+      order: 'desc',
       columns: [{
         label: '날짜',
         field: 'created_at',
@@ -14473,42 +14508,61 @@ __webpack_require__.r(__webpack_exports__);
         field: 'amount',
         type: 'number'
       }],
-      rows: [],
-      pagination: {
-        enabled: true,
-        mode: 'pages',
-        perPage: 20
-      }
+      rows: []
     };
   },
+  watch: {
+    "$route": 'getRecords'
+  },
   mounted: function mounted() {
-    this.fetchChargeAccept();
+    this.getRecords();
   },
   methods: {
-    fetchChargeAccept: function fetchChargeAccept() {
+    onSortChange: function onSortChange(params) {
+      this.sort = params[0].field;
+      this.order = params[0].type;
+      this.getRecords();
+    },
+    getRecords: function getRecords() {
       var _this = this;
 
-      axios.get('/admin/accept').then(function (_ref) {
+      axios.get("/admin/accept?searchTerm=".concat(this.meta.searchTerm, "&per_page=").concat(this.meta.per_page, "&sort=").concat(this.sort, "&order=").concat(this.order), {
+        params: this.$route.query
+      }).then(function (_ref) {
         var data = _ref.data;
         _this.rows = data.data;
+        _this.meta = data.meta;
+        _this.meta.searchTerm = data.searchTerm;
+        _this.sort = data.sort;
+        _this.order = data.order;
       })["catch"](function (error) {
         console.log(error.response);
       });
     },
+    updateParams: function updateParams(newProps) {
+      this.meta = Object.assign({}, this.meta, newProps);
+    },
+    onSearch: _.debounce(function (params) {
+      this.updateParams(params);
+      this.getRecords();
+      return false;
+    }, 100),
     accept: function accept() {
       var selectIds = [];
       this.$refs['my-table'].selectedRows.forEach(function (row) {
         selectIds.push(row.id);
       });
-      axios.post('/admin/accept', {
-        selectIds: selectIds
-      }).then(function (_ref2) {
-        var data = _ref2.data;
-        console.log(data);
-      })["catch"](function (_ref3) {
-        var response = _ref3.response;
-        console.log(response.data.errors);
-      });
+      console.log(selectIds);
+      /*                 axios.post('/admin/accept', {
+                      selectIds: selectIds,
+                  })
+                  .then(({ data }) => {
+                      console.log(data.selectIds)
+                      this.$toast.success(data.message, "Success", { timeout: 2000 })
+                  })
+                  .catch(({ response }) => {
+                      console.log(response.data.errors)
+                  }) */
     }
   }
 });
@@ -19962,7 +20016,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".u-pagination-v1__item:hover span[data-v-d7acf176] {\n  color: #72c02c;\n}\n.u-pagination-v1__item.disabled[data-v-d7acf176] {\n  pointer-events: none;\n}\n.u-pagination-v1__item.u-pagination-v1-4--active span[data-v-d7acf176] {\n  color: white;\n}", "",{"version":3,"sources":["webpack://./resources/js/components/Pagination.vue"],"names":[],"mappings":"AA0EQ;EACI,cAAA;AAzEZ;AA6EI;EACI,oBAAA;AA3ER;AA+EQ;EACI,YAAA;AA7EZ","sourcesContent":["\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n.u-pagination-v1__item {\n    &:hover {\n        span {\n            color: rgb(114,192,44);\n        }\n    }\n\n    &.disabled {\n        pointer-events: none;\n    }\n\n    &.u-pagination-v1-4--active {\n        span {\n            color: white;\n        }\n    }\n}\n"],"sourceRoot":""}]);
+___CSS_LOADER_EXPORT___.push([module.id, ".u-pagination-v1__item:hover span[data-v-d7acf176] {\n  color: #72c02c;\n}\n.u-pagination-v1__item.disabled[data-v-d7acf176] {\n  pointer-events: none;\n}\n.u-pagination-v1__item.u-pagination-v1-4--active span[data-v-d7acf176] {\n  color: white;\n}", "",{"version":3,"sources":["webpack://./resources/js/components/Pagination.vue"],"names":[],"mappings":"AAmFQ;EACI,cAAA;AAlFZ;AAsFI;EACI,oBAAA;AApFR;AAwFQ;EACI,YAAA;AAtFZ","sourcesContent":["\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n.u-pagination-v1__item {\n    &:hover {\n        span {\n            color: rgb(114,192,44);\n        }\n    }\n\n    &.disabled {\n        pointer-events: none;\n    }\n\n    &.u-pagination-v1-4--active {\n        span {\n            color: white;\n        }\n    }\n}\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -78631,43 +78685,72 @@ var render = function() {
             _vm._v("Pages")
           ]),
           _vm._v(" "),
-          _c(
-            "ul",
-            { staticClass: "list-unstyled g-font-size-13 mb-0" },
-            _vm._l(_vm.currentLinks, function(link, key) {
-              return _c(
-                "router-link",
-                {
-                  key: key,
-                  attrs: {
-                    tag: "li",
-                    to: {
-                      name: link.path,
-                      query: _vm.$router.currentRoute.query
-                    }
-                  }
-                },
-                [
-                  _c(
-                    "a",
+          _vm.$route.name == "home" || _vm.$route.name == "tags.shop"
+            ? _c(
+                "ul",
+                { staticClass: "list-unstyled g-font-size-13 mb-0" },
+                _vm._l(_vm.currentLinks, function(link, key) {
+                  return _c(
+                    "router-link",
                     {
-                      class: _vm.linkClasses(link.active),
-                      on: {
-                        click: function($event) {
-                          return _vm.linkActive(key)
+                      key: key,
+                      attrs: {
+                        tag: "li",
+                        to: {
+                          name: link.path,
+                          query: _vm.$router.currentRoute.query
                         }
                       }
                     },
                     [
-                      _c("i", { staticClass: "mr-2 fa fa-angle-right" }),
-                      _vm._v(" " + _vm._s(link.name))
+                      _c(
+                        "a",
+                        {
+                          class: _vm.linkClasses(link.active),
+                          on: {
+                            click: function($event) {
+                              return _vm.linkActive(key)
+                            }
+                          }
+                        },
+                        [
+                          _c("i", { staticClass: "mr-2 fa fa-angle-right" }),
+                          _vm._v(" " + _vm._s(link.name))
+                        ]
+                      )
                     ]
                   )
-                ]
+                }),
+                1
               )
-            }),
-            1
-          ),
+            : _c(
+                "ul",
+                { staticClass: "list-unstyled g-font-size-13 mb-0" },
+                _vm._l(_vm.currentLinks, function(link, key) {
+                  return _c(
+                    "router-link",
+                    { key: key, attrs: { tag: "li", to: { name: link.path } } },
+                    [
+                      _c(
+                        "a",
+                        {
+                          class: _vm.linkClasses(link.active),
+                          on: {
+                            click: function($event) {
+                              return _vm.linkActive(key)
+                            }
+                          }
+                        },
+                        [
+                          _c("i", { staticClass: "mr-2 fa fa-angle-right" }),
+                          _vm._v(" " + _vm._s(link.name))
+                        ]
+                      )
+                    ]
+                  )
+                }),
+                1
+              ),
           _vm._v(" "),
           _c(
             "div",
@@ -79123,13 +79206,19 @@ var render = function() {
         "vue-good-table",
         {
           ref: "my-table",
+          staticClass: "g-mb-10",
           attrs: {
+            mode: "remote",
             columns: _vm.columns,
             rows: _vm.rows,
+            globalSearch: true,
             "select-options": { enabled: true },
-            "search-options": { enabled: true },
-            "pagination-options": _vm.pagination
-          }
+            "search-options": {
+              enabled: true,
+              skipDiacritics: true
+            }
+          },
+          on: { "on-sort-change": _vm.onSortChange, "on-search": _vm.onSearch }
         },
         [
           _c(
@@ -79147,7 +79236,9 @@ var render = function() {
             ]
           )
         ]
-      )
+      ),
+      _vm._v(" "),
+      _c("pagination", { attrs: { meta: _vm.meta } })
     ],
     1
   )

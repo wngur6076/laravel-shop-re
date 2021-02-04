@@ -23,7 +23,7 @@ class Charge extends Model
 
     public function getPinAttribute()
     {
-        return $this->type ? $this->pinConvert() : $this->user->name;
+        return $this->type ? $this->pinConvert() : $this->pin_number;
     }
 
     public function pinConvert()

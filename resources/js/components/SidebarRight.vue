@@ -4,14 +4,20 @@
             <!-- pages -->
             <div class="g-mb-50">
                 <h3 class="h5 g-color-black g-font-weight-600 mb-4">Pages</h3>
-                <ul class="list-unstyled g-font-size-13 mb-0">
+                <ul class="list-unstyled g-font-size-13 mb-0" v-if="$route.name == 'home' || $route.name == 'tags.shop'">
                     <router-link v-for="(link, key) in currentLinks" :key="key" tag="li" :to="{ name: link.path,
                     query: $router.currentRoute.query }">
                         <a :class="linkClasses(link.active)" @click="linkActive(key)">
                         <i class="mr-2 fa fa-angle-right"></i> {{ link.name }}</a>
                     </router-link>
-
                 </ul>
+                <ul class="list-unstyled g-font-size-13 mb-0" v-else>
+                    <router-link v-for="(link, key) in currentLinks" :key="key" tag="li" :to="{ name: link.path }">
+                        <a :class="linkClasses(link.active)" @click="linkActive(key)">
+                        <i class="mr-2 fa fa-angle-right"></i> {{ link.name }}</a>
+                    </router-link>
+                </ul>
+
                 <!-- Modal -->
                 <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1"
                     aria-labelledby="staticBackdropLabel" aria-hidden="true" ref="noticeModal">

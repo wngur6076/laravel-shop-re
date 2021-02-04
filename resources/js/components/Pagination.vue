@@ -30,7 +30,16 @@
 
 <script>
 export default {
-    props: ['meta', 'links'],
+    props: {
+        meta: {
+            type: Object,
+            required: true
+        },
+        links: {
+            type: Object,
+            default: null
+        }
+    },
 
     computed: {
         isFirst () {

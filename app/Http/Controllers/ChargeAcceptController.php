@@ -8,11 +8,31 @@ use Illuminate\Http\Request;
 
 class ChargeAcceptController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $charges = Charge::latest()->get();
+        $search_query = $request->input('searchTerm');
+        $perPage = $request->input('per_page');
 
-        return ChargeResource::collection($charges);
+        $query = Charge::where('pin_number', 'LIKE', '%' . $search_query . '%');
+
+        $sort = $request->input('sort', 'created_at');
+        $order = $request->input('order', 'desc');
+
+        $query = $query->orderBy($sort, $order);
+
+        $charges = $query->paginate($perPage);
+
+        if ($search_query) {
+			$searchTerm = $search_query ?: '';
+		} else {
+			$searchTerm = $search_query ? null : '';
+        }
+
+        return ChargeResource::collection($charges)->additional([
+            'searchTerm' => $searchTerm,
+            'sort' => $sort,
+            'order' => $order,
+        ]);
     }
 
     public function store(Request $request)
@@ -21,11 +41,13 @@ class ChargeAcceptController extends Controller
             'selectIds' => 'required|array',
         ]);
 
-        $charges = Charge::whereIn('id', $request->input('selectIds'))->delete();
+        $selectIds = $request->input('selectIds');
+
+        Charge::whereIn('id', $selectIds)->delete();
 
         return response()->json([
-            'message' => '결제 성공했습니다.',
-            'selectIds' => $charges
+            'message' => '승인 성공했습니다.',
+            'selectIds' => $selectIds
         ], 200);
     }
 }
