@@ -15111,6 +15111,150 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pages/Voucher.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pages/Voucher.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  data: function data() {
+    return {
+      pinList: [{
+        number: ['', '', '', ''],
+        amount: ''
+      }]
+    };
+  },
+  computed: {
+    total: function total() {
+      var result = 0;
+      this.pinList.forEach(function (pin) {
+        if (!isNaN(pin.amount)) {
+          result += Number(pin.amount);
+        }
+      });
+      return result;
+    },
+    isEmptyPinList: function isEmptyPinList() {
+      return this.pinList[0].amount != '';
+    },
+    disabled: function disabled() {
+      var check = false;
+      this.pinList.forEach(function (pin) {
+        if (!pin.amount || isNaN(pin.amount)) {
+          check = true;
+        }
+
+        for (var i in pin.number) {
+          if (!pin.number[i] || pin.number[i].length < 4) {
+            check = true;
+            break;
+          }
+        }
+      });
+      return check;
+    }
+  },
+  methods: {
+    handleSubmit: function handleSubmit() {
+      var _this = this;
+
+      axios.post('/charges', {
+        pinList: this.pinList,
+        type: true
+      }).then(function (_ref) {
+        var data = _ref.data;
+
+        _this.$toast.success(data.message, "Success"); // console.log(data.data)
+
+
+        _this.pinList = [{
+          number: ['', '', '', ''],
+          amount: ''
+        }];
+      })["catch"](function (_ref2) {
+        var response = _ref2.response;
+
+        _this.$toast.error('빈칸을 채워주세요.', "Error");
+
+        console.log(response.data.errors);
+      });
+    },
+    add: function add(index) {
+      this.pinList.push({
+        number: ['', '', '', ''],
+        amount: ''
+      });
+    },
+    remove: function remove(index) {
+      this.pinList.splice(index, 1);
+    },
+    classes: function classes(k) {
+      return ['g-px-5', k != 3 ? 'col-2' : 'col-3'];
+    },
+    placeholder: function placeholder(k) {
+      return k != 3 ? '4자리' : '4-6자리';
+    },
+    maxlength: function maxlength(k) {
+      return k != 3 ? '4' : '6';
+    },
+    numberWithCommas: function numberWithCommas(x) {
+      return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./resources/js/app.js":
 /*!*****************************!*\
   !*** ./resources/js/app.js ***!
@@ -75654,15 +75798,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
 /* harmony import */ var _Voucher_vue_vue_type_template_id_acb8bf96___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Voucher.vue?vue&type=template&id=acb8bf96& */ "./resources/js/pages/Voucher.vue?vue&type=template&id=acb8bf96&");
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* harmony import */ var _Voucher_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Voucher.vue?vue&type=script&lang=js& */ "./resources/js/pages/Voucher.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
-var script = {}
+
+
 
 
 /* normalize component */
 ;
-var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__.default)(
-  script,
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__.default)(
+  _Voucher_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__.default,
   _Voucher_vue_vue_type_template_id_acb8bf96___WEBPACK_IMPORTED_MODULE_0__.render,
   _Voucher_vue_vue_type_template_id_acb8bf96___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
   false,
@@ -75964,6 +76110,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Shop_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Shop.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pages/Shop.vue?vue&type=script&lang=js&");
  /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Shop_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__.default); 
+
+/***/ }),
+
+/***/ "./resources/js/pages/Voucher.vue?vue&type=script&lang=js&":
+/*!*****************************************************************!*\
+  !*** ./resources/js/pages/Voucher.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Voucher_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Voucher.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pages/Voucher.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Voucher_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__.default); 
 
 /***/ }),
 
@@ -79330,7 +79492,7 @@ var render = function() {
                 staticClass: "g-mb-10 g-font-weight-600",
                 attrs: { for: "remittance" }
               },
-              [_vm._v("입금 할 금액")]
+              [_vm._v("입금할 금액")]
             ),
             _vm._v(" "),
             _c("input", {
@@ -79389,7 +79551,7 @@ var staticRenderFns = [
       _vm._v(" "),
       _c("p", [
         _vm._v(
-          "\n                    입금자명은 한 번 지정시 변경이 불가능 합니다.\n                    입금금액과 입금자명이 정확하다면 3분내로 충전됩니다.\n                    24시간 동안 입금이 없을 시 취소됩니다.\n                "
+          "\n                    입금자명은 한 번 지정 시 변경이 불가능합니다.\n                    입금금액과 입금자명이 정확하다면 3분 내로 충전됩니다.\n                    24시간 동안 입금이 없을 시 취소됩니다.\n                "
         )
       ])
     ])
@@ -80187,39 +80349,203 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", { staticClass: "g-pr-20--lg" }, [
+    _c("div", { staticClass: "g-bg-white g-pa-30 u-shadow-v11 text-center" }, [
+      _c(
+        "form",
+        {
+          attrs: { autocomplete: "off" },
+          on: {
+            submit: function($event) {
+              $event.preventDefault()
+              return _vm.handleSubmit($event)
+            }
+          }
+        },
+        [
+          _c(
+            "label",
+            {
+              staticClass: "g-mb-10 g-font-weight-600",
+              attrs: { for: "remitter" }
+            },
+            [_vm._v("핀 번호")]
+          ),
+          _vm._v(" "),
+          _vm._l(_vm.pinList, function(pin, k) {
+            return _c("div", { key: k, staticClass: "form-group g-mb-10" }, [
+              _c("div", { staticClass: "col-12" }, [
+                _c(
+                  "div",
+                  {
+                    staticClass:
+                      "row list-inline d-flex justify-content-between mb-0 align-items-center"
+                  },
+                  [
+                    _vm._l(pin.number, function(number, k) {
+                      return _c("div", { key: k, class: _vm.classes(k) }, [
+                        _c("input", {
+                          directives: [
+                            { name: "int", rawName: "v-int" },
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: pin.number[k],
+                              expression: "pin.number[k]"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: {
+                            type: "text",
+                            placeholder: _vm.placeholder(k),
+                            maxlength: _vm.maxlength(k)
+                          },
+                          domProps: { value: pin.number[k] },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(pin.number, k, $event.target.value)
+                            }
+                          }
+                        })
+                      ])
+                    }),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-2 g-px-5" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: pin.amount,
+                            expression: "pin.amount"
+                          },
+                          { name: "int", rawName: "v-int" }
+                        ],
+                        staticClass: "form-control",
+                        attrs: { type: "text", placeholder: "금액 입력" },
+                        domProps: { value: pin.amount },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(pin, "amount", $event.target.value)
+                          }
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-1 align-center g-px-5" }, [
+                      _c("i", {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: k || (!k && _vm.pinList.length > 1),
+                            expression: "k || ( !k && pinList.length > 1)"
+                          }
+                        ],
+                        staticClass:
+                          "fas fa-minus-circle align-items-center text-center",
+                        staticStyle: { cursor: "pointer" },
+                        on: {
+                          click: function($event) {
+                            return _vm.remove(k)
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("i", {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: k == _vm.pinList.length - 1,
+                            expression: "k == pinList.length-1"
+                          }
+                        ],
+                        staticClass: "fas fa-plus-circle",
+                        staticStyle: { cursor: "pointer" },
+                        on: {
+                          click: function($event) {
+                            return _vm.add(k)
+                          }
+                        }
+                      })
+                    ])
+                  ],
+                  2
+                )
+              ])
+            ])
+          }),
+          _vm._v(" "),
+          _c("hr", { staticClass: "my-3" }),
+          _vm._v(" "),
+          _vm.isEmptyPinList
+            ? _c(
+                "div",
+                {
+                  staticClass:
+                    "list-inline-item d-flex justify-content-end align-items-center"
+                },
+                [
+                  _c(
+                    "p",
+                    {
+                      staticClass:
+                        "g-font-weight-400 g-color-gray list-inline-item mb-0 mr-4"
+                    },
+                    [_vm._v("총 금액")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "h4",
+                    {
+                      staticClass:
+                        "g-font-weight-700 g-color-black list-inline-item mb-0 mr-1"
+                    },
+                    [_vm._v(_vm._s(_vm.numberWithCommas(_vm.total)) + "원")]
+                  )
+                ]
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          _vm._m(0),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "btn u-btn-outline-primary btn-lg btn-block",
+              attrs: { disabled: _vm.disabled }
+            },
+            [_c("span", [_vm._v("요청하기")])]
+          )
+        ],
+        2
+      )
+    ])
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "g-pr-20--lg" }, [
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-info p-t-15 p-b-15 p-l-40 p-r-40",
-          attrs: {
-            type: "button",
-            "data-toggle": "modal",
-            "data-target": "#registerModal"
-          }
-        },
-        [_vm._v("상품권")]
-      ),
+    return _c("div", { staticClass: "alert alert-danger g-mt-30" }, [
+      _c("h5", [
+        _c("i", { staticClass: "fa fa-info-circle" }),
+        _vm._v(" 충전시 유의 사항")
+      ]),
       _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-info p-t-15 p-b-15 p-l-40 p-r-40",
-          attrs: {
-            type: "button",
-            "data-toggle": "modal",
-            "data-target": "#registerModal"
-          }
-        },
-        [_vm._v("상품권")]
-      )
+      _c("p", [
+        _vm._v(
+          "\n                    상품권 금액과 핀 번호가 정확하다면 3분 내로 충전됩니다.\n                    핀 번호가 일치하지 않을 시 취소됩니다.\n                "
+        )
+      ])
     ])
   }
 ]

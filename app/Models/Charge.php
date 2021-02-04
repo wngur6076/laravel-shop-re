@@ -38,7 +38,7 @@ class Charge extends Model
 
     public function getCreatedDateAttribute()
     {
-        return  $this->created_at->format('Y-m-d H:i:s');
+        return  $this->created_at->format('Y-m-d h:i:s');
     }
 
     public function getTypeNameAttribute()

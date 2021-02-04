@@ -10,7 +10,7 @@
                 </div>
 
                 <div class="form-group g-mb-30">
-                    <label class="g-mb-10 g-font-weight-600" for="remittance">입금 할 금액</label>
+                    <label class="g-mb-10 g-font-weight-600" for="remittance">입금할 금액</label>
                     <input id="remittance"
                         class="text-center form-control form-control-md g-brd-none g-brd-bottom g-brd-gray-light-v7 g-brd-gray-light-v3--focus rounded-0 px-0 g-py-10"
                         type="text" placeholder="충전하실 금액을 입력해주세요." v-model="amount">
@@ -19,8 +19,8 @@
                 <div class="alert alert-danger">
                     <h5><i class="fa fa-info-circle"></i> 충전시 유의 사항</h5>
                     <p>
-                        입금자명은 한 번 지정시 변경이 불가능 합니다.
-                        입금금액과 입금자명이 정확하다면 3분내로 충전됩니다.
+                        입금자명은 한 번 지정 시 변경이 불가능합니다.
+                        입금금액과 입금자명이 정확하다면 3분 내로 충전됩니다.
                         24시간 동안 입금이 없을 시 취소됩니다.
                     </p>
                 </div>
