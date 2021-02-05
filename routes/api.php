@@ -19,9 +19,6 @@ use App\Http\Controllers\FavoritesController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::get('/admin/accept', [ChargeAcceptController::class, 'index']);
-Route::post('/admin/accept', [ChargeAcceptController::class, 'store']);
-Route::post('/charges', [ChargesController::class, 'store']);
 
 Route::get('/tags', TagsController::class);
 
@@ -45,6 +42,11 @@ Route::group(['middleware' => 'auth:api'], function() {
 
     Route::get('orders/{product}', [OrdersController::class, 'show']);
     Route::post('orders/{product}', [OrdersController::class, 'store']);
+
+    Route::get('/admin/accept', [ChargeAcceptController::class, 'index'])->middleware('isAdmin');
+    Route::post('/admin/accept', [ChargeAcceptController::class, 'store'])->middleware('isAdmin');
+
+    Route::post('/charges', [ChargesController::class, 'store']);
 
     Route::post('/products/{product}/favorites', [FavoritesController::class, 'store']);
     Route::delete('/products/{product}/favorites', [FavoritesController::class, 'destroy']);

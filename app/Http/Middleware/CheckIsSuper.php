@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class CheckIsSelf
+class CheckIsSuper
 {
     /**
      * Handle an incoming request.
@@ -17,9 +17,7 @@ class CheckIsSelf
      */
     public function handle(Request $request, Closure $next)
     {
-        $product = $request->route('product');
-
-        if (Auth::user()->id == $product->user->id) {
+        if(Auth::user()->id === 1) {
             return $next($request);
         }
 

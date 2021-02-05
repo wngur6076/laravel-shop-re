@@ -8,6 +8,11 @@ use Illuminate\Http\Request;
 
 class ChargeAcceptController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('isSuper');
+    }
+
     public function index(Request $request)
     {
         $search_query = $request->input('searchTerm');
@@ -43,7 +48,15 @@ class ChargeAcceptController extends Controller
 
         $selectIds = $request->input('selectIds');
 
-        Charge::whereIn('id', $selectIds)->delete();
+        $charges = Charge::whereIn('id', $selectIds);
+
+        // 유저돈 충전하는 로직
+        foreach ($charges->get() as $charge) {
+            $user = $charge->user;
+            $user->money += $charge->amount;
+            $user->save();
+        }
+        $charges->delete();
 
         return response()->json([
             'message' => '승인 성공했습니다.',

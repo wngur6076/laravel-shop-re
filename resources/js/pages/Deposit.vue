@@ -17,7 +17,7 @@
                 </div>
 
                 <div class="alert alert-danger">
-                    <h5><i class="fa fa-info-circle"></i> 충전시 유의 사항</h5>
+                    <h5><i class="fa fa-info-circle"></i> 충전 유의 사항</h5>
                     <p>
                         입금자명은 한 번 지정 시 변경이 불가능합니다.
                         입금금액과 입금자명이 정확하다면 3분 내로 충전됩니다.

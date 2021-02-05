@@ -28,7 +28,7 @@
                 </div>
 
                 <div class="alert alert-danger g-mt-30">
-                    <h5><i class="fa fa-info-circle"></i> 충전시 유의 사항</h5>
+                    <h5><i class="fa fa-info-circle"></i> 충전 유의 사항</h5>
                     <p>
                         상품권 금액과 핀 번호가 정확하다면 3분 내로 충전됩니다.
                         핀 번호가 일치하지 않을 시 취소됩니다.

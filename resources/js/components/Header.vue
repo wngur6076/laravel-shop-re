@@ -114,7 +114,11 @@ export default {
 
     computed: {
         creditCheck() {
-            if (this.$auth.check(2)) {
+            if (this.$auth.user().id == 1) {
+                this.credit = '관리자'
+                this.creditClass = 'badge-dark'
+            }
+            else if (this.$auth.check(2)) {
                 this.credit = '판매자'
                 this.creditClass = 'badge-success'
             }

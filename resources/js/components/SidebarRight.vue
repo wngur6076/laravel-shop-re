@@ -55,8 +55,7 @@
                                         src="/files/logo/KakaoTalk_logo.svg" alt="Image Description">
                                     <div class="media-body">
                                         <h4 class="h6 g-color-black g-font-weight-600">카카오톡</h4>
-                                        <a class="btn u-btn-outline-primary g-font-size-11 g-rounded-25"
-                                            href="#">Follow</a>
+                                        <a class="btn u-btn-outline-primary g-font-size-11 g-rounded-25"><span>Follow</span></a>
                                     </div>
                                 </article>
                             </li>
@@ -66,8 +65,7 @@
                                         src="/files/logo/Discord_Logo.svg" alt="Image Description">
                                     <div class="media-body">
                                         <h4 class="h6 g-color-black g-font-weight-600">디스코드</h4>
-                                        <a class="btn u-btn-outline-primary g-font-size-11 g-rounded-25"
-                                            href="#">Follow</a>
+                                        <a class="btn u-btn-outline-primary g-font-size-11 g-rounded-25"><span>Follow</span></a>
                                     </div>
                                 </article>
                             </li>
@@ -77,8 +75,7 @@
                                         src="/files/logo/Telegram_logo.svg" alt="Image Description">
                                     <div class="media-body">
                                         <h4 class="h6 g-color-black g-font-weight-600">텔레그램</h4>
-                                        <a class="btn u-btn-outline-primary g-font-size-11 g-rounded-25"
-                                            href="#">Follow</a>
+                                        <a class="btn u-btn-outline-primary g-font-size-11 g-rounded-25"><span>Follow</span></a>
                                     </div>
                                 </article>
                             </li>
@@ -310,3 +307,16 @@ export default {
     }
 }
 </script>
+
+<style lang="scss">
+    .list-unstyled {
+        span {
+            color: rgb(114,192,44);
+        }
+        a:hover {
+            span {
+                color: white;
+            }
+        }
+    }
+</style>
