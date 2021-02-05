@@ -50,16 +50,22 @@ class ChargeAcceptController extends Controller
 
         $charges = Charge::whereIn('id', $selectIds);
 
-        // 유저돈 충전하는 로직
-        foreach ($charges->get() as $charge) {
-            $user = $charge->user;
-            $user->money += $charge->amount;
-            $user->save();
+        if (! $request->input('type')) {
+            // 유저돈 충전하는 로직
+            foreach ($charges->get() as $charge) {
+                $user = $charge->user;
+                $user->money += $charge->amount;
+                $user->save();
+            }
+            $charges->delete();
+            $message = '승인 성공했습니다.';
+        } else {
+            $charges->forceDelete();
+            $message = '삭제 성공했습니다.';
         }
-        $charges->delete();
 
         return response()->json([
-            'message' => '승인 성공했습니다.',
+            'message' => $message,
             'selectIds' => $selectIds
         ], 200);
     }

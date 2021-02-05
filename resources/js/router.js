@@ -6,10 +6,10 @@ import Login from './pages/Login'
 import Base from './pages/Base'
 import NotFound from './pages/NotFound'
 
-import Deposit from './pages/Deposit'
-import Voucher from './pages/Voucher'
+import DepositCharge from './pages/DepositCharge'
+import VoucherCharge from './pages/VoucherCharge'
 import ChargeHistory from './pages/ChargeHistory'
-import BuyHistory from './pages/BuyHistory'
+import PurchaseHistory from './pages/PurchaseHistory'
 import SalesHistory from './pages/SalesHistory'
 import MyProducts from './pages/MyProducts'
 import ChargeAccept from './pages/ChargeAccept'
@@ -60,17 +60,17 @@ const routes = [
             {
                 path: '',
                 name: 'charge.index',
-                component: Deposit
+                component: DepositCharge
             },
             {
                 name: 'charge.deposit',
                 path: 'deposit',
-                component: Deposit
+                component: DepositCharge
             },
             {
                 name: 'charge.voucher',
                 path: 'voucher',
-                component: Voucher
+                component: VoucherCharge
             },
         ]
     },
@@ -98,9 +98,9 @@ const routes = [
                 component: ChargeHistory
             },
             {
-                name: 'history.buy',
-                path: 'buy',
-                component: BuyHistory
+                name: 'history.purchase',
+                path: 'purchase',
+                component: PurchaseHistory
             },
         ]
     },

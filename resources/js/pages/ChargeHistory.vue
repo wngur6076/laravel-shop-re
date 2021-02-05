@@ -1,94 +1,138 @@
 <template>
     <div class="g-pr-20--lg">
-        <vue-good-table
+        <vue-good-table ref="my-table"
+            mode="remote"
             :columns="columns"
             :rows="rows"
-            :select-options="{ enabled: true }"
-            :search-options="{ enabled: true }"
-            :pagination-options="{
+            :globalSearch="true"
+            :search-options="{
                 enabled: true,
-                mode: 'pages'
-            }">
+                skipDiacritics: true,
+            }"
+            @on-sort-change="onSortChange"
+            @on-search="onSearch" class="g-mb-10">
+            <template slot="table-row" slot-scope="props">
+                <span v-if="props.column.field == 'accept'">
+                    <i class="fas fa-check fa-lg"></i>
+                </span>
+                <span v-else>
+                    {{props.formattedRow[props.column.field]}}
+                </span>
+            </template>
         </vue-good-table>
+        <pagination :meta="meta"></pagination>
     </div>
 </template>
 
 <script>
-    import 'vue-good-table/dist/vue-good-table.css'
-    import { VueGoodTable } from 'vue-good-table';
-    export default {
-        components: {
-            VueGoodTable,
+import Pagination from '../components/Pagination'
+import 'vue-good-table/dist/vue-good-table.css'
+import { VueGoodTable } from 'vue-good-table';
+export default {
+    components: {
+        VueGoodTable, Pagination
+    },
+
+    data() {
+        return {
+            meta: {
+                searchTerm: '',
+                total: 0,
+                per_page: 20,
+                from: 1,
+                to: 0,
+                current_page: 1,
+            },
+            sort: 'created_at',
+            order: 'desc',
+
+            columns:
+            [
+                {
+                    label: '날짜',
+                    field: 'created_at',
+                    type: 'date',
+                    dateInputFormat: 'yyyy-MM-dd hh:mm:ss',
+                    dateOutputFormat: 'yyyy-MM-dd hh:mm:ss',
+                    thClass: 'text-center',
+                    tdClass: 'text-center',
+                },
+                {
+                    label: '종류',
+                    field: 'type',
+                    thClass: 'text-center',
+                    tdClass: 'text-center',
+                },
+                {
+                    label: '핀번호',
+                    field: 'pin_number',
+                    thClass: 'text-center',
+                    tdClass: 'text-center',
+                },
+                {
+                    label: '금액',
+                    field: 'amount',
+                    type: 'number',
+                    thClass: 'text-center',
+                    tdClass: 'text-center',
+                },
+                {
+                    label: '승인',
+                    field: 'accept',
+                    thClass: 'text-center',
+                    tdClass: this.tdClassFunc,
+                },
+            ],
+            rows: [],
+        };
+    },
+
+    watch: {
+        "$route": 'getRecords'
+    },
+
+    mounted() {
+        this.getRecords();
+    },
+
+    methods: {
+        onSortChange(params) {
+            params[0].field == 'accept' ? this.sort = 'deleted_at' : this.sort = params[0].field;
+            this.order = params[0].type;
+            this.getRecords();
         },
 
-        data() {
-            return {
-                columns: [{
-                        label: 'Name',
-                        field: 'name',
-                    },
-                    {
-                        label: 'Age',
-                        field: 'age',
-                        type: 'number',
-                    },
-                    {
-                        label: 'Created On',
-                        field: 'createdAt',
-                        type: 'date',
-                        dateInputFormat: 'yyyy-MM-dd',
-                        dateOutputFormat: 'MMM do yy',
-                    },
-                    {
-                        label: 'Percent',
-                        field: 'score',
-                        type: 'percentage',
-                    },
-                ],
-                rows: [{
-                        id: 1,
-                        name: "John",
-                        age: 20,
-                        createdAt: '2011-10-31',
-                        score: 0.03343
-                    },
-                    {
-                        id: 2,
-                        name: "Jane",
-                        age: 24,
-                        createdAt: '2011-10-31',
-                        score: 0.03343
-                    },
-                    {
-                        id: 3,
-                        name: "Susan",
-                        age: 16,
-                        createdAt: '2011-10-30',
-                        score: 0.03343
-                    },
-                    {
-                        id: 4,
-                        name: "Chris",
-                        age: 55,
-                        createdAt: '2011-10-11',
-                        score: 0.03343
-                    },
-                    {
-                        id: 5,
-                        name: "Dan",
-                        age: 40,
-                        createdAt: '2011-10-21',
-                        score: 0.03343
-                    },
-                    {
-                        id: 6,
-                        name: "John",
-                        age: 20,
-                        createdAt: '2011-10-31',
-                        score: 0.03343
-                    },
-                ],
-            };
+        getRecords() {
+            axios.get(`/charges/history?searchTerm=${this.meta.searchTerm}&per_page=${this.meta.per_page}&sort=${this.sort}&order=${this.order}`,
+            { params: this.$route.query })
+            .then(({ data }) => {
+                this.rows = data.data
+                this.meta = data.meta
+                this.meta.searchTerm = data.searchTerm
+                this.sort = data.sort
+                this.order = data.order
+            })
+            .catch(error => {
+                console.log(error.response);
+            })
+        },
+
+        updateParams(newProps) {
+            this.meta = Object.assign({}, this.meta, newProps);
+        },
+
+        onSearch: _.debounce(function (params) {
+            this.updateParams(params);
+            this.getRecords();
+            return false;
+        }, 100),
+
+        tdClassFunc(row) {
+            if (! row.accept) {
+                return 'text-center';
+            }
+            return 'text-center g-color-green';
         },
     }
+}
 </script>

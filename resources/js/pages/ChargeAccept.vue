@@ -13,7 +13,10 @@
             @on-sort-change="onSortChange"
             @on-search="onSearch" class="g-mb-10">
             <div slot="table-actions">
-                <button class="btn u-btn-primary btn-lg btn-block" @click="accept"><span>승인하기</span></button>
+                <button class="btn u-btn-primary" @click="remove(false)">승인하기</button>
+            </div>
+            <div slot="selected-row-actions">
+                <a class="btn-delete" style="color: orangered;" @click="remove(true)">삭제하기</a>
             </div>
         </vue-good-table>
         <pagination :meta="meta"></pagination>
@@ -43,26 +46,35 @@ export default {
             sort: 'created_at',
             order: 'desc',
 
-            columns: [
+            columns:
+            [
                 {
                     label: '날짜',
                     field: 'created_at',
                     type: 'date',
                     dateInputFormat: 'yyyy-MM-dd hh:mm:ss',
                     dateOutputFormat: 'yyyy-MM-dd hh:mm:ss',
+                    thClass: 'text-center',
+                    tdClass: 'text-center',
                 },
                 {
                     label: '종류',
                     field: 'type',
+                    thClass: 'text-center',
+                    tdClass: 'text-center',
                 },
                 {
                     label: '핀번호',
                     field: 'pin_number',
+                    thClass: 'text-center',
+                    tdClass: 'text-center',
                 },
                 {
                     label: '금액',
                     field: 'amount',
                     type: 'number',
+                    thClass: 'text-center',
+                    tdClass: 'text-center',
                 },
             ],
             rows: [],
@@ -109,7 +121,7 @@ export default {
             return false;
         }, 100),
 
-        accept() {
+        remove(type) {
             let selectIds = []
             this.$refs['my-table'].selectedRows.forEach(row => {
                 selectIds.push(row.id)
@@ -117,6 +129,7 @@ export default {
 
             axios.post('/admin/accept', {
                 selectIds: selectIds,
+                type: type
             })
             .then(({ data }) => {
                 this.getRecords();
@@ -129,5 +142,17 @@ export default {
         },
     },
 }
-
 </script>
+
+<style lang="scss">
+    .btn-delete {
+        cursor: pointer;
+        &:hover {
+            font-weight: 900;
+        }
+    }
+
+    a:hover { 
+        text-decoration: none;
+    }
+</style>

@@ -169,7 +169,7 @@ export default {
                     },
                     {
                         name: '구매 내역',
-                        path: 'history.buy',
+                        path: 'history.purchase',
                         active:  false
                     },
                 ],

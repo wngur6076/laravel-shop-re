@@ -20,6 +20,7 @@ class ChargeResource extends JsonResource
             'amount' => $this->amount_convert,
             'type' => $this->type_name,
             'created_at' => $this->created_date,
+            'accept' => $this->accept
         ];
     }
 }

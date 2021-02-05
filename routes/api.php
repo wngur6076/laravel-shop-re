@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ChargeAcceptController;
+use App\Http\Controllers\ChargeHistoryController;
 use App\Http\Controllers\ChargesController;
 use App\Http\Controllers\TagsController;
 use App\Http\Controllers\OrdersController;
@@ -45,6 +46,8 @@ Route::group(['middleware' => 'auth:api'], function() {
 
     Route::get('/admin/accept', [ChargeAcceptController::class, 'index'])->middleware('isAdmin');
     Route::post('/admin/accept', [ChargeAcceptController::class, 'store'])->middleware('isAdmin');
+
+    Route::get('/charges/history', ChargeHistoryController::class);
 
     Route::post('/charges', [ChargesController::class, 'store']);
 

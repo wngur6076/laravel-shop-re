@@ -50,4 +50,9 @@ class Charge extends Model
     {
         return number_format($this->amount);
     }
+
+    public function getAcceptAttribute()
+    {
+        return $this->deleted_at ? true : false;
+    }
 }
