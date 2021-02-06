@@ -14,17 +14,14 @@ class OrderResource extends JsonResource
      */
     public function toArray($request)
     {
-        $maxQuantityList = [];
-        $codeList = CodeResource::collection($this->order_option);
-        foreach ($codeList as $code) {
-            $maxQuantityList[] = $this->getCodeQuantity($code->period);
-        }
-
+        $product = $this->codeList()->withTrashed()->first()->product;
         return [
             'id' => $this->id,
-            'title' => $this->title,
-            'code_list' => $codeList,
-            'max_quantity_list' => $maxQuantityList,
+            'hash' => $this->hash,
+            'product' => $product->title,
+            'total' => $this->total_convert,
+            'created_at' => $this->created_date,
+            'file_link' => $product->file_link
         ];
     }
 }

@@ -223,7 +223,7 @@ export default {
                 case 'history.charge':
                     this.assignHstory(0)
                     break;
-                case 'history.buy':
+                case 'history.purchase':
                     this.assignHstory(1)
                     break;
                 case 'admin.index':

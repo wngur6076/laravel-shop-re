@@ -157,6 +157,7 @@ const router = new VueRouter({
     history: true,
     mode: 'history',
     linkActiveClass: 'active',
+    scrollBehavior (to, from, savedPosition) { return { x: 0, y: 0 } },
     routes,
 })
 

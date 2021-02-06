@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Code;
 use App\Models\Product;
 use Illuminate\Http\Request;
-use App\Http\Resources\OrderResource;
+use App\Http\Resources\CodeDetailsResource;
 
 class OrdersController extends Controller
 {
@@ -69,7 +69,7 @@ class OrdersController extends Controller
     public function show(Product $product)
     {
         return response()->json([
-            'product' => new OrderResource($product)
+            'product' => new CodeDetailsResource($product)
         ], 200);
     }
 

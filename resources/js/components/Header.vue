@@ -116,7 +116,7 @@ export default {
         creditCheck() {
             if (this.$auth.user().id == 1) {
                 this.credit = '관리자'
-                this.creditClass = 'badge-dark'
+                this.creditClass = 'badge-warning'
             }
             else if (this.$auth.check(2)) {
                 this.credit = '판매자'
@@ -201,13 +201,13 @@ export default {
 
             .dropdown-button {
                 position: absolute;
-                top: 5px;
+                top: 9px;
                 right: 70px;
             }
 
             .product-add-button {
                 position: absolute;
-                top: 5px;
+                top: 9px;
                 right: 110px;
             }
         }

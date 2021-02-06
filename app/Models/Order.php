@@ -28,4 +28,14 @@ class Order extends Model
         $user->credit = 1;
         $user->save();
     }
+
+    public function getCreatedDateAttribute()
+    {
+        return  $this->created_at->format('Y-m-d h:i:s');
+    }
+
+    public function getTotalConvertAttribute()
+    {
+        return number_format($this->total);
+    }
 }

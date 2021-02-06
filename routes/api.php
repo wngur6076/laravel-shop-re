@@ -9,6 +9,7 @@ use App\Http\Controllers\TagsController;
 use App\Http\Controllers\OrdersController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\FavoritesController;
+use App\Http\Controllers\PurchaseHistoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,6 +49,7 @@ Route::group(['middleware' => 'auth:api'], function() {
     Route::post('/admin/accept', [ChargeAcceptController::class, 'store'])->middleware('isAdmin');
 
     Route::get('/charges/history', ChargeHistoryController::class);
+    Route::get('/charges/purchase', PurchaseHistoryController::class);
 
     Route::post('/charges', [ChargesController::class, 'store']);
 
