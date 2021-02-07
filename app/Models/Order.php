@@ -9,7 +9,7 @@ class Order extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['hash', 'total'];
+    protected $fillable = ['hash', 'total', 'title', 'file_link'];
 
     public function user()
     {

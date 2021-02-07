@@ -54,27 +54,27 @@ export default {
                     type: 'date',
                     dateInputFormat: 'yyyy-MM-dd hh:mm:ss',
                     dateOutputFormat: 'yyyy-MM-dd hh:mm:ss',
-                    thClass: 'text-center',
-                    tdClass: 'text-center',
+                    thClass: this.centerClassFunc,
+                    tdClass: this.centerClassFunc,
                 },
                 {
                     label: '종류',
                     field: 'type',
-                    thClass: 'text-center',
-                    tdClass: 'text-center',
+                    thClass: this.centerClassFunc,
+                    tdClass: this.centerClassFunc,
                 },
                 {
                     label: '핀번호',
                     field: 'pin_number',
-                    thClass: 'text-center',
-                    tdClass: 'text-center',
+                    thClass: this.centerClassFunc,
+                    tdClass: this.centerClassFunc,
                 },
                 {
                     label: '금액',
                     field: 'amount',
                     type: 'number',
-                    thClass: 'text-center',
-                    tdClass: 'text-center',
+                    thClass: this.centerClassFunc,
+                    tdClass: this.centerClassFunc,
                 },
             ],
             rows: [],
@@ -140,6 +140,10 @@ export default {
                 console.log(response.data.errors)
             })
         },
+
+        centerClassFunc() {
+            return 'text-center align-middle';
+        },
     },
 }
 </script>
@@ -152,7 +156,7 @@ export default {
         }
     }
 
-    a:hover { 
+    a:hover {
         text-decoration: none;
     }
 </style>

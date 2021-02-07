@@ -40,7 +40,9 @@ class OrdersController extends Controller
         $hash = bin2hex(random_bytes(32));
         $order = $request->user()->orders()->create([
             'hash' => $hash,
+            'title' => $product->title,
             'total' => $total,
+            'file_link' => $product->file_link,
         ]);
 
         // 유저돈에서 total만큼 차감

@@ -1,6 +1,6 @@
 <template>
     <div class="g-pr-20--lg">
-        <vue-good-table ref="my-table"
+        <vue-good-table
             mode="remote"
             :columns="columns"
             :rows="rows"
@@ -54,32 +54,32 @@ export default {
                     type: 'date',
                     dateInputFormat: 'yyyy-MM-dd hh:mm:ss',
                     dateOutputFormat: 'yyyy-MM-dd hh:mm:ss',
-                    thClass: 'text-center',
-                    tdClass: 'text-center',
+                    thClass: this.centerClassFunc,
+                    tdClass: this.centerClassFunc,
                 },
                 {
                     label: '종류',
                     field: 'type',
-                    thClass: 'text-center',
-                    tdClass: 'text-center',
+                    thClass: this.centerClassFunc,
+                    tdClass: this.centerClassFunc,
                 },
                 {
                     label: '핀번호',
                     field: 'pin_number',
-                    thClass: 'text-center',
-                    tdClass: 'text-center',
+                    thClass: this.centerClassFunc,
+                    tdClass: this.centerClassFunc,
                 },
                 {
                     label: '금액',
                     field: 'amount',
                     type: 'number',
-                    thClass: 'text-center',
-                    tdClass: 'text-center',
+                    thClass: this.centerClassFunc,
+                    tdClass: this.centerClassFunc,
                 },
                 {
                     label: '승인',
                     field: 'accept',
-                    thClass: 'text-center',
+                    thClass: this.centerClassFunc,
                     tdClass: this.tdClassFunc,
                 },
             ],
@@ -127,11 +127,15 @@ export default {
             return false;
         }, 100),
 
+        centerClassFunc() {
+            return 'text-center align-middle';
+        },
+
         tdClassFunc(row) {
             if (! row.accept) {
-                return 'text-center';
+                return 'text-center align-middle';
             }
-            return 'text-center g-color-green';
+            return 'text-center align-middle g-color-green';
         },
     }
 }

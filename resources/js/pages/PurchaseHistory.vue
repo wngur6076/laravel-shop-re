@@ -1,6 +1,6 @@
 <template>
     <div class="g-pr-20--lg">
-        <vue-good-table ref="my-table"
+        <vue-good-table
             mode="remote"
             :columns="columns"
             :rows="rows"
@@ -9,12 +9,13 @@
                 enabled: true,
                 skipDiacritics: true,
             }"
-            class="g-mb-10">
+            @on-sort-change="onSortChange"
+            @on-search="onSearch" class="g-mb-10">
             <template slot="table-row" slot-scope="props">
-                <span v-if="props.column.field == 'product'">
-                    <a class="u-link-v5 g-color-black g-color-primary--hover g-cursor-pointer product-title"
-                    data-toggle="modal" data-target="#readProduct" @click="click(props.row.hash)">
-                        {{ props.row.product }}
+                <span v-if="props.column.field == 'title'">
+                    <a class="u-link-v5 g-color-black g-color-primary--hover g-cursor-pointer"
+                    data-toggle="modal" data-target="#orderDetails" @click="getId(props.row, 4)">
+                        {{ props.row.title }}
                     </a>
                 </span>
                 <span v-else-if="props.column.field == 'file_link'">
@@ -26,6 +27,8 @@
             </template>
         </vue-good-table>
         <pagination :meta="meta"></pagination>
+
+        <order-details v-if="$root.isShowModal == 4" :orderDetails="selected"></order-details>
     </div>
 </template>
 
@@ -33,9 +36,10 @@
 import Pagination from '../components/Pagination'
 import 'vue-good-table/dist/vue-good-table.css'
 import { VueGoodTable } from 'vue-good-table';
+import OrderDetails from '../components/OrderDetails'
 export default {
     components: {
-        VueGoodTable, Pagination
+        VueGoodTable, Pagination, OrderDetails
     },
 
     data() {
@@ -59,33 +63,35 @@ export default {
                     type: 'date',
                     dateInputFormat: 'yyyy-MM-dd hh:mm:ss',
                     dateOutputFormat: 'yyyy-MM-dd hh:mm:ss',
-                    thClass: 'text-center',
-                    tdClass: 'text-center',
+                    thClass: this.centerClassFunc,
+                    tdClass: this.centerClassFunc,
                 },
                 {
                     label: '제품',
-                    field: 'product',
-                    thClass: 'text-center',
-                    tdClass: 'text-center',
+                    field: 'title',
+                    thClass: this.centerClassFunc,
+                    tdClass: this.centerClassFunc,
                 },
                 {
                     label: '총액',
                     field: 'total',
                     type: 'number',
-                    thClass: 'text-center',
-                    tdClass: 'text-center',
+                    thClass: this.centerClassFunc,
+                    tdClass: this.centerClassFunc,
                 },
                 {
                     label: '파일',
                     field: 'file_link',
-                    thClass: 'text-center',
+                    thClass: this.centerClassFunc,
                     tdClass: this.tdClassFunc,
                 },
             ],
-            rows: [
-                /* { created_at: '2021-02-05 10:06:10', product: '서든 플라이 학살용', total: '5,0000', file_link: 'https://drive.google.com/file/d/1LYozTVCPd5HMAxn0Ypy0M1fu7I6b3GtW/view?usp=sharing', hash: 'alkdawo1' },
-                { created_at: '2021-02-04 08:01:05', product: '서든 플라이 랭커용', total: '2,1000', file_link: '', hash: 'besgkp2' } */
-            ],
+            rows: [],
+
+            selected: {
+                hash: '',
+                title: ''
+            }
         };
     },
 
@@ -98,6 +104,12 @@ export default {
     },
 
     methods: {
+        onSortChange(params) {
+            this.sort = params[0].field;
+            this.order = params[0].type;
+            this.getRecords();
+        },
+
         getRecords() {
             axios.get(`/charges/purchase?searchTerm=${this.meta.searchTerm}&per_page=${this.meta.per_page}&sort=${this.sort}&order=${this.order}`,
             { params: this.$route.query })
@@ -113,11 +125,25 @@ export default {
             })
         },
 
+        updateParams(newProps) {
+            this.meta = Object.assign({}, this.meta, newProps);
+        },
+
+        onSearch: _.debounce(function (params) {
+            this.updateParams(params);
+            this.getRecords();
+            return false;
+        }, 100),
+
         tdClassFunc(row) {
             if (! row.file_link) {
-                return 'text-center g-color-black';
+                return 'text-center align-middle g-color-black';
             }
-            return 'text-center g-color-green';
+            return 'text-center align-middle g-color-green';
+        },
+
+        centerClassFunc() {
+            return 'text-center align-middle';
         },
 
         fileLink(url){
@@ -125,9 +151,11 @@ export default {
             : ''
         },
 
-        click(hash) {
-            console.log(hash)
-        }
+        getId(row, val) {
+            this.selected.title = row.title
+            this.selected.hash = row.hash
+            this.$root.isShowModal = val
+        },
     }
 }
 </script>

@@ -29,4 +29,14 @@ class Code extends Model
     {
         return $this->belongsToMany(Order::class, 'orders_code_list')->withPivot('quantity');
     }
+
+    public function getPeriodConvertAttribute()
+    {
+        return $this->period == -1 ? 0xff : $this->period;
+    }
+
+    public function getPriceConvertAttribute()
+    {
+        return number_format($this->price);
+    }
 }

@@ -49,7 +49,8 @@ Route::group(['middleware' => 'auth:api'], function() {
     Route::post('/admin/accept', [ChargeAcceptController::class, 'store'])->middleware('isAdmin');
 
     Route::get('/charges/history', ChargeHistoryController::class);
-    Route::get('/charges/purchase', PurchaseHistoryController::class);
+    Route::get('/charges/purchase', [PurchaseHistoryController::class, 'index']);
+    Route::get('/charges/purchase/{hash}', [PurchaseHistoryController::class, 'show']);
 
     Route::post('/charges', [ChargesController::class, 'store']);
 

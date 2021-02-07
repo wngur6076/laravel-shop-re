@@ -14,14 +14,13 @@ class OrderResource extends JsonResource
      */
     public function toArray($request)
     {
-        $product = $this->codeList()->withTrashed()->first()->product;
         return [
             'id' => $this->id,
             'hash' => $this->hash,
-            'product' => $product->title,
+            'title' => $this->title,
             'total' => $this->total_convert,
             'created_at' => $this->created_date,
-            'file_link' => $product->file_link
+            'file_link' => $this->file_link
         ];
     }
 }
