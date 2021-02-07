@@ -13,7 +13,7 @@
             @on-sort-change="onSortChange"
             @on-search="onSearch" class="g-mb-10">
             <div slot="table-actions">
-                <button class="btn u-btn-primary" @click="remove(false)">승인하기</button>
+                <button class="btn u-btn-primary g-mr-5" @click="remove(false)">승인하기</button>
             </div>
             <div slot="selected-row-actions">
                 <a class="btn-delete" style="color: orangered;" @click="remove(true)">삭제하기</a>

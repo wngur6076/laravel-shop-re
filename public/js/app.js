@@ -13487,7 +13487,8 @@ __webpack_require__.r(__webpack_exports__);
       this.$router.push({
         name: this.$route.name,
         query: {
-          page: currentPage
+          page: currentPage,
+          q: this.$route.query.q
         }
       });
     },
@@ -14410,7 +14411,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -14453,7 +14453,8 @@ __webpack_require__.r(__webpack_exports__);
         }]
       },
       currentLinks: null,
-      noticeImageUrl: '/files/notice.gif'
+      noticeImageUrl: '/files/notice.gif',
+      word: ''
     };
   },
   watch: {
@@ -14463,6 +14464,24 @@ __webpack_require__.r(__webpack_exports__);
     this.fetchlinks();
   },
   methods: {
+    search: function search() {
+      var name = this.$route.name;
+      var page = this.$route.query.page;
+
+      if (name != 'home' && name != 'tags.shop') {
+        page = 1;
+        name = 'home';
+      }
+
+      this.$router.push({
+        name: name,
+        query: {
+          page: page,
+          q: this.word
+        }
+      });
+      this.word = '';
+    },
     fetchlinks: function fetchlinks() {
       switch (this.$route.name) {
         case 'home':
@@ -20584,7 +20603,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".u-pagination-v1__item:hover span[data-v-d7acf176] {\n  color: #72c02c;\n}\n.u-pagination-v1__item.disabled[data-v-d7acf176] {\n  pointer-events: none;\n}\n.u-pagination-v1__item.u-pagination-v1-4--active span[data-v-d7acf176] {\n  color: white;\n}", "",{"version":3,"sources":["webpack://./resources/js/components/Pagination.vue"],"names":[],"mappings":"AAmFQ;EACI,cAAA;AAlFZ;AAsFI;EACI,oBAAA;AApFR;AAwFQ;EACI,YAAA;AAtFZ","sourcesContent":["\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n.u-pagination-v1__item {\n    &:hover {\n        span {\n            color: rgb(114,192,44);\n        }\n    }\n\n    &.disabled {\n        pointer-events: none;\n    }\n\n    &.u-pagination-v1-4--active {\n        span {\n            color: white;\n        }\n    }\n}\n"],"sourceRoot":""}]);
+___CSS_LOADER_EXPORT___.push([module.id, ".u-pagination-v1__item:hover span[data-v-d7acf176] {\n  color: #72c02c;\n}\n.u-pagination-v1__item.disabled[data-v-d7acf176] {\n  pointer-events: none;\n}\n.u-pagination-v1__item.u-pagination-v1-4--active span[data-v-d7acf176] {\n  color: white;\n}", "",{"version":3,"sources":["webpack://./resources/js/components/Pagination.vue"],"names":[],"mappings":"AAoFQ;EACI,cAAA;AAnFZ;AAuFI;EACI,oBAAA;AArFR;AAyFQ;EACI,YAAA;AAvFZ","sourcesContent":["\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n.u-pagination-v1__item {\n    &:hover {\n        span {\n            color: rgb(114,192,44);\n        }\n    }\n\n    &.disabled {\n        pointer-events: none;\n    }\n\n    &.u-pagination-v1-4--active {\n        span {\n            color: white;\n        }\n    }\n}\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -20719,7 +20738,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".list-unstyled span {\n  color: #72c02c;\n}\n.list-unstyled a:hover span {\n  color: white;\n}", "",{"version":3,"sources":["webpack://./resources/js/components/SidebarRight.vue"],"names":[],"mappings":"AAwTI;EACI,cAAA;AAvTR;AA0TQ;EACI,YAAA;AAxTZ","sourcesContent":["\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n.list-unstyled {\n    span {\n        color: rgb(114,192,44);\n    }\n    a:hover {\n        span {\n            color: white;\n        }\n    }\n}\n"],"sourceRoot":""}]);
+___CSS_LOADER_EXPORT___.push([module.id, ".list-unstyled span {\n  color: #72c02c;\n}\n.list-unstyled a:hover span {\n  color: white;\n}", "",{"version":3,"sources":["webpack://./resources/js/components/SidebarRight.vue"],"names":[],"mappings":"AA2UI;EACI,cAAA;AA1UR;AA6UQ;EACI,YAAA;AA3UZ","sourcesContent":["\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n.list-unstyled {\n    span {\n        color: rgb(114,192,44);\n    }\n    a:hover {\n        span {\n            color: white;\n        }\n    }\n}\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -79842,7 +79861,73 @@ var render = function() {
               _vm._v(" "),
               _c("hr", { staticClass: "g-brd-gray-light-v4 g-my-50" }),
               _vm._v(" "),
-              _vm._m(1)
+              _c("div", { staticClass: "g-mb-50" }, [
+                _c(
+                  "h3",
+                  { staticClass: "h5 g-color-black g-font-weight-600 mb-4" },
+                  [_vm._v("Search")]
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "input-group" }, [
+                  _c("span", { staticClass: "input-group-btn" }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass:
+                          "btn u-btn-primary g-rounded-left-50 g-py-13 g-px-20",
+                        on: { click: _vm.search }
+                      },
+                      [
+                        _c("i", {
+                          staticClass:
+                            "fas fa-search u-line-icon-pro g-pos-rel g-top-1"
+                        })
+                      ]
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.word,
+                        expression: "word"
+                      }
+                    ],
+                    staticClass:
+                      "form-control g-brd-primary g-placeholder-gray-dark-v5 border-left-0 g-rounded-right-50 g-px-12",
+                    attrs: {
+                      type: "text",
+                      placeholder: "Enter your search ..."
+                    },
+                    domProps: { value: _vm.word },
+                    on: {
+                      keypress: function($event) {
+                        if (
+                          !$event.type.indexOf("key") &&
+                          _vm._k(
+                            $event.keyCode,
+                            "enter",
+                            13,
+                            $event.key,
+                            "Enter"
+                          )
+                        ) {
+                          return null
+                        }
+                        return _vm.search($event)
+                      },
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.word = $event.target.value
+                      }
+                    }
+                  })
+                ])
+              ])
             ]
           )
         ])
@@ -79943,38 +80028,6 @@ var staticRenderFns = [
         ])
       ])
     ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "g-mb-50" }, [
-      _c("h3", { staticClass: "h5 g-color-black g-font-weight-600 mb-4" }, [
-        _vm._v("Search")
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "input-group" }, [
-        _c("span", { staticClass: "input-group-btn" }, [
-          _c(
-            "button",
-            {
-              staticClass: "btn u-btn-primary g-rounded-left-50 g-py-13 g-px-20"
-            },
-            [
-              _c("i", {
-                staticClass: "fas fa-search u-line-icon-pro g-pos-rel g-top-1"
-              })
-            ]
-          )
-        ]),
-        _vm._v(" "),
-        _c("input", {
-          staticClass:
-            "form-control g-brd-primary g-placeholder-gray-dark-v5 border-left-0 g-rounded-right-50 g-px-12",
-          attrs: { type: "email", placeholder: "Enter your search ..." }
-        })
-      ])
-    ])
   }
 ]
 render._withStripped = true
@@ -80054,7 +80107,7 @@ var render = function() {
               _c(
                 "button",
                 {
-                  staticClass: "btn u-btn-primary",
+                  staticClass: "btn u-btn-primary g-mr-5",
                   on: {
                     click: function($event) {
                       return _vm.remove(false)

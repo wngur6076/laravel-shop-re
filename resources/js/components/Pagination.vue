@@ -56,7 +56,8 @@ export default {
             this.$router.push({
                 name: this.$route.name,
                 query: {
-                    page: currentPage
+                    page: currentPage,
+                    q: this.$route.query.q,
                 },
             });
         },

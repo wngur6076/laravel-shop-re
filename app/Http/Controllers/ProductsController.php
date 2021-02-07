@@ -10,6 +10,7 @@ use App\Http\Utility\File;
 use App\Http\Requests\ProductsRequest;
 use App\Http\Resources\ProductResource;
 use App\Http\Resources\ProductDetailsResource;
+use Illuminate\Http\Request;
 
 class ProductsController extends Controller
 {
@@ -23,7 +24,7 @@ class ProductsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($slug = null)
+    public function index(Request $request, $slug = null)
     {
         if ($slug == 'favorites') {
             $user = User::find(auth()->id());
@@ -32,6 +33,11 @@ class ProductsController extends Controller
             $query = $slug
             ? Tag::whereSlug($slug)->firstOrFail()->products()
             : new Product;
+        }
+
+        if ($keyword = $request->input('q')) {
+            $raw = 'MATCH(title,body) AGAINST(? IN BOOLEAN MODE)';
+            $query = $query->whereRaw($raw, [$keyword.'*']);
         }
 
         $products = $query->latest()->Paginate(4);

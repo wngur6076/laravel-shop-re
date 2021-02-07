@@ -115,14 +115,13 @@
                         <h3 class="h5 g-color-black g-font-weight-600 mb-4">Search</h3>
                         <div class="input-group">
                             <span class="input-group-btn">
-                                <button class="btn u-btn-primary g-rounded-left-50 g-py-13 g-px-20">
-                                    <!-- <i class="icon-communication-062 u-line-icon-pro g-pos-rel g-top-1"></i> -->
+                                <button class="btn u-btn-primary g-rounded-left-50 g-py-13 g-px-20" @click="search">
                                     <i class="fas fa-search u-line-icon-pro g-pos-rel g-top-1"></i>
                                 </button>
                             </span>
                             <input
                                 class="form-control g-brd-primary g-placeholder-gray-dark-v5 border-left-0 g-rounded-right-50 g-px-12"
-                                type="email" placeholder="Enter your search ...">
+                                type="text" placeholder="Enter your search ..." v-model="word" @keypress.enter="search">
                         </div>
                     </div>
                     <!-- End Inquiry -->
@@ -190,6 +189,8 @@ export default {
             currentLinks: null,
 
             noticeImageUrl: '/files/notice.gif',
+
+            word: ''
         }
 
     },
@@ -203,6 +204,24 @@ export default {
     },
 
     methods: {
+        search() {
+            let name = this.$route.name
+            let page = this.$route.query.page
+            if (name != 'home' && name != 'tags.shop')
+            {
+                page = 1
+                name = 'home'
+            }
+            this.$router.push({
+                name: name,
+                query: {
+                    page: page,
+                    q: this.word
+                },
+            });
+            this.word = ''
+        },
+
         fetchlinks() {
             switch (this.$route.name) {
                 case 'home':
