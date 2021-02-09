@@ -111,7 +111,7 @@ export default {
         },
 
         getRecords() {
-            axios.get(`/charges/purchase?searchTerm=${this.meta.searchTerm}&per_page=${this.meta.per_page}&sort=${this.sort}&order=${this.order}`,
+            axios.get(`/purchase/history?searchTerm=${this.meta.searchTerm}&per_page=${this.meta.per_page}&sort=${this.sort}&order=${this.order}`,
             { params: this.$route.query })
             .then(({ data }) => {
                 this.rows = data.data

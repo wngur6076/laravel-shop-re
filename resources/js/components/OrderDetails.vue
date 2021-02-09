@@ -88,7 +88,7 @@ export default {
 
     methods: {
         getRecords() {
-            axios.get(`/charges/purchase/${this.orderDetails.hash}`)
+            axios.get(`/purchase/history/${this.orderDetails.hash}`)
             .then(({ data }) => {
                 this.rows = data.codeList
             })

@@ -71,4 +71,45 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->hasMany(Order::class);
     }
+
+    public function salesHistory()
+    {
+        $from = date(request()->get('start')).' 00:00:00';
+        $to = date(request()->get('end')).' 23:59:59';
+        
+        $products = $this->products;
+        $data = collect();
+
+        foreach ($products as $product) {
+            if ($product->codeList()->onlyTrashed()->whereBetween('deleted_at', [$from, $to])->count() <= 0)
+                continue;
+
+            $priceSum = 0;
+            $QuantitySum = 0;
+            $item = [
+                'id' => $product->id,
+                'title' => $product->title
+            ];
+
+            foreach ([1, 7, 15, 30, -1] as $period) {
+                $salesCode = $product->codeList()->onlyTrashed()->wherePeriod($period)->whereBetween('deleted_at', [$from, $to]);
+                if ($salesCode->count() <= 0)
+                    continue;
+                    
+                $price = $salesCode->sum('price');
+                $quantity = $salesCode->count();
+                $item['children'][] = [
+                    'title' => $period == -1 ? 0xff : $period,
+                    'quantity' => $quantity,
+                    'sales' => number_format($price)
+                ];
+                $priceSum += $price;
+                $QuantitySum += $quantity;
+            }
+            $item['sales'] = number_format($priceSum);
+            $item['quantity'] = $QuantitySum;
+            $data->push($item);
+        }
+        return $data;
+    }
 }
