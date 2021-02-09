@@ -55,7 +55,7 @@
         </div>
 
         <div class="form-group" v-for="(code, k) in codeList" :key="k">
-            <h4 class="h6 g-font-weight-600 g-color-black g-mb-15">Price {{ k+1 }}</h4>
+            <h4 class="h6 g-font-weight-600 g-color-black g-mb-15">Code {{ k+1 }}</h4>
             <div class="col-12">
                 <div class="row">
                     <div class="col-3">

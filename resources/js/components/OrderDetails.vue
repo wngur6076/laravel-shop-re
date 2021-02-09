@@ -4,7 +4,7 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <a class="u-link-v5 w-100 text-center g-color-black g-color-primary--hover g-cursor-pointer">{{ orderDetails.title }}</a>
+                    <a class="u-link-v5 w-100 text-center g-color-green">{{ orderDetails.title }}</a>
                     <button type="button" class="close g-ml-0" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>

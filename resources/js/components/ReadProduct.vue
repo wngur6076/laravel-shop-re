@@ -12,7 +12,10 @@
                 <div class="modal-body g-bg-white g-pa-30">
                     <span class="d-block g-color-gray-dark-v4 g-font-weight-600 g-font-size-12 text-uppercase mb-2">{{ product.created_date }}</span>
                     <h2 class="h5 g-color-black g-font-weight-600 mb-3">
-                        <a class="u-link-v5 g-color-black g-color-primary--hover g-cursor-pointer product-title">
+                        <!-- <a class="u-link-v5 g-color-black g-color-primary--hover g-cursor-pointer product-title">
+                            {{ product.title }}
+                        </a> -->
+                        <a class="u-link-v5 g-color-green product-title">
                             {{ product.title }}
                         </a>
                     </h2>

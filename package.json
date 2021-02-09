@@ -28,12 +28,14 @@
         "vue": "^2.5.17",
         "vue-izitoast": "^1.2.1",
         "vue-loader": "^15.9.6",
+        "vue-moment": "^4.1.0",
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
         "@websanova/vue-auth": "^2.21.14-beta",
         "es6-promise": "^4.2.8",
         "laravel-mix-alias": "^1.0.2",
+        "v-calendar": "^2.2.3",
         "v-select2-multiple-component": "^0.1.1",
         "vue-axios": "^2.1.5",
         "vue-good-table": "^2.21.3",
