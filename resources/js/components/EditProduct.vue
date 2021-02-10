@@ -22,9 +22,20 @@ export default {
     props: ['id'],
 
     components: { ProductForm },
-    
+
     mounted(){
         $(this.$refs.modal).on("hidden.bs.modal", this.doSomethingOnHidden)
+    },
+
+    created() {
+        const backButtonRouteGuard = this.$router.beforeEach((to, from, next) => {
+            $(this.$refs.modal).modal('hide');
+            next(true);
+        });
+
+        this.$once('hook:destroyed', () => {
+            backButtonRouteGuard();
+        });
     },
 
     methods: {

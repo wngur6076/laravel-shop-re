@@ -27,7 +27,7 @@ class Code extends Model
 
     public function orders()
     {
-        return $this->belongsToMany(Order::class, 'orders_code_list')->withPivot('quantity');
+        return $this->belongsToMany(Order::class, 'orders_code_list');
     }
 
     public function getPeriodConvertAttribute()
@@ -38,5 +38,10 @@ class Code extends Model
     public function getPriceConvertAttribute()
     {
         return number_format($this->price);
+    }
+
+    public function getDeletedDateAttribute()
+    {
+        return  $this->deleted_at->format('Y-m-d h:i:s');
     }
 }

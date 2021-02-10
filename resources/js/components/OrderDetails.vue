@@ -25,7 +25,14 @@
                                 {{ periodConvert(props.row.period) }}
                             </span>
                             <span v-else-if="props.column.field == 'code'">
-                                <a class="u-link-v5 g-color-black g-color-primary--hover g-cursor-pointer" @click="copyToClipboard(props.row.id)" :ref="props.row.id">{{ props.row.code }}</a>
+                                <!-- <a class="u-link-v5 g-color-black g-color-primary--hover g-cursor-pointer" @click="copyToClipboard(props.row.id)" :ref="props.row.id">
+                                    {{ textOverflow(props.row.code) }}
+                                </a> -->
+                                <a class="u-link-v5 g-color-black g-color-primary--hover g-cursor-pointer"
+                                    v-if="props.row.code.length > textMaxSize" @click="textReadMore(props.row.originalIndex)">
+                                    {{ props.row.code }}
+                                </a>
+                                <p v-else>{{ props.row.code }}</p>
                             </span>
                             <span v-else>
                                 {{props.formattedRow[props.column.field]}}
@@ -53,6 +60,9 @@ export default {
 
     data() {
         return {
+            textMaxSize: 20,
+            tempCodeList: [],
+
             columns:
             [
                 {
@@ -86,11 +96,29 @@ export default {
         this.getRecords();
     },
 
+    created() {
+        const backButtonRouteGuard = this.$router.beforeEach((to, from, next) => {
+            $(this.$refs.modal).modal('hide');
+            next(true);
+        });
+
+        this.$once('hook:destroyed', () => {
+            backButtonRouteGuard();
+        });
+    },
+
     methods: {
         getRecords() {
             axios.get(`/purchase/history/${this.orderDetails.hash}`)
             .then(({ data }) => {
                 this.rows = data.codeList
+                this.tempCodeList = []
+                this.rows.forEach(element => {
+                    this.tempCodeList.push(element.code)
+                    if (element.code.length > this.textMaxSize)
+                        element.code = element.code.substr(0, this.textMaxSize-2) + '...';
+                    element.readMore = false
+                });
             })
             .catch(error => {
                 console.log(error.response);
@@ -122,6 +150,16 @@ export default {
             document.execCommand("copy");
             window.getSelection().removeAllRanges();
             this.$toast.success('클립보드에 복사되었습니다', "Success")
+        },
+
+        textReadMore(index) {
+            this.rows[index].readMore = ! this.rows[index].readMore
+
+            if (! this.rows[index].readMore) {
+                this.rows[index].code = this.rows[index].code.substr(0, this.textMaxSize-2) + '...';
+            } else {
+                this.rows[index].code = this.tempCodeList[index]
+            }
         }
     },
 }

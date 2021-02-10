@@ -25,6 +25,17 @@ export default {
         $(this.$refs.modal).on("hidden.bs.modal", this.doSomethingOnHidden)
     },
 
+    created() {
+        const backButtonRouteGuard = this.$router.beforeEach((to, from, next) => {
+            $(this.$refs.modal).modal('hide');
+            next(true);
+        });
+
+        this.$once('hook:destroyed', () => {
+            backButtonRouteGuard();
+        });
+    },
+
     methods: {
         create(data) {
             axios.post('/products', data)

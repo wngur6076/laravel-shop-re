@@ -2,11 +2,12 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Http\Resources\SalesDetailsResource;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class User extends Authenticatable implements JWTSubject
 {
@@ -76,7 +77,7 @@ class User extends Authenticatable implements JWTSubject
     {
         $from = date(request()->get('start')).' 00:00:00';
         $to = date(request()->get('end')).' 23:59:59';
-        
+
         $products = $this->products;
         $data = collect();
 
@@ -95,7 +96,7 @@ class User extends Authenticatable implements JWTSubject
                 $salesCode = $product->codeList()->onlyTrashed()->wherePeriod($period)->whereBetween('deleted_at', [$from, $to]);
                 if ($salesCode->count() <= 0)
                     continue;
-                    
+
                 $price = $salesCode->sum('price');
                 $quantity = $salesCode->count();
                 $item['children'][] = [
@@ -112,4 +113,47 @@ class User extends Authenticatable implements JWTSubject
         }
         return $data;
     }
+
+    public function salesDetails(Product $product)
+    {
+        $search_query = request()->get('searchTerm');
+
+        $sort = request()->get('sort', 'deleted_at');
+        $order = request()->get('order', 'desc');
+        $perPage = request()->get('per_page');
+
+        $from = date(request()->get('start')).' 00:00:00';
+        $to = date(request()->get('end')).' 23:59:59';
+        $period = request()->get('period');
+
+        $query = $product->codeList()->onlyTrashed()->wherePeriod($period)
+            ->whereBetween('deleted_at', [$from, $to]);
+
+        if ($sort != 'purchaser') {
+            $query = $query->where('code', 'LIKE', '%' . $search_query . '%');
+            $query = $query->orderBy($sort, $order);
+        } else {
+            $query = $query->join('orders_code_list', 'code_list.id', '=', 'orders_code_list.code_id');
+            $query = $query->join('orders', 'orders_code_list.order_id', '=', 'orders.id');
+            $query = $query->join('users', 'orders.user_id', '=', 'users.id');
+            $query = $query->select('name', 'code_list.*');
+            $query = $query->orderBy('name', $order);
+        }
+
+        $salesCode = $query->paginate($perPage);
+
+        if ($search_query) {
+			$searchTerm = $search_query ?: '';
+		} else {
+			$searchTerm = $search_query ? null : '';
+        }
+
+        return SalesDetailsResource::collection($salesCode)->additional([
+            'searchTerm' => $searchTerm,
+            'sort' => $sort,
+            'order' => $order,
+        ]);
+    }
 }
+
+// ->orders()->first()->user->name,

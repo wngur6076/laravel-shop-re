@@ -82,6 +82,17 @@ export default {
         this.fetchProduct();
     },
 
+    created() {
+        const backButtonRouteGuard = this.$router.beforeEach((to, from, next) => {
+            $(this.$refs.modal).modal('hide');
+            next(true);
+        });
+
+        this.$once('hook:destroyed', () => {
+            backButtonRouteGuard();
+        });
+    },
+
     computed: {
         totalPrice() {
             let result = 0;

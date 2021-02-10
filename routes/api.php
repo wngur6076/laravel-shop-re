@@ -50,6 +50,7 @@ Route::group(['middleware' => 'auth:api'], function() {
     Route::post('/admin/accept', [ChargeAcceptController::class, 'store'])->middleware('isAdmin');
 
     Route::get('/admin/sales', [SalesHistoryController::class, 'index'])->middleware('isAdmin');
+    Route::get('/admin/sales/{product}', [SalesHistoryController::class, 'show'])->middleware('isAdmin');
 
     Route::get('/charges/history', ChargeHistoryController::class);
     Route::get('/purchase/history', [PurchaseHistoryController::class, 'index']);

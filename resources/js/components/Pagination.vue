@@ -38,6 +38,10 @@ export default {
         links: {
             type: Object,
             default: null
+        },
+        isEmit: {
+            type: Boolean,
+            default: false
         }
     },
 
@@ -53,13 +57,17 @@ export default {
 
     methods: {
         switchPage (currentPage = this.meta.current_page) {
-            this.$router.push({
-                name: this.$route.name,
-                query: {
-                    page: currentPage,
-                    q: this.$route.query.q,
-                },
-            });
+            if (! this.isEmit) {
+                this.$router.push({
+                    name: this.$route.name,
+                    query: {
+                        page: currentPage,
+                        q: this.$route.query.q,
+                    },
+                });
+            } else {
+                this.$emit('paginate', currentPage);
+            }
         },
 
         prev () {

@@ -20,13 +20,15 @@
         >
         <template slot="table-row" slot-scope="props">
             <span v-if="props.column.field == 'title'">
-                {{ periodConvert(props.row.title) }}
+                <a class="u-link-v5 g-color-black g-color-primary--hover g-cursor-pointer" @click="getId(props.row, 5)" data-toggle="modal" data-target="#salesDetails">
+                    {{ periodConvert(props.row.title) }}
+                </a>
             </span>
             <span v-else>
                 {{props.formattedRow[props.column.field]}}
             </span>
         </template>
-        
+
         <div slot="table-actions">
             <v-date-picker v-model="range" is-range :masks="masks">
             <template v-slot="{ inputEvents }">
@@ -62,15 +64,17 @@
         </div>
         </vue-good-table>
 
+    <sales-details v-if="$root.isShowModal == 5" :salesDetails="selected" :range="range"></sales-details>
     </div>
 </template>
 
 <script>
 import 'vue-good-table/dist/vue-good-table.css'
 import { VueGoodTable } from 'vue-good-table';
+import SalesDetails from '../components/SalesDetails'
 export default {
     components: {
-        VueGoodTable
+        VueGoodTable, SalesDetails
     },
 
     data() {
@@ -80,9 +84,15 @@ export default {
                 end: this.$moment().format('YYYY-MM-DD'),
             },
 
+            selected: {
+                id: '',
+                title: '',
+                period: ''
+            },
+
             masks: {
                 input: 'YYYY-MM-DD',
-            },      
+            },
 
             columns: [
                 {
@@ -139,7 +149,6 @@ export default {
             axios.get(`/admin/sales?start=${this.range.start}&end=${this.range.end}`)
             .then(({ data }) => {
                 this.rows = data.data
-                console.log(data)
             })
             .catch(error => {
                 console.log(error.response);
@@ -162,6 +171,13 @@ export default {
                 return period + '일'
             }
         },
+
+        getId(row, val) {
+            this.selected.id = this.rows[row.vgt_id].id
+            this.selected.title = this.rows[row.vgt_id].title
+            this.selected.period = this.periodConvert(row.title)
+            this.$root.isShowModal = val
+        },
     }
 }
 </script>
@@ -169,7 +185,7 @@ export default {
 <style lang="scss" scoped>
     .picker {
         width: 90px;
-        
+
     }
 
     .dropdown-item {
