@@ -23,7 +23,7 @@ class ProductFactory extends Factory
     {
         if (random_int(0, 1)) {
             $video = 'https://youtu.be/S4DEFCf5p-Q';
-            $image = null;
+            $image = basename(public_path('files', 500, 450) . '/apple.jpg');
         } else {
             $video = null;
             $image = basename(public_path('files', 500, 450) . '/apple.jpg');

@@ -27,7 +27,7 @@
                                         <button class="dropdown-item pointer-none">{{ $auth.user().name }}</button>
                                         <div class="dropdown-divider"></div>
                                         <button class="dropdown-item" data-toggle="modal" data-target="#editProduct" @click="getId(item, 1)"><i class="fas fa-pencil-alt"></i> <span class="g-ml-3">게시물 수정</span></button>
-                                        <button class="dropdown-item" @click="destroy(item)"><i class="fas fa-trash"></i> <span class="g-ml-3">게시물 삭제</span></button>
+                                        <button class="dropdown-item" @click="destroy(item)"><i class="fas fa-trash"></i> <span class="g-ml-4">게시물 삭제</span></button>
                                     </div>
                                 </div>
                             </div>

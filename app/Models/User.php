@@ -2,12 +2,12 @@
 
 namespace App\Models;
 
+use App\Http\Resources\TagResource;
+use Tymon\JWTAuth\Contracts\JWTSubject;
+use Illuminate\Notifications\Notifiable;
 use App\Http\Resources\SalesDetailsResource;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Tymon\JWTAuth\Contracts\JWTSubject;
-use Illuminate\Pagination\LengthAwarePaginator;
 
 class User extends Authenticatable implements JWTSubject
 {
@@ -154,6 +154,23 @@ class User extends Authenticatable implements JWTSubject
             'order' => $order,
         ]);
     }
-}
 
-// ->orders()->first()->user->name,
+    public function posts()
+    {
+        $products = $this->products;
+        $data = collect();
+
+        foreach ($products as $product) {
+            $item = [
+                'id' => $product->id,
+                'title' => $product->title,
+                'tags' => TagResource::collection($product->tags),
+                'file_link' => $product->file_link,
+                'created_at' => $product->created_at->format('Y-m-d h:i:s')
+            ];
+            $data->push($item);
+        }
+
+        return $data;
+    }
+}

@@ -1,7 +1,6 @@
 <template>
     <div class="g-pr-20--lg">
         <vue-good-table
-            ref="MyCoolTable"
             :columns="columns"
             :rows="rows"
             :search-options="{
@@ -16,6 +15,10 @@
                 mode: 'pages',
                 perPage: 20,
                 dropdownAllowAll: false,
+            }"
+            :sort-options="{
+                enabled: true,
+                initialSortBy: {field: 'title', type: 'asc'}
             }"
         >
         <template slot="table-row" slot-scope="props">

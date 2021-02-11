@@ -179,7 +179,7 @@ export default {
                         active: true
                     },
                     {
-                        name: '나의 상품',
+                        name: '나의 제품',
                         path: 'admin.my-products',
                         active:  false
                     },

@@ -19,7 +19,7 @@
                     </a>
                 </span>
                 <span v-else-if="props.column.field == 'file_link'">
-                    <a @click="fileLink(props.row.file_link)" style="cursor:pointer" class="file-link"><i class="fas fa-folder-open fa-lg"></i></a>
+                    <a @click="fileLink(props.row.file_link)" style="cursor:pointer" class="g-color-primary--hover"><i class="fas fa-file-download fa-lg"></i></a>
                 </span>
                 <span v-else>
                     {{props.formattedRow[props.column.field]}}
@@ -83,7 +83,7 @@ export default {
                     label: '파일',
                     field: 'file_link',
                     thClass: this.centerClassFunc,
-                    tdClass: this.tdClassFunc,
+                    tdClass: this.centerClassFunc,
                 },
             ],
             rows: [],
@@ -134,13 +134,6 @@ export default {
             this.getRecords();
             return false;
         }, 100),
-
-        tdClassFunc(row) {
-            if (! row.file_link) {
-                return 'text-center align-middle g-color-black';
-            }
-            return 'text-center align-middle g-color-green';
-        },
 
         centerClassFunc() {
             return 'text-center align-middle';

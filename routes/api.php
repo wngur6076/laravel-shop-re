@@ -9,6 +9,7 @@ use App\Http\Controllers\TagsController;
 use App\Http\Controllers\OrdersController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\FavoritesController;
+use App\Http\Controllers\MyProductsController;
 use App\Http\Controllers\PurchaseHistoryController;
 use App\Http\Controllers\SalesHistoryController;
 
@@ -51,6 +52,9 @@ Route::group(['middleware' => 'auth:api'], function() {
 
     Route::get('/admin/sales', [SalesHistoryController::class, 'index'])->middleware('isAdmin');
     Route::get('/admin/sales/{product}', [SalesHistoryController::class, 'show'])->middleware('isAdmin');
+
+    Route::get('/my-products', [MyProductsController::class, 'index'])->middleware('isAdmin');
+    // Route::get('/my-products', [MyProductsController::class, 'show'])->middleware('isAdmin');
 
     Route::get('/charges/history', ChargeHistoryController::class);
     Route::get('/purchase/history', [PurchaseHistoryController::class, 'index']);
