@@ -27,6 +27,8 @@ class Order extends Model
         $user->money = $user->money - $this->total;
         $user->credit = 1;
         $user->save();
+
+        return $user->money;
     }
 
     public function getCreatedDateAttribute()

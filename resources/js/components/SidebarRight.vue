@@ -322,7 +322,7 @@ export default {
 
         imgPop(url){
             window.open(url,'_blank','toolbar=no,directories=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=500,height=750,left=0,top=0')
-        }
+        },
     }
 }
 </script>

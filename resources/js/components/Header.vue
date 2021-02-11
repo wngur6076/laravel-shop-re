@@ -91,7 +91,7 @@
                         <button class="dropdown-item pointer-none">{{ $auth.user().name }}</button>
                         <div class="dropdown-divider"></div>
                         <button class="dropdown-item pointer-none" v-if="creditCheck"><span :class="classes">{{ credit }}</span> 등급</button>
-                        <button class="dropdown-item pointer-none"><span class="badge badge-danger pull-right">{{ $auth.user().money }}원</span> 잔액</button>
+                        <button class="dropdown-item pointer-none"><span class="badge badge-danger pull-right">{{ numberWithCommas($auth.user().money) }}원</span> 잔액</button>
                         <div class="dropdown-divider"></div>
                         <button @click.prevent="logout" class="dropdown-item">로그아웃</button>
                     </div>
@@ -151,6 +151,10 @@ export default {
                 this.$router.go(this.$router.currentRoute);
             }, 100);
         },
+
+        numberWithCommas(x) {
+            return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        }
     },
 }
 </script>

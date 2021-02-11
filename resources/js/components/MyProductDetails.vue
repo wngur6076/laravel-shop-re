@@ -34,7 +34,7 @@
                                     v-if="props.row.code.length > textMaxSize" @click="textReadMore(props.row.originalIndex)">
                                     {{ props.row.code }}
                                 </a>
-                                <p v-else>{{ props.row.code }}</p>
+                                <p v-else class="g-mb-0">{{ props.row.code }}</p>
                             </span>
                             <span v-else>
                                 {{props.formattedRow[props.column.field]}}

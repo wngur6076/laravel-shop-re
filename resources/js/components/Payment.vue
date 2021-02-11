@@ -121,8 +121,8 @@ export default {
                 quantityList: this.quantityList,
             })
             .then(({ data }) => {
-                this.$auth.user().money -= data.total;
-                this.$auth.user().credit = 1;
+                this.$auth.user().money = data.money
+                this.$auth.user().credit = 1
                 $(this.$refs.modal).modal('hide')
                 this.$toast.success(this.numberWithCommas(data.total) + '원 ' + data.message, "Success")
             })

@@ -46,7 +46,7 @@ class OrdersController extends Controller
         ]);
 
         // 유저돈에서 total만큼 차감
-        $order->payment();
+        $money = $order->payment();
 
         // 구매개수랑 현재보유코드개수랑 같을경우 전체를 다 가져오고 아닐경우에는 Disabled = true만 가져온다. (false는 기준값)
         $codeList = [];
@@ -64,7 +64,8 @@ class OrdersController extends Controller
 
         return response()->json([
             'message' => '결제 성공했습니다.',
-            'total' => $total
+            'money' => $money,
+            'total' => $total,
         ], 200);
     }
 
