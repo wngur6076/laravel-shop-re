@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class MyProductsController extends Controller
@@ -10,6 +11,13 @@ class MyProductsController extends Controller
     {
         return response()->json([
             'data' => $request->user()->posts()
+        ]);
+    }
+
+    public function show(Request $request, Product $product)
+    {
+        return response()->json([
+            'data' => $request->user()->postsDetails($product)
         ]);
     }
 }

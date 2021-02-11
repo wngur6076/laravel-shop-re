@@ -173,4 +173,22 @@ class User extends Authenticatable implements JWTSubject
 
         return $data;
     }
+
+    public function postsDetails(Product $product)
+    {
+        $codeList = $product->codeList;
+        $data = collect();
+
+        foreach ($codeList as $code) {
+            $item = [
+                'period' => $code->period == -1 ? 0xff : $code->period,
+                'code' => $code->code,
+                'price' => number_format($code->price),
+                'created_at' => $code->created_at->format('Y-m-d h:i:s')
+            ];
+            $data->push($item);
+        }
+
+        return $data;
+    }
 }

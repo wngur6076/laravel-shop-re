@@ -19,7 +19,7 @@
         >
         <template slot="table-row" slot-scope="props">
             <span v-if="props.column.field == 'title'">
-                <a class="u-link-v5 g-color-black g-color-primary--hover g-cursor-pointer">
+                <a class="u-link-v5 g-color-black g-color-primary--hover g-cursor-pointer" data-toggle="modal" data-target="#productDetails" @click="getId(props.row, 6)">
                     {{ props.row.title }}
                 </a>
             </span>
@@ -46,9 +46,9 @@
                     <div class="dropdown-menu dropdown-menu-right">
                         <button class="dropdown-item pointer-none">{{ textReadMore(props.row.title) }}</button>
                         <div class="dropdown-divider"></div>
-                        <button class="dropdown-item" data-toggle="modal" data-target="#readProduct" @click="getId(props.row.id, 2)"><i class="fas fa-glasses"></i> <span class="g-ml-3">게시물 보기</span></button>
-                        <button class="dropdown-item" data-toggle="modal" data-target="#editProduct" @click="getId(props.row.id, 1)"><i class="fas fa-pencil-alt"></i> <span class="g-ml-4">게시물 수정</span></button>
-                        <button class="dropdown-item" @click="destroy(props.row.id)"><i class="fas fa-trash"></i> <span class="g-ml-5">게시물 삭제</span></button>
+                        <button class="dropdown-item" data-toggle="modal" data-target="#readProduct" @click="getId(props.row, 2)"><i class="fas fa-glasses"></i> <span class="g-ml-3">게시물 보기</span></button>
+                        <button class="dropdown-item" data-toggle="modal" data-target="#editProduct" @click="getId(props.row, 1)"><i class="fas fa-pencil-alt"></i> <span class="g-ml-4">게시물 수정</span></button>
+                        <button class="dropdown-item" @click="destroy(props.row)"><i class="fas fa-trash"></i> <span class="g-ml-5">게시물 삭제</span></button>
                     </div>
                 </div>
             </span>
@@ -58,9 +58,11 @@
         </template>
         </vue-good-table>
         <!-- 게시글 수정 Modal -->
-        <edit-product v-if="$root.isShowModal == 1" :id="selectedId" @updated="edit"></edit-product>
+        <edit-product v-if="$root.isShowModal == 1" :id="selected.id" @updated="edit"></edit-product>
         <!-- 게시글 읽기 Modal -->
-        <read-product v-if="$root.isShowModal == 2" :id="selectedId"></read-product>
+        <read-product v-if="$root.isShowModal == 2" :id="selected.id"></read-product>
+
+        <my-product-details v-if="$root.isShowModal == 6" :product="selected"></my-product-details>
     </div>
 </template>
 
@@ -69,14 +71,18 @@ import 'vue-good-table/dist/vue-good-table.css'
 import { VueGoodTable } from 'vue-good-table';
 import ReadProduct from '../components/ReadProduct'
 import EditProduct from '../components/EditProduct'
+import MyProductDetails from '../components/MyProductDetails'
 export default {
     components: {
-        VueGoodTable, ReadProduct, EditProduct
+        VueGoodTable, ReadProduct, EditProduct, MyProductDetails
     },
 
     data() {
         return {
-            selectedId: '',
+            selected: {
+                id: '',
+                title: ''
+            },
 
             columns: [
                 {
@@ -158,8 +164,9 @@ export default {
             return str
         },
 
-        getId(id, val) {
-            this.selectedId = id
+        getId(row, val) {
+            this.selected.title = row.title
+            this.selected.id = row.id
             this.$root.isShowModal = val
         },
 
@@ -171,8 +178,8 @@ export default {
             this.getRecords();
         },
 
-        destroy(id) {
-            this.getId(id, -1)
+        destroy(row) {
+            this.getId(row, -1)
 
             this.$toast.question('정말 삭제 하시겠습니까?', "확인", {
             timeout: 20000,
@@ -201,7 +208,7 @@ export default {
         },
 
         delete() {
-            axios.delete(`products/${this.selectedId}`)
+            axios.delete(`products/${this.selected.id}`)
                 .then(({ data })  => {
                     // this.items.splice(this.findItemIndex(), 1)
                     this.getRecords()

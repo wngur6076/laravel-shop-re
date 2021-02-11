@@ -54,7 +54,7 @@ Route::group(['middleware' => 'auth:api'], function() {
     Route::get('/admin/sales/{product}', [SalesHistoryController::class, 'show'])->middleware('isAdmin');
 
     Route::get('/my-products', [MyProductsController::class, 'index'])->middleware('isAdmin');
-    // Route::get('/my-products', [MyProductsController::class, 'show'])->middleware('isAdmin');
+    Route::get('/my-products/{product}', [MyProductsController::class, 'show'])->middleware('isAdmin');
 
     Route::get('/charges/history', ChargeHistoryController::class);
     Route::get('/purchase/history', [PurchaseHistoryController::class, 'index']);
