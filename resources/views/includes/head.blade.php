@@ -4,6 +4,8 @@
 
 <title>{{ config('app.name', 'Laravel') }}</title>
 
+<meta name="api-base-url" content="{{ config('app.url') . '/api' }}" />
+
 <!-- CSRF Token -->
 <meta name="csrf-token" content="{{ csrf_token() }}">
 <!-- Styles -->
