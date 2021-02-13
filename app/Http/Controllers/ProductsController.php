@@ -39,6 +39,8 @@ class ProductsController extends Controller
             $raw = 'MATCH(title,body) AGAINST(? IN BOOLEAN MODE)';
             $query = $query->whereRaw($raw, [$keyword.'*']);
         }
+        // 코드가 매진대면 보여주지 않기위해서
+        $query = $query->has('codeList');
 
         $products = $query->latest()->Paginate(4);
 

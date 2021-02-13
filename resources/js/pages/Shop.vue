@@ -83,7 +83,7 @@
         <!-- 게시글 읽기 Modal -->
         <read-product v-if="$root.isShowModal == 2" :id="selectedId"></read-product>
         <!-- 구매하기 Modal -->
-        <payment v-if="$root.isShowModal == 3" :id="selectedId"></payment>
+        <payment v-if="$root.isShowModal == 3" :id="selectedId" @renew="fetchProducts"></payment>
     </div>
     <!-- End Blog Classic Blocks -->
 

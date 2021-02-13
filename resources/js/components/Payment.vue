@@ -125,6 +125,7 @@ export default {
                 this.$auth.user().credit = 1
                 $(this.$refs.modal).modal('hide')
                 this.$toast.success(this.numberWithCommas(data.total) + '원 ' + data.message, "Success")
+                this.$emit('renew')
             })
             .catch(error => {
                 this.has_error = true

@@ -16,7 +16,7 @@
             @on-sort-change="onSortChange"
             @on-search="onSearch" class="g-mb-10">
             <template slot="table-row" slot-scope="props">
-                <span v-if="props.column.field == 'purchase_amount'">
+                <span v-if="props.column.field == 'purchase_amount' && props.row.purchase_amount">
                     <a class="u-link-v5 g-color-black g-color-primary--hover g-cursor-pointer"
                     >
                         {{ props.row.purchase_amount }}
