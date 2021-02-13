@@ -8,11 +8,6 @@ use Illuminate\Http\Request;
 
 class ChargeAcceptController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('isSuper');
-    }
-
     public function index(Request $request)
     {
         $search_query = $request->input('searchTerm');

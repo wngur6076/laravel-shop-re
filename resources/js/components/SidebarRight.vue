@@ -183,6 +183,18 @@ export default {
                         path: 'admin.my-products',
                         active:  false
                     },
+                ],
+                super: [
+                    {
+                        name: '충전 승인',
+                        path: 'super.accept',
+                        active:  false,
+                    },
+                    {
+                        name: '판매 권환',
+                        path: 'super.sales-authority',
+                        active:  false,
+                    },
                 ]
             },
 
@@ -253,8 +265,13 @@ export default {
                 case 'admin.my-products':
                     this.assignAdmin(1);
                     break;
-                case 'admin.accept':
-                    this.assignAdmin(2);
+                case 'super.index':
+                    this.initActive(this.links.super)
+                case 'super.accept':
+                    this.assignSuper(0);
+                    break;
+                case 'super.sales-authority':
+                    this.assignSuper(1);
                     break;
             }
         },
@@ -270,26 +287,13 @@ export default {
         },
 
         assignAdmin(index) {
-            this.isSuper();
             this.currentLinks = Object.assign({}, this.links.admin);
             this.linkActive(index)
         },
 
-        isSuper() {
-            if (this.$auth.user().id == 1) {
-                let check = false
-                this.links.admin.forEach(element => {
-                    if (element.path == 'admin.accept')
-                        check = true
-                });
-                if (! check) {
-                    this.links.admin.push({
-                        name: '충전 승인',
-                        path: 'admin.accept',
-                        active:  false,
-                    });
-                }
-            }
+        assignSuper(index) {
+            this.currentLinks = Object.assign({}, this.links.super);
+            this.linkActive(index)
         },
 
         initActive(link) {

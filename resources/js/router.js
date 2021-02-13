@@ -13,6 +13,7 @@ import PurchaseHistory from './pages/PurchaseHistory'
 import SalesHistory from './pages/SalesHistory'
 import MyProducts from './pages/MyProducts'
 import ChargeAccept from './pages/ChargeAccept'
+import SalesAuthority from './pages/SalesAuthority'
 
 // Routes
 const routes = [
@@ -132,10 +133,35 @@ const routes = [
                 path: 'myproducts',
                 component: MyProducts
             },
+        ]
+    },
+    {
+        path: '/super',
+        component: Base,
+        meta: {
+            auth: {
+                roles: true,
+                redirect: {
+                    name: 'login'
+                },
+                forbiddenRedirect: '/403'
+            }
+        },
+        children: [
             {
-                name: 'admin.accept',
+                path: '',
+                name: 'super.index',
+                component: ChargeAccept
+            },
+            {
+                name: 'super.accept',
                 path: 'accept',
                 component: ChargeAccept
+            },
+            {
+                name: 'super.sales-authority',
+                path: 'authority',
+                component: SalesAuthority
             },
         ]
     },

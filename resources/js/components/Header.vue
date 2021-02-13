@@ -53,6 +53,13 @@
                             </div>
                         </router-link>
 
+                        <router-link class="nav-item g-mx-5--lg" tag="li" :to="{ name: 'super.index' }" v-if="$auth.user().id == 1">
+                            <div class="nav-link g-py-7 g-px-0">
+                                <i class="fas fa-sun fa-2x"></i>
+                                <span class="name">승인</span>
+                            </div>
+                        </router-link>
+
                         <router-link class="nav-item g-mx-5--lg" tag="li" :to="{ name: 'charge.index' }">
                             <div class="nav-link g-py-7 g-px-0">
                                 <i class="fas fa-cash-register fa-2x"></i>

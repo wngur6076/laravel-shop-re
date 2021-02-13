@@ -97,7 +97,7 @@ export default {
         },
 
         getRecords() {
-            axios.get(`/admin/accept?searchTerm=${this.meta.searchTerm}&per_page=${this.meta.per_page}&sort=${this.sort}&order=${this.order}`,
+            axios.get(`/super/accept?searchTerm=${this.meta.searchTerm}&per_page=${this.meta.per_page}&sort=${this.sort}&order=${this.order}`,
             { params: this.$route.query })
             .then(({ data }) => {
                 this.rows = data.data
@@ -127,7 +127,7 @@ export default {
                 selectIds.push(row.id)
             });
 
-            axios.post('/admin/accept', {
+            axios.post('/super/accept', {
                 selectIds: selectIds,
                 type: type
             })

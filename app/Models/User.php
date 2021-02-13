@@ -191,4 +191,17 @@ class User extends Authenticatable implements JWTSubject
 
         return $data;
     }
+
+    public function getCreditConvertAttribute()
+    {
+        $ret = 0;
+        if ($this->id == 1)
+            $ret = 3;
+        else if ($this->role == 2)
+            $ret = 2;
+        else if ($this->role == 1 && $this->credit == 1)
+            $ret = 1;
+
+        return $ret;
+    }
 }

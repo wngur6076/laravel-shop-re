@@ -11,6 +11,7 @@ use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\FavoritesController;
 use App\Http\Controllers\MyProductsController;
 use App\Http\Controllers\PurchaseHistoryController;
+use App\Http\Controllers\SalesAuthorityController;
 use App\Http\Controllers\SalesHistoryController;
 
 /*
@@ -47,8 +48,11 @@ Route::group(['middleware' => 'auth:api'], function() {
     Route::get('orders/{product}', [OrdersController::class, 'show']);
     Route::post('orders/{product}', [OrdersController::class, 'store']);
 
-    Route::get('/admin/accept', [ChargeAcceptController::class, 'index'])->middleware('isAdmin');
-    Route::post('/admin/accept', [ChargeAcceptController::class, 'store'])->middleware('isAdmin');
+    Route::get('/super/accept', [ChargeAcceptController::class, 'index'])->middleware('isSuper');
+    Route::post('/super/accept', [ChargeAcceptController::class, 'store'])->middleware('isSuper');
+
+    Route::get('/super/authority', [SalesAuthorityController::class, 'index'])->middleware('isSuper');
+    Route::post('/super/authority', [SalesAuthorityController::class, 'store'])->middleware('isSuper');
 
     Route::get('/admin/sales', [SalesHistoryController::class, 'index'])->middleware('isAdmin');
     Route::get('/admin/sales/{product}', [SalesHistoryController::class, 'show'])->middleware('isAdmin');

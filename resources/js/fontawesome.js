@@ -14,7 +14,7 @@ import {
     faCashRegister, faMoneyCheck, faSortDown,
     faAngleLeft, faShoppingCart, faUserCog, faPlus, faPaperclip, faMinusCircle,
     faPlusCircle, faEllipsisH, faEllipsisV, faPencilAlt, faTrash, faSearch, faInfoCircle,
-    faFolderOpen, faCalendar, faArrowRight, faGlasses, faFileDownload
+    faFolderOpen, faCalendar, faArrowRight, faGlasses, faFileDownload, faSun
 } from '@fortawesome/free-solid-svg-icons';
 
 import {
@@ -29,7 +29,7 @@ library.add(
     faCashRegister, faMoneyCheck, faSortDown, faAngleLeft, faShoppingCart, faUserCog,
     faPlus, faPaperclip, faMinusCircle, faPlusCircle, faEllipsisH, faEllipsisV,
     faPencilAlt, faTrash, faSearch, faInfoCircle, faFolderOpen, faCalendar, faArrowRight,
-    faGlasses, faFileDownload
+    faGlasses, faFileDownload, faSun
     );
     // Kicks off the process of finding <i> tags and replacing with <svg>
     dom.watch();
