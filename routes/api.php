@@ -13,6 +13,7 @@ use App\Http\Controllers\MyProductsController;
 use App\Http\Controllers\PurchaseHistoryController;
 use App\Http\Controllers\SalesAuthorityController;
 use App\Http\Controllers\SalesHistoryController;
+use App\Http\Controllers\SocialController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,6 +32,8 @@ Route::prefix('auth')->group(function () {
     Route::post('register', [AuthController::class, 'register']);
     Route::post('login', [AuthController::class, 'login']);
     Route::get('refresh', [AuthController::class, 'refresh']);
+
+    Route::post('social/{provider}', [SocialController::class, 'handleProviderCallback']);
 
     Route::group(['middleware' => 'auth:api'], function(){
         Route::get('user', [AuthController::class, 'user']);

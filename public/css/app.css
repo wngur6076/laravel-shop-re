@@ -1,2 +1,20 @@
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800);
-.payment span{color:#72c02c}.js-go-to:hover i,.payment:hover span{color:#fff}
+/* Font size */
+
+/* Font weight */
+
+.payment span {
+  color: #72c02c;
+}
+
+.payment:hover span {
+  color: #fff;
+}
+
+.js-go-to:hover i {
+  color: #fff;
+}
+
+
+
+/*# sourceMappingURL=app.css.map*/

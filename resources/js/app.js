@@ -5,12 +5,12 @@
  */
 
 import 'es6-promise/auto'
+import VueAxios from 'vue-axios'
 import axios from 'axios'
 import './bootstrap'
 import './fontawesome'
 import Vue from 'vue'
 import VueAuth from '@websanova/vue-auth'
-import VueAxios from 'vue-axios'
 import VueRouter from 'vue-router'
 import Index from './Index'
 import auth from './auth'
@@ -31,11 +31,12 @@ Vue.use(VueRouter)
 // Set Vue authentication
 Vue.use(VueAxios, axios)
 Vue.use(VueAuth, auth)
-Vue.use(VueIziToast);
-Vue.use(LoadScript);
-Vue.use(onlyInt);
-Vue.use(VCalendar);
-Vue.use(VueMoment);
+Vue.use(VueIziToast)
+Vue.use(LoadScript)
+Vue.use(onlyInt)
+Vue.use(VCalendar)
+Vue.use(VueMoment)
+
 
 Vue.prototype.authorization = policies
 

@@ -119,6 +119,12 @@ export default {
         }
     },
 
+    mounted() {
+        this.$loadScript('unify/assets/js/helpers/hs.hamburgers.js')
+
+        $.HSCore.helpers.HSHamburgers.init('.hamburger')
+    },
+
     computed: {
         creditCheck() {
             if (this.$auth.user().id == 1) {
@@ -153,7 +159,7 @@ export default {
     methods: {
         logout() {
             this.$auth.logout()
-
+        
             setTimeout(() => {
                 this.$router.go(this.$router.currentRoute);
             }, 100);

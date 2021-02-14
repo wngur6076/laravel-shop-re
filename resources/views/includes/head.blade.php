@@ -3,6 +3,7 @@
 <meta http-equiv="x-ua-compatible" content="ie=edge">
 
 <title>{{ config('app.name', 'Laravel') }}</title>
+<base href="/" />
 
 <meta name="api-base-url" content="{{ config('app.url') . '/api' }}" />
 

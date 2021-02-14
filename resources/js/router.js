@@ -15,6 +15,8 @@ import MyProducts from './pages/MyProducts'
 import ChargeAccept from './pages/ChargeAccept'
 import SalesAuthority from './pages/SalesAuthority'
 
+import SocialCallback from './pages/SocialCallback'
+
 // Routes
 const routes = [
     {
@@ -172,6 +174,10 @@ const routes = [
         meta: {
             auth: false
         }
+    },
+    {
+        path: '/social/:provider',
+        component: SocialCallback
     },
     {
         path: '*',
