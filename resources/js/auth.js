@@ -1,10 +1,11 @@
 import bearer from '@websanova/vue-auth/drivers/auth/bearer'
 import axios from '@websanova/vue-auth/drivers/http/axios.1.x'
 import router from '@websanova/vue-auth/drivers/router/vue-router.2.x'
-import oauth2Google from '@websanova/vue-auth/drivers/oauth2/google.js';
-import oauth2Facebook from '@websanova/vue-auth/drivers/oauth2/facebook.js';
+import oauth2Google from '@websanova/vue-auth/drivers/oauth2/google.js'
+import oauth2Facebook from '@websanova/vue-auth/drivers/oauth2/facebook.js'
 
-oauth2Google.params.client_id = '999926938099-6divji6tsjuf18nksgir3o37q0dh9665.apps.googleusercontent.com';
+oauth2Google.params.client_id = '999926938099-6divji6tsjuf18nksgir3o37q0dh9665.apps.googleusercontent.com'
+oauth2Facebook.params.client_id = '1299695560415953'
 
 // Auth base configuration some of this options
 // can be override in method calls

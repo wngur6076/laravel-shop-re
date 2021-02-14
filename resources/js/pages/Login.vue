@@ -45,7 +45,7 @@
                             <button type="button" class="btn btn-block btn-lg loginBtn loginBtn--google text-center" @click="authProvider('google')">Google</button>
                         </div>
                         <div class="col-6">
-                            <button type="button" class="btn btn-block btn-lg loginBtn loginBtn--facebook text-center" @click="authProvider">Facebook</button>
+                            <button type="button" class="btn btn-block btn-lg loginBtn loginBtn--facebook text-center" @click="authProvider('facebook')">Facebook</button>
                         </div>
                     </div>
                 </form>
