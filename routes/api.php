@@ -53,6 +53,7 @@ Route::group(['middleware' => 'auth:api'], function() {
 
     Route::get('/super/authority', [SalesAuthorityController::class, 'index'])->middleware('isSuper');
     Route::post('/super/authority', [SalesAuthorityController::class, 'store'])->middleware('isSuper');
+    Route::get('/super/authority/{user}', [SalesAuthorityController::class, 'show'])->middleware('isSuper');
 
     Route::get('/admin/sales', [SalesHistoryController::class, 'index'])->middleware('isAdmin');
     Route::get('/admin/sales/{product}', [SalesHistoryController::class, 'show'])->middleware('isAdmin');

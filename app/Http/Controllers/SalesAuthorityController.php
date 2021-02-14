@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\SalesAuthorityResource;
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Http\Resources\OrderResource;
+use App\Http\Resources\SalesAuthorityResource;
 
 class SalesAuthorityController extends Controller
 {
@@ -17,7 +18,7 @@ class SalesAuthorityController extends Controller
             ->leftJoin('orders', 'orders.user_id', '=', 'users.id')
             ->groupBy('users.id');
 
-        $query = $query->where('name', 'LIKE', '%' . $search_query . '%');
+        $query = $query->where('email', 'LIKE', '%' . $search_query . '%')->orWhere('name', 'LIKE', '%' . $search_query . '%');
 
         $sort = $request->input('sort', 'purchase_amount');
         $order = $request->input('order', 'desc');
@@ -70,5 +71,33 @@ class SalesAuthorityController extends Controller
             'message' => $message,
             'selectIds' => $selectIds
         ], 200);
+    }
+
+    public function show(Request $request, User $user)
+    {
+        $search_query = $request->input('searchTerm');
+        $perPage = $request->input('per_page');
+
+        $query = $user->orders();
+        $query = $query->where('title', 'LIKE', '%' . $search_query . '%');
+
+        $sort = $request->input('sort', 'created_at');
+        $order = $request->input('order', 'desc');
+
+        $query = $query->orderBy($sort, $order);
+
+        $orders = $query->paginate($perPage);
+
+        if ($search_query) {
+			$searchTerm = $search_query ?: '';
+		} else {
+			$searchTerm = $search_query ? null : '';
+        }
+
+        return OrderResource::collection($orders)->additional([
+            'searchTerm' => $searchTerm,
+            'sort' => $sort,
+            'order' => $order,
+        ]);
     }
 }

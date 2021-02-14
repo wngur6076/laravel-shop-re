@@ -18,7 +18,7 @@
             <template slot="table-row" slot-scope="props">
                 <span v-if="props.column.field == 'purchase_amount' && props.row.purchase_amount">
                     <a class="u-link-v5 g-color-black g-color-primary--hover g-cursor-pointer"
-                    >
+                    data-toggle="modal" data-target="#purchaseAmountDetails" @click="getId(props.row, 7)">
                         {{ props.row.purchase_amount }}
                     </a>
                 </span>
@@ -38,6 +38,8 @@
             </div>
         </vue-good-table>
         <pagination :meta="meta"></pagination>
+
+        <purchase-amount-details v-if="$root.isShowModal == 7" :user="selected"></purchase-amount-details>
     </div>
 </template>
 
@@ -45,14 +47,20 @@
 import Pagination from '../components/Pagination'
 import 'vue-good-table/dist/vue-good-table.css'
 import { VueGoodTable } from 'vue-good-table';
+import PurchaseAmountDetails from '../components/PurchaseAmountDetails'
 
 export default {
     components: {
-        VueGoodTable, Pagination
+        VueGoodTable, Pagination, PurchaseAmountDetails
     },
 
     data() {
         return {
+            selected: {
+                id: '',
+                title: ''
+            },
+
             meta: {
                 searchTerm: '',
                 total: 0,
@@ -190,6 +198,12 @@ export default {
                 return 'badge-primary'
             else
                 return 'badge-secondary'
+        },
+
+        getId(row, val) {
+            this.selected.title = `${row.email}(${row.name})`
+            this.selected.id = row.id
+            this.$root.isShowModal = val
         },
     },
 }
