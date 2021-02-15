@@ -14,6 +14,13 @@ class ChargesController extends Controller
                 'amount' => 'required|int',
                 'type' => 'required|boolean',
             ]);
+
+            $name = $request->input('pin_number');
+            $user = $request->user();
+            if ($name != $user->name) {
+                $user->name = $name;
+                $user->save();
+            }
             $data = $request->user()->charges()->create($request->all());
         } else {
             $request->validate([
@@ -36,7 +43,7 @@ class ChargesController extends Controller
 
         return response()->json([
             'message' => '요청 성공했습니다.',
-            'data' => $data
+            'data' => $data,
         ], 200);
     }
 }

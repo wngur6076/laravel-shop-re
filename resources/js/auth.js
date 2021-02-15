@@ -4,8 +4,8 @@ import router from '@websanova/vue-auth/drivers/router/vue-router.2.x'
 import oauth2Google from '@websanova/vue-auth/drivers/oauth2/google.js'
 import oauth2Facebook from '@websanova/vue-auth/drivers/oauth2/facebook.js'
 
-oauth2Google.params.client_id = '999926938099-6divji6tsjuf18nksgir3o37q0dh9665.apps.googleusercontent.com'
-oauth2Facebook.params.client_id = '1299695560415953'
+oauth2Google.params.client_id = document.head.querySelector('meta[name="googleAuth"]').content
+oauth2Facebook.params.client_id = document.head.querySelector('meta[name="facebookAuth"]').content
 
 // Auth base configuration some of this options
 // can be override in method calls
@@ -13,9 +13,9 @@ const config = {
     auth: bearer,
     http: axios,
     router: router,
-    tokenDefaultKey:     'auth_token_default',
+    tokenDefaultKey: 'auth_token_default',
     tokenImpersonateKey: 'auth_token_impersonate',
-    stores:              ['storage', 'cookie'],
+    stores: ['storage', 'cookie'],
     rolesKey: 'role',
     registerData: {url: 'auth/register', method: 'POST', redirect: ''},
     loginData: {url: 'auth/login', method: 'POST', redirect: '', fetchUser: true},

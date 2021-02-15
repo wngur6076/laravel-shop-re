@@ -2,7 +2,7 @@
     <!-- Blog Classic Blocks -->
     <div class="col-lg-9 g-mb-80">
         <div class="spinner" v-if="$root.loading"></div>
-        <div class="g-pr-20--lg" v-else-if="items.length">
+        <div class="g-pr-20--lg" v-else-if="items.length" ref="products">
             <vue-masonry-wall :items="items" :options="options" class="row g-mb-70">
                 <template v-slot:default="{item}">
                     <!-- Blog Classic Blocks -->
@@ -83,7 +83,7 @@
         <!-- 게시글 읽기 Modal -->
         <read-product v-if="$root.isShowModal == 2" :id="selectedId"></read-product>
         <!-- 구매하기 Modal -->
-        <payment v-if="$root.isShowModal == 3" :id="selectedId" @renew="fetchProducts"></payment>
+        <payment v-if="$root.isShowModal == 3" :id="selectedId" @renew="renew"></payment>
     </div>
     <!-- End Blog Classic Blocks -->
 
@@ -156,6 +156,11 @@ export default {
         add(product) {
             // this.items.unshift(product);
             this.fetchProducts()
+        },
+
+        renew() {
+            this.fetchProducts()
+            window.scrollTo(0, 0);
         },
 
         edit(product) {

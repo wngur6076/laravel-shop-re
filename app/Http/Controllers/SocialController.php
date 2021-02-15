@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
 
 class SocialController extends Controller
 {
-    public function handleProviderCallback($provider)
+    public function store($provider)
     {
         $user = \Socialite::driver($provider)->stateless()->user();
 
@@ -24,10 +24,9 @@ class SocialController extends Controller
     {
         $user = (User::whereEmail($socialLiteUser->email)->first())
             ?: User::create([
-                'name'  => $socialLiteUser->name ?: 'unknown',
+                'name'  => 'unknown',
                 'email' => $socialLiteUser->email,
             ]);
-
 
         return $user;
     }

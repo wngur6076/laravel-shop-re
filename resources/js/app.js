@@ -40,7 +40,7 @@ Vue.use(VueMoment)
 
 Vue.prototype.authorization = policies
 
-axios.defaults.baseURL = document.head.querySelector('meta[name="api-base-url"]').content;
+axios.defaults.baseURL = document.head.querySelector('meta[name="api-base-url"]').content
 
 /**
  * The following block of code may be used to automatically register your
