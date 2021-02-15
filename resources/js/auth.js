@@ -25,7 +25,7 @@ const config = {
     oauth2: {
         google: oauth2Google,
         facebook: oauth2Facebook,
-    }
+    },
 }
 
 export default config

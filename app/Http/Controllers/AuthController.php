@@ -3,13 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Events\UserCreated;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('guest', ['except' => ['logout', 'user']]);
+    }
+
     public function register(Request $request)
     {
         $v = Validator::make($request->all(), [
@@ -26,11 +32,17 @@ class AuthController extends Controller
             ], 422);
         }
 
+        $confirmCode = \Str::random(60);
+
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'confirm_code' => $confirmCode,
         ]);
+
+        // 가입확인 메일 보내는 이벤트
+        event(new UserCreated($user));
 
         return response()->json(['status' => 'success'], 200);
     }
@@ -38,12 +50,14 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $credentials = $request->only('email', 'password');
-
-        if ($token = $this->guard()->attempt($credentials)) {
-            return response()->json(['status' => 'success'], 200)->header('Authorization', $token);
+        if (! $token = $this->guard()->attempt($credentials)) {
+            return response()->json(['error' => 'login_error', 'message' => '입력을 다시 확인해주세요.'], 401);
+        }
+        if (! Auth::user()->activated) {
+            return response()->json(['error' => 'confirm_error', 'message' => '메일을 다시 확인해주세요.'], 401);
         }
 
-        return response()->json(['error' => 'login_error'], 401);
+        return response()->json(['status' => 'success'], 200)->header('Authorization', $token);
     }
 
     public function logout()
@@ -52,8 +66,27 @@ class AuthController extends Controller
 
         return response()->json([
             'status' => 'success',
-            'msg' => 'Logged out Successfully.'
+            'message' => 'Logged out Successfully.'
         ], 200);
+    }
+
+    public function confirm(Request $request)
+    {
+        $user = User::whereConfirmCode($request->input('code'))->first();
+
+        if(! $user) {
+            return response()->json(['error' => 'code_error'], 401);
+        }
+
+        $user->activated = 1;
+        $user->confirm_code = null;
+        $user->save();
+
+        if ($token = $this->guard()->login($user)) {
+            return response()->json(['status' => 'success', 'user' => $user], 200)->header('Authorization', $token);
+        }
+
+        return response()->json(['error' => 'login_error'], 401);
     }
 
     public function user(Request $request)
