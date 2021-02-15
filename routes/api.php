@@ -33,7 +33,7 @@ Route::prefix('auth')->group(function () {
     Route::post('login', [AuthController::class, 'login']);
     Route::get('refresh', [AuthController::class, 'refresh']);
 
-    Route::post('social/{provider}', [SocialController::class, 'handleProviderCallback']);
+    Route::post('social/{provider}', [SocialController::class, 'store']);
 
     Route::group(['middleware' => 'auth:api'], function(){
         Route::get('user', [AuthController::class, 'user']);

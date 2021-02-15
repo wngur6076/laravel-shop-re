@@ -15,6 +15,14 @@ export default {
                 state: this.$route.query.state
             },
         })
+        .then(() => {
+            // success
+            let message = this.$auth.user().name + '님 환영합니다.'
+            this.$toast.success(message, "Success");
+        }, () => {
+            // error
+            this.$toast.error('입력을 다시 확인해주세요.', "Error")
+        });
     },
 }
 </script>

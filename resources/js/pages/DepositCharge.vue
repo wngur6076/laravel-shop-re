@@ -4,9 +4,12 @@
             <form @submit.prevent="handleSubmit" autocomplete="off">
                 <div class="form-group g-mb-30">
                     <label class="g-mb-10 g-font-weight-600" for="remitter">입금자명</label>
-                    <input id="remitter"
+                    <input id="remitter" v-if="$auth.user().name != 'unknown'"
                         class="text-center form-control form-control-md g-brd-none g-brd-bottom g-brd-gray-light-v7 g-brd-gray-light-v3--focus rounded-0 px-0 g-py-10"
                         type="text" placeholder="입금자 이름을 입력해주세요." v-model="name" disabled>
+                    <input id="remitter" v-else
+                        class="text-center form-control form-control-md g-brd-none g-brd-bottom g-brd-gray-light-v7 g-brd-gray-light-v3--focus rounded-0 px-0 g-py-10"
+                        type="text" placeholder="입금자 이름을 입력해주세요." v-model="name">
                 </div>
 
                 <div class="form-group g-mb-30">
@@ -57,6 +60,10 @@ export default {
 
     methods: {
         handleSubmit() {
+            if (this.name == 'unknown') {
+                this.$toast.error('입금자명 변경해주세요.', "Error")
+                return
+            }
             this.$toast.question('입금은행: 부산은행 | 입금계좌: 1122035150602 | 예금주: 김*혁', "계좌번호 안내", {
             timeout: 20000,
             close: false,
@@ -92,6 +99,7 @@ export default {
             .then(({ data }) => {
                 this.$toast.success(data.message, "Success")
                 this.amount = ''
+                this.$auth.user().name = this.name
             })
             .catch(({ response }) => {
                 console.log(response.data.errors)

@@ -6,6 +6,8 @@
 <base href="/" />
 
 <meta name="api-base-url" content="{{ config('app.url') . '/api' }}" />
+<meta name="googleAuth" content="{{ config('services.google.client_id') }}" />
+<meta name="facebookAuth" content="{{ config('services.facebook.client_id') }}" />
 
 <!-- CSRF Token -->
 <meta name="csrf-token" content="{{ csrf_token() }}">
