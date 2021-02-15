@@ -97,10 +97,10 @@ export default {
                 })
                 let message = this.$auth.user().name + '님 환영합니다.'
                 this.$toast.success(message, "Success");
-            }, () => {
+            }, ({ response }) => {
                 // error
                 app.has_error = true
-                this.$toast.error('입력을 다시 확인해주세요.', "Error")
+                this.$toast.error(response.data.message, response.data.error)
             });
 
         },

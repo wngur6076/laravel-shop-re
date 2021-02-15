@@ -16,6 +16,7 @@ import ChargeAccept from './pages/ChargeAccept'
 import SalesAuthority from './pages/SalesAuthority'
 
 import SocialCallback from './pages/SocialCallback'
+import ConfirmCallback from './pages/ConfirmCallback'
 
 // Routes
 const routes = [
@@ -178,6 +179,10 @@ const routes = [
     {
         path: '/social/:provider',
         component: SocialCallback
+    },
+    {
+        path: '/confirm',
+        component: ConfirmCallback
     },
     {
         path: '*',

@@ -29,15 +29,16 @@ use App\Http\Controllers\SocialController;
 Route::get('/tags', TagsController::class);
 
 Route::prefix('auth')->group(function () {
-    Route::post('register', [AuthController::class, 'register']);
-    Route::post('login', [AuthController::class, 'login']);
-    Route::get('refresh', [AuthController::class, 'refresh']);
+    Route::post('/register', [AuthController::class, 'register']);
+    Route::post('/login', [AuthController::class, 'login']);
+    Route::get('/refresh', [AuthController::class, 'refresh']);
+    Route::post('/confirm', [AuthController::class, 'confirm']);
 
-    Route::post('social/{provider}', [SocialController::class, 'store']);
+    Route::post('/social/{provider}', [SocialController::class, 'store']);
 
     Route::group(['middleware' => 'auth:api'], function(){
-        Route::get('user', [AuthController::class, 'user']);
-        Route::post('logout', [AuthController::class, 'logout']);
+        Route::get('/user', [AuthController::class, 'user']);
+        Route::post('/logout', [AuthController::class, 'logout']);
     });
 });
 
@@ -48,8 +49,8 @@ Route::group(['middleware' => 'auth:api'], function() {
     Route::get('/products/{product}', [ProductsController::class, 'show']);
     Route::apiResource('/products', ProductsController::class)->except(['index', 'show'])->middleware('isAdmin');
 
-    Route::get('orders/{product}', [OrdersController::class, 'show']);
-    Route::post('orders/{product}', [OrdersController::class, 'store']);
+    Route::get('/orders/{product}', [OrdersController::class, 'show']);
+    Route::post('/orders/{product}', [OrdersController::class, 'store']);
 
     Route::get('/super/accept', [ChargeAcceptController::class, 'index'])->middleware('isSuper');
     Route::post('/super/accept', [ChargeAcceptController::class, 'store'])->middleware('isSuper');

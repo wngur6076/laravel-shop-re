@@ -23,6 +23,8 @@ class CreateUsersTable extends Migration
             $table->boolean('credit')->default(0);
             $table->integer('money')->default(0);
             $table->integer('role')->default(1);
+            $table->string('confirm_code', 60)->nullable();
+            $table->boolean('activated')->default(0);
             $table->timestamps();
         });
     }

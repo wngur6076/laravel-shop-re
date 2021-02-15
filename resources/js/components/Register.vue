@@ -32,7 +32,13 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary">가입하기</button>
+                            <button type="submit" class="btn btn-primary" :disabled="$root.loading">
+                                <div v-if="$root.loading">
+                                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                    Loading...
+                                </div>
+                                <span v-else>가입하기</span>
+                            </button>
                             <button type="button" class="btn btn-secondary" data-dismiss="modal"
                                 @click="clearText">나가기</button>
                         </div>
@@ -71,6 +77,7 @@
             },
 
             register() {
+                this.$root.loading = true;
                 var app = this
                 this.$auth.register({
                     data: {
@@ -83,9 +90,11 @@
                     // success
                     $(this.$refs.modal).modal('hide')
                     app.clearText()
-                    this.$toast.success('회원 가입 완료되었습니다.', "Success")
+                    this.$root.loading = false
+                    this.$toast.info('가입하신 메일 계정으로 가입 확인 메일을 보내드렸습니다.', "Success")
                 }, (res) => {
                     // error
+                    this.$root.loading = false
                     app.errors = res.response.data.errors || {}
                     this.$toast.error('입력을 다시 확인해주세요.', "Error")
                 })
