@@ -108,6 +108,12 @@ export default {
         },
 
         authProvider(provider) {
+            let url = document.head.querySelector('meta[name="api-base-url"]').content
+            // http이면 페이스북 로그인이 안되므로 에러메세지 출력한다.
+            if (provider == 'facebook' && url.indexOf('http') == 0) {
+                this.$toast.error('죄송합니다. HTTP 환경에서는 페이스북 로그인 지원을 하지 않습니다.', "Error")
+                return
+            }
             this.$auth.oauth2(provider, {
                 params: {
                     redirect_uri: `social/${provider}`,
