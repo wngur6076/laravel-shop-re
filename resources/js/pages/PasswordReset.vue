@@ -29,17 +29,17 @@
                             <div class="alert alert-muted text-center">
                                 8자 이상의 새 비밀번호를 만드세요. <code>영문, 숫자, 특수기호</code>를 함께 사용하면 보안 수준이 높은 비밀번호를 만들 수 있습니다.
                             </div>
-                            <form class="m-t-25">
+                            <form class="m-t-25" @submit.prevent="reset" method="post">
                                 <div class="form-group row m-b-15">
                                     <label class="col-form-label col-md-2">새 비밀번호</label>
                                     <div class="col-md-10">
-                                        <input type="password" class="form-control m-b-5" placeholder="새로운 비밀번호" />
+                                        <input type="password" class="form-control m-b-5" :class="errorClass()" v-model="password" placeholder="새로운 비밀번호" autofocus required />
                                     </div>
                                 </div>
                                 <div class="form-group row m-b-15">
                                     <label class="col-form-label col-md-2">비밀번호 확인</label>
                                     <div class="col-md-10">
-                                        <input type="password" class="form-control m-b-5" placeholder="새로운 비밀번호 확인" />
+                                        <input type="password" class="form-control m-b-5" :class="errorClass()" v-model="passwordConfirmation" placeholder="새로운 비밀번호 확인" required />
                                     </div>
                                 </div>
                                 <div class="modal-footer p-10 m-t-20">
@@ -63,6 +63,47 @@
         </div>
     </div>
 </template>
+
+<script>
+export default {
+    data() {
+        return {
+            password: '',
+            passwordConfirmation: '',
+            has_error: false
+        }
+    },
+
+    methods: {
+        reset() {
+            this.$root.loading = true;
+            axios.post('/auth/reset', {
+                password: this.password,
+                password_confirmation: this.passwordConfirmation,
+                code: this.$route.query.code,
+            })
+            .then(({ data }) => {
+                this.$root.loading = false
+                this.$router.push({
+                    name: 'home'
+                })
+                this.$toast.success(data.message, "Success");
+            })
+            .catch(res => {
+                this.$root.loading = false
+                this.has_error = true
+                this.$toast.error(res.response.data.message, "Error")
+            })
+        },
+
+        errorClass() {
+            return [
+                this.has_error  ? 'is-invalid' : ''
+            ]
+        },
+    },
+}
+</script>
 
 <style lang="scss" scoped>
 @import 'resources/sass/_variables.scss';

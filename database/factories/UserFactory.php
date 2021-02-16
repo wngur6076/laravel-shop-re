@@ -31,6 +31,7 @@ class UserFactory extends Factory
             'credit' => (bool)random_int(0, 1),
             'money' => $this->faker->randomNumber(5),
             'role' => random_int(1, 2),
+            'activated' => true,
         ];
     }
 }

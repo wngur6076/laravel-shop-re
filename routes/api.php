@@ -38,6 +38,7 @@ Route::prefix('auth')->group(function () {
     Route::post('/social/{provider}', [SocialController::class, 'store']);
 
     Route::post('/remind', [PasswordsController::class, 'postRemind']);
+    Route::post('/reset', [PasswordsController::class, 'postReset']);
 
     Route::group(['middleware' => 'auth:api'], function(){
         Route::get('/user', [AuthController::class, 'user']);
