@@ -10,6 +10,7 @@ use App\Http\Controllers\OrdersController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\FavoritesController;
 use App\Http\Controllers\MyProductsController;
+use App\Http\Controllers\PasswordsController;
 use App\Http\Controllers\PurchaseHistoryController;
 use App\Http\Controllers\SalesAuthorityController;
 use App\Http\Controllers\SalesHistoryController;
@@ -35,6 +36,9 @@ Route::prefix('auth')->group(function () {
     Route::post('/confirm', [AuthController::class, 'confirm']);
 
     Route::post('/social/{provider}', [SocialController::class, 'store']);
+
+    Route::post('/remind', [PasswordsController::class, 'postRemind']);
+    Route::post('/reset', [PasswordsController::class, 'postReset']);
 
     Route::group(['middleware' => 'auth:api'], function(){
         Route::get('/user', [AuthController::class, 'user']);

@@ -9,6 +9,9 @@ use Illuminate\Support\Facades\Event;
 
 class EventServiceProvider extends ServiceProvider
 {
+    protected $subscribe = [
+        \App\Listeners\UsersEventListener::class
+    ];
     /**
      * The event listener mappings for the application.
      *

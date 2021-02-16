@@ -91,7 +91,7 @@
                     $(this.$refs.modal).modal('hide')
                     app.clearText()
                     this.$root.loading = false
-                    this.$toast.info('가입하신 메일 계정으로 가입 확인 메일을 보내드렸습니다.', "Success")
+                    this.$toast.info('가입하신 메일 계정으로 가입 확인 메일을 보내드렸습니다.', "Info")
                 }, (res) => {
                     // error
                     this.$root.loading = false
