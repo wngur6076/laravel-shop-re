@@ -15,8 +15,9 @@ import MyProducts from './pages/MyProducts'
 import ChargeAccept from './pages/ChargeAccept'
 import SalesAuthority from './pages/SalesAuthority'
 
-import SocialCallback from './pages/SocialCallback'
-import ConfirmCallback from './pages/ConfirmCallback'
+import SocialLogin from './pages/SocialLogin'
+import AuthConfirm from './pages/AuthConfirm'
+import PasswordReset from './pages/PasswordReset'
 
 // Routes
 const routes = [
@@ -178,11 +179,24 @@ const routes = [
     },
     {
         path: '/social/:provider',
-        component: SocialCallback
+        component: SocialLogin,
     },
     {
-        path: '/confirm',
-        component: ConfirmCallback
+        path: '/auth/confirm',
+        component: AuthConfirm
+    },
+    {
+        path: '/password/reset',
+        component: PasswordReset,
+        meta: {
+            auth: {
+                roles: false,
+                redirect: {
+                    name: 'home'
+                },
+                forbiddenRedirect: '/403'
+            }
+        },
     },
     {
         path: '*',

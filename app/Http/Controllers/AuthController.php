@@ -54,7 +54,7 @@ class AuthController extends Controller
             return response()->json(['error' => 'login_error', 'message' => '입력을 다시 확인해주세요.'], 401);
         }
         if (! Auth::user()->activated) {
-            return response()->json(['error' => 'confirm_error', 'message' => '메일을 다시 확인해주세요.'], 401);
+            return response()->json(['error' => 'confirm_error', 'message' => '메일함을 다시 확인해주세요.'], 401);
         }
 
         return response()->json(['status' => 'success'], 200)->header('Authorization', $token);

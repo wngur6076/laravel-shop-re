@@ -35,7 +35,7 @@
                         <button type="submit" class="btn btn-dark btn-block btn-lg">Login</button>
                     </div>
                     <div class="m-t-10 m-b-10 text-center">
-                        <a class="g-color-green">Forget?</a>
+                        <a class="g-color-green" data-toggle="modal" data-target="#passwordRemindModal">Forget?</a>
                         <span class="g-color-black">|</span>
                         <a class="g-color-green" data-toggle="modal" data-target="#registerModal">Register</a>
                     </div>
@@ -53,12 +53,14 @@
             <!-- end login-content -->
         </div>
         <register></register>
+        <password-remind></password-remind>
     </div>
     <!-- end login -->
 </template>
 
 <script>
 import register from '../components/Register'
+import PasswordRemind from '../components/PasswordRemind'
 
 export default {
     data() {
@@ -70,7 +72,7 @@ export default {
     },
 
     components: {
-        register,
+        register, PasswordRemind
     },
 
     methods: {
