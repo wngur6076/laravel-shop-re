@@ -18,7 +18,7 @@ class SalesAuthorityController extends Controller
             ->leftJoin('orders', 'orders.user_id', '=', 'users.id')
             ->groupBy('users.id');
 
-        $query = $query->where('email', 'LIKE', '%' . $search_query . '%')->orWhere('name', 'LIKE', '%' . $search_query . '%');
+        $query = $query->where('activated', true)->where('email', 'LIKE', '%' . $search_query . '%');
 
         $sort = $request->input('sort', 'purchase_amount');
         $order = $request->input('order', 'desc');
