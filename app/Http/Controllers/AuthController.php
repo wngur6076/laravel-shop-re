@@ -21,7 +21,7 @@ class AuthController extends Controller
         $v = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'email' => 'required|email|string|max:255|unique:users',
-            'password'  => 'required|min:8|string', //confirmed
+            'password'  => 'required|min:8|string',
         ]);
 
         if ($v->fails())
@@ -44,7 +44,7 @@ class AuthController extends Controller
         // 가입확인 메일 보내는 이벤트
         event(new UserCreated($user));
 
-        return response()->json(['status' => 'success'], 200);
+        return response()->json(['status' => 'success'], 201);
     }
 
     public function login(Request $request)
