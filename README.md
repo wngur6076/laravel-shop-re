@@ -1,5 +1,10 @@
 # 핵 쇼핑몰
 
+## ⚙️ 주제
+
+* 리버싱 공부한 경험으로 주제 선정 ([게임 메모리 분석](https://drive.google.com/file/d/1ht_KHPd8tlAqbLGAW8zmWthQxdSDInS-/view), [게임 해킹툴 분석](https://drive.google.com/file/d/1rXNZw84lMwgbW6eE0xQqPD6KYAeDkgBK/view))
+* 첫 프로젝트라 흥미 있는 주제면 재밌게 할 것 같아서 선정
+
 ## ⚙️ 서버
 
 * AWS: <http://ec2-52-79-243-119.ap-northeast-2.compute.amazonaws.com>
@@ -130,25 +135,31 @@
               
 ## ⚙️ Key summary
 
-- 프론트는 Vue+Bootstrap Unify Template, 백엔드는 Laravel 이용
+- 프론트는 Vue+Bootstrap Unify Template, 백엔드는 Laravel 이용 => [Unify Template](https://htmlstream.com/preview/unify-v2.6.3/unify-main/blog/blog-grid-background-overlay-right-sidebar.html) 
 <p align="center">
     <img width="45%" src="https://user-images.githubusercontent.com/71273875/115179588-9cf75100-a10e-11eb-96df-6cb30155aae2.png"> 
     <img width="45%" src="https://user-images.githubusercontent.com/71273875/115179599-a1236e80-a10e-11eb-9cf5-3b4c96634859.png">                        
 </p> 
 
-- 처음에는 기획, 기능 위주로 코딩
+- 처음에는 기획, 기능 위주로 구현
 <p align="center">
     <img width="45%" src="https://user-images.githubusercontent.com/71273875/115179127-961c0e80-a10d-11eb-91b4-7c8691557902.png"> 
-    <img width="45%" src="https://user-images.githubusercontent.com/71273875/115179134-9916ff00-a10d-11eb-93dd-a6741bdb1074.png">                        
+    <img width="45%" src="https://user-images.githubusercontent.com/71273875/115184016-ebf5b400-a117-11eb-9e5f-feb147886e75.png">                        
 </p>  
 
-- 이후 핵심 기능 TDD로 다시 코딩(Code Coverage 100%, Refactoring)
+- 이후 핵심 기능 TDD로 다시 구현(Code Coverage 100%, Refactoring) => [TDD Repositoriy](https://github.com/wngur6076/hack-shopping-mall)
 <p align="center">
     <img width="45%" src="https://user-images.githubusercontent.com/71273875/115178135-a03d0d80-a10b-11eb-8376-6b4aa0817cda.png"> 
     <img width="45%" src="https://user-images.githubusercontent.com/71273875/115178140-a29f6780-a10b-11eb-844a-4873eb88c511.png">                        
-</p>
-             
+</p>              
               
-              
-                                                                                                                                        
+
+
+
+
+
+
+
+
+
                                                                                                                                         
