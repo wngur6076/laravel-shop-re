@@ -4,13 +4,14 @@
 
 * 리버싱 공부한 경험으로 주제 선정 ([게임 메모리 분석](https://drive.google.com/file/d/1ht_KHPd8tlAqbLGAW8zmWthQxdSDInS-/view), [게임 해킹툴 분석](https://drive.google.com/file/d/1rXNZw84lMwgbW6eE0xQqPD6KYAeDkgBK/view))
 * 첫 프로젝트라 흥미 있는 주제면 재밌게 할 것 같아서 선정
+* 콘서트 티켓구매와 비슷한 로직 (콘서트->티켓구매 == 핵상품->코드구매)
 
 ## ⚙️ 서버
 
 * AWS: <http://ec2-52-79-243-119.ap-northeast-2.compute.amazonaws.com>
 * 접속 에러 시 크롬으로 접속
 * 관리자ID: rolfson.ashley@example.com 비밀번호: password
-* 회원가입 후 가입한 ID로 메일인증 필요
+* 회원가입 시 입력한 ID로 메일인증 필요
 
 ## ⚙️ 주요 기능
 
@@ -152,13 +153,38 @@
     <img width="45%" src="https://user-images.githubusercontent.com/71273875/115178135-a03d0d80-a10b-11eb-8376-6b4aa0817cda.png"> 
     <img width="45%" src="https://user-images.githubusercontent.com/71273875/115178140-a29f6780-a10b-11eb-844a-4873eb88c511.png">                        
 </p>              
-              
 
+## ⚙️ Backend architecture             
+ 
+이 프로젝트는 유데미강의(Vue, Laravel 기초 배움)와, 라라벨로 배우는 실전 PHP 웹 프로그래밍 등 공부 후 2021.01월에 첫 프로젝트로 만들었지만, 현재 READEME 작성 일 2021.04.19 3개월이 지났으니, 현재 다시 만들 경우 비교하여 소개하겠습니다.
 
+당시 생각해보면 백엔드는 복잡한 로직이 없었기 때문에 빠르게 만들었고 기획, 프론트에서 시간이 오래 걸렸습니다. 이후 구매, 상품CURD 구현을 TDD로 다시 만들었습니다.
 
+* Routes, Controllers, Endpoints
+    * 기존
+        * 공부한 강의 코드 본 후 비슷하게 이름 정함
+        * Routes/Endpoints 구조에 대한 중요성을 몰랐음
+    * 현재
+        * 네이밍 신중하게 할 것 같음
+        * [Cruddy by Design](https://www.youtube.com/watch?v=MF0jFKvS4SI&list=WL&index=26&ab_channel=AdamWathan) 본 후 고민해봄
 
+* 테스트
+    * 기존
+        * Postman으로 API 테스트
+        * 새로운 기능추가 후 다른 API도 테스트하게 됨
+        * API 테스트에 많은 시간 투자
+    * 현재
+        * 테스트코드로 API 테스트
+        * 클린코드에 대한 관심 증가
+        * [Test Driven Laravel](https://course.testdrivenlaravel.com/) 본 후 기본적인 TDD 작성 방법, 외부라이브러리 인터페이스 작성, 의존성주입 배움
+        * [Facebook Clone with Laravel, TDD, Vue & Tailwind CSS](https://www.udemy.com/course/facebook-clone-with-laravel-tdd-vue-tailwind-css/) 본 후 TDD로 작은 기능 부터 하나씩 추가는 방법 배움
 
-
+* JSON 구조
+    * 기존
+        * JSON 구조 생각 안함
+        * 메세지, Response Code 생각 안함
+    * 현재
+        * [jsonapi.org](https://jsonapi.org/format/#crud) 참고하여 구조에 신경씀
 
 
 
