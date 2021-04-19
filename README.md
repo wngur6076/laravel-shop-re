@@ -1,7 +1,13 @@
 # 핵 쇼핑몰
 
-## ⚙️ 주요 기능
+## ⚙️ 서버
 
+* AWS: <http://ec2-52-79-243-119.ap-northeast-2.compute.amazonaws.com>
+* 접속 에러 시 크롬으로 접속
+* 관리자ID: rolfson.ashley@example.com 비밀번호: password
+* 회원가입 후 가입한 ID로 메일인증 필요
+
+## ⚙️ 주요 기능
 
 <details>
 <summary>구매자</summary>
@@ -122,9 +128,26 @@
 </ul>
 </details>              
               
-              
-              
-              
+## ⚙️ Key summary
+
+- 프론트는 Vue+Bootstrap Unify Template, 백엔드는 Laravel 이용
+<p align="center">
+    <img width="45%" src="https://user-images.githubusercontent.com/71273875/115179588-9cf75100-a10e-11eb-96df-6cb30155aae2.png"> 
+    <img width="45%" src="https://user-images.githubusercontent.com/71273875/115179599-a1236e80-a10e-11eb-9cf5-3b4c96634859.png">                        
+</p> 
+
+- 처음에는 기획, 기능 위주로 코딩
+<p align="center">
+    <img width="45%" src="https://user-images.githubusercontent.com/71273875/115179127-961c0e80-a10d-11eb-91b4-7c8691557902.png"> 
+    <img width="45%" src="https://user-images.githubusercontent.com/71273875/115179134-9916ff00-a10d-11eb-93dd-a6741bdb1074.png">                        
+</p>  
+
+- 이후 핵심 기능 TDD로 다시 코딩(Code Coverage 100%, Refactoring)
+<p align="center">
+    <img width="45%" src="https://user-images.githubusercontent.com/71273875/115178135-a03d0d80-a10b-11eb-8376-6b4aa0817cda.png"> 
+    <img width="45%" src="https://user-images.githubusercontent.com/71273875/115178140-a29f6780-a10b-11eb-844a-4873eb88c511.png">                        
+</p>
+             
               
               
                                                                                                                                         
