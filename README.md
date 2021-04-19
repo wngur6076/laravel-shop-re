@@ -185,6 +185,7 @@
         * 메세지, Response Code 생각 안함
     * 현재
         * [jsonapi.org](https://jsonapi.org/format/#crud) 참고하여 구조에 신경씀
+        * 라라벨 컬렉션을 사용하여 데이터 쉽게 처리
 
 * 기획, 이슈관리
     * 기존
