@@ -5,7 +5,7 @@
 
 <details>
 <summary>구매자</summary>
-    
+<ul>    
 <details>
     <summary>회원가입, 메일인증</summary>
     <div markdown="1>  
@@ -65,12 +65,14 @@
         </p>                                                                                                                                    
     </div>
 </details>
-                                                                                                                                        
-</details>               
+
+</ul>
+</details>            
               
 <details>
 <summary>판매자</summary>
-    
+
+<ul>
 <details>
     <summary>상품CURD</summary>
     <div markdown="1>  
@@ -80,7 +82,8 @@
         </p>                                                                                                                                    
     </div>
 </details>      
-                                                                                                                                        
+
+</ul>
 </details>               
               
               
