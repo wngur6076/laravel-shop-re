@@ -208,7 +208,7 @@
 ## ⚙️ Frontend architecture
 
 프론트는 3개월 전과 크게 달라진 건 없고, vuex 사용만 해봤습니다.
-현재 만들면 vuex 사용과 bootstrap 대신 tailwind 배워서 적용해 볼 것 같아요.
+현재 다시 만들면 vuex 사용과 bootstrap 대신 tailwind 배워서 적용해 볼 것 같아요.
 
 ## ⚙️ 느낀점
 
