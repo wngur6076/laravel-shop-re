@@ -1,10 +1,10 @@
-# 핵 쇼핑몰
+# Hack Shopping Mall
 
 ## ⚙️ 주제
 
 * 리버싱 공부한 경험으로 주제 선정 ([게임 메모리 분석](https://drive.google.com/file/d/1ht_KHPd8tlAqbLGAW8zmWthQxdSDInS-/view), [게임 해킹툴 분석](https://drive.google.com/file/d/1rXNZw84lMwgbW6eE0xQqPD6KYAeDkgBK/view))
 * 첫 프로젝트라 흥미 있는 주제면 재밌게 할 것 같아서 선정
-* 콘서트 티켓구매와 비슷한 로직 (콘서트->티켓구매 == 핵상품->코드구매)
+* 콘서트 티켓구매와 비슷한 로직 (콘서트->티켓구매 == 상품->코드구매)
 
 ## ⚙️ 서버
 
@@ -154,7 +154,7 @@
     <img width="45%" src="https://user-images.githubusercontent.com/71273875/115178140-a29f6780-a10b-11eb-844a-4873eb88c511.png">                        
 </p>              
 
-## ⚙️ Backend architecture             
+## ⚙️ Backend architecture            
  
 이 프로젝트는 유데미강의(Vue, Laravel 기초 배움)와, 라라벨로 배우는 실전 PHP 웹 프로그래밍 등 공부 후 2021.01월에 첫 프로젝트로 만들었지만, 현재 READEME 작성 일 2021.04.19 3개월이 지났으니, 현재 다시 만들 경우 비교하여 소개하겠습니다.
 
@@ -186,6 +186,35 @@
     * 현재
         * [jsonapi.org](https://jsonapi.org/format/#crud) 참고하여 구조에 신경씀
 
+* 기획, 이슈관리
+    * 기존
+        * 간단한 기획 후 코딩하면서 설계
+        * 이슈는 Text Editor에 작성
+    * 현재
+        * 페이지마다 정확한 데이터, 디자인 설계 후 코딩
+        * 이슈관리는 GitHub 이슈트래커 사용함
+        * Commit 메세지 정확하게 작성
+         
+* 데이터베이스
+    * 기존
+        * 기획과 마찬가지로 코딩하면서 설계
+    * 현재
+        * 필요한 기능 정확하게 기획 후 설계 -> 코딩
+        * [데이터베이스 구조 훔쳐보기 1탄 - 넷플릭스](https://www.youtube.com/watch?v=Wpy28DU4Sbc&ab_channel=%EA%B0%9C%EB%B0%9C%EC%9E%90%EC%9D%98%ED%92%88%EA%B2%A9) 본 후 데이터베이스 설계와 사용자에 대한 여러 가지 데이터도 저장한다는 것을 배움
+
+## ⚙️ Frontend architecture
+
+프론트는 3개월 전과 크게 달라진 건 없고, vuex 사용만 해봤습니다.
+현재 만들면 vuex 사용과 bootstrap 대신 tailwind 배워서 적용해 볼 것 같아요.
+
+## ⚙️ 느낀점
+
+공부하면 할수록 진짜 많이 부족하다는 것을 다시 한번 느꼈고 열심히 공부해서 2~3년 후에는 괜찮은 개발자가 되려고 노력할 것
+
+## ⚙️ 향후 추가 할 기능들
+
+Backend architecture를 모두 신경 써서 기존프로젝트보다 더 크게 만드는 게 목표이고, 입사 후 아직은 잘 모르는 AWS 운영이나, 성능 관련된 Redis, ElasticSearch등을 배워서 추가할 생각입니다.
 
 
-                                                                                                                                        
+
+
