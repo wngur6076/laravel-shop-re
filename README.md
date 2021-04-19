@@ -203,12 +203,16 @@
         * 기획과 마찬가지로 코딩하면서 설계
     * 현재
         * 필요한 기능 정확하게 기획 후 설계 -> 코딩
-        * [데이터베이스 구조 훔쳐보기 1탄 - 넷플릭스](https://www.youtube.com/watch?v=Wpy28DU4Sbc&ab_channel=%EA%B0%9C%EB%B0%9C%EC%9E%90%EC%9D%98%ED%92%88%EA%B2%A9) 본 후 데이터베이스 설계와 사용자 맞춤 정보를 위해 여러 가지 데이터를 저장한다는 것을 알게 됨
+        * [데이터베이스 구조 훔쳐보기 1탄 - 넷플릭스](https://www.youtube.com/watch?v=Wpy28DU4Sbc&ab_channel=%EA%B0%9C%EB%B0%9C%EC%9E%90%EC%9D%98%ED%92%88%EA%B2%A9) 본 후 데이터베이스 설계와 사용자 맞춤 정보를 위해 여러 가지 데이터를 저장한다는 것을 배움
 
 ## ⚙️ Frontend architecture
 
 프론트는 3개월 전과 크게 달라진 건 없고, vuex 사용만 해봤습니다.
 현재 다시 만들면 vuex 사용과 bootstrap 대신 tailwind 배워서 적용해 볼 것 같아요.
+
+* 힘들었던 내용
+    * Bootstrap Template에서 masonry-wall 사용 에러가 떠서 vue.js vue-masonry-wall 사용
+    * JWT인증 및 SNS 로그인 프론트에서 처리 부분
 
 ## ⚙️ 느낀점
 
