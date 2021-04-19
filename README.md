@@ -15,6 +15,16 @@
         </p>                                                                                                                                    
     </div>
 </details>
+
+<details>
+    <summary>계정찾기</summary>
+    <div markdown="1>  
+        <p align="center">
+            <img width="45%" src="https://user-images.githubusercontent.com/71273875/115177054-518e7400-a109-11eb-98e6-7f4f061aeee4.gif"> 
+            <img width="45%" src="https://user-images.githubusercontent.com/71273875/115177274-d5e0f700-a109-11eb-9797-ad93ac55849b.gif">                         
+        </p>                                                                                                                                    
+    </div>
+</details>
                                                                                                                                         
 <details>
     <summary>로그인</summary>
@@ -96,8 +106,21 @@
 </ul>
 </details>               
               
-              
-              
+<details>
+<summary>관리자</summary>
+
+<ul>
+<details>
+    <summary>승인 (충전, 판매권환)</summary>
+    <div markdown="1>  
+        <p align="center">
+            <img width="45%" src="https://user-images.githubusercontent.com/71273875/115175951-01aead80-a107-11eb-9a46-a231fe79e682.gif"> 
+            <img width="45%" src="https://user-images.githubusercontent.com/71273875/115176125-71249d00-a107-11eb-9913-efa629b03ff6.gif">                        
+        </p>                                                                                                                                    
+    </div>
+</details>                
+</ul>
+</details>              
               
               
               
