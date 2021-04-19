@@ -203,7 +203,7 @@
         * 기획과 마찬가지로 코딩하면서 설계
     * 현재
         * 필요한 기능 정확하게 기획 후 설계 -> 코딩
-        * [데이터베이스 구조 훔쳐보기 1탄 - 넷플릭스](https://www.youtube.com/watch?v=Wpy28DU4Sbc&ab_channel=%EA%B0%9C%EB%B0%9C%EC%9E%90%EC%9D%98%ED%92%88%EA%B2%A9) 본 후 데이터베이스 설계와 사용자에 대한 여러 가지 데이터도 저장한다는 것을 배움
+        * [데이터베이스 구조 훔쳐보기 1탄 - 넷플릭스](https://www.youtube.com/watch?v=Wpy28DU4Sbc&ab_channel=%EA%B0%9C%EB%B0%9C%EC%9E%90%EC%9D%98%ED%92%88%EA%B2%A9) 본 후 데이터베이스 설계와 사용자 맞춤 정보를 위해 여러 가지 데이터를 저장한다는 것을 알게 됨
 
 ## ⚙️ Frontend architecture
 
