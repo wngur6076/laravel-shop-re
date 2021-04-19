@@ -2,6 +2,10 @@
 
 ## ⚙️ 주요 기능
 
+
+<details>
+<summary>구매자</summary>
+    
 <details>
     <summary>회원가입, 메일인증</summary>
     <div markdown="1>  
@@ -42,10 +46,27 @@
     </div>
 </details>
 
-
+<details>
+    <summary>내역 (충전, 구매)</summary>
+    <div markdown="1>  
+        <p align="center">
+            <img width="45%" src="https://user-images.githubusercontent.com/71273875/115168385-a3c59a00-a0f5-11eb-951d-b656c0a41e02.gif"> 
+            <img width="45%" src="https://user-images.githubusercontent.com/71273875/115168455-e7200880-a0f5-11eb-95ff-30110473b428.gif">                         
+        </p>                                                                                                                                    
+    </div>
+</details>
                                                                                                                                         
-              
-              
+<details>
+    <summary>즐겨찾기, 검색</summary>
+    <div markdown="1>  
+        <p align="center">
+            <img width="45%" src="https://user-images.githubusercontent.com/71273875/115168587-788f7a80-a0f6-11eb-806e-8b6869fcaaa3.gif"> 
+            <img width="45%" src="https://user-images.githubusercontent.com/71273875/115168701-c60be780-a0f6-11eb-9224-20994cd672ad.gif">                         
+        </p>                                                                                                                                    
+    </div>
+</details>
+                                                                                                                                        
+</details>               
               
               
               
