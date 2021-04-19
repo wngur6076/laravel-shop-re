@@ -177,7 +177,7 @@
         * 테스트코드로 API 테스트
         * 클린코드에 대한 관심 증가
         * [Test Driven Laravel](https://course.testdrivenlaravel.com/) 본 후 기본적인 TDD 작성 방법, 외부라이브러리 인터페이스 작성, 의존성주입 배움
-        * [Facebook Clone with Laravel, TDD, Vue & Tailwind CSS](https://www.udemy.com/course/facebook-clone-with-laravel-tdd-vue-tailwind-css/) 본 후 TDD로 작은 기능 부터 하나씩 추가는 방법 배움
+        * [Facebook Clone with Laravel, TDD, Vue & Tailwind CSS](https://github.com/wngur6076/facebook-ct) 본 후 TDD로 작은 기능 부터 하나씩 추가는 방법 배움
 
 * JSON 구조
     * 기존
