@@ -68,8 +68,20 @@
                                                                                                                                         
 </details>               
               
-              
-              
+<details>
+<summary>판매자</summary>
+    
+<details>
+    <summary>상품CURD</summary>
+    <div markdown="1>  
+        <p align="center">
+            <img width="45%" src="https://user-images.githubusercontent.com/71273875/115171110-46cde200-a0fd-11eb-90cf-043506d68a4f.gif"> 
+            <img width="45%" src="https://user-images.githubusercontent.com/71273875/115171509-1fc3e000-a0fe-11eb-8bc8-1e2f4463fbaa.gif">                         
+        </p>                                                                                                                                    
+    </div>
+</details>      
+                                                                                                                                        
+</details>               
               
               
               
