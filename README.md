@@ -210,9 +210,9 @@
 프론트는 3개월 전과 크게 달라진 건 없고, vuex 사용만 해봤습니다.
 현재 다시 만들면 vuex 사용과 bootstrap 대신 tailwind 배워서 적용해 볼 것 같아요.
 
-* 힘들었던 내용
-    * Bootstrap Template에서 masonry-wall 사용 에러가 떠서 vue.js vue-masonry-wall 사용
-    * JWT인증 및 SNS 로그인 프론트에서 처리 부분
+힘들었던 내용
+* Bootstrap Template에서 masonry-wall 사용 에러가 떠서 vue.js vue-masonry-wall 사용
+* JWT인증 및 SNS 로그인 프론트에서 처리 부분
 
 ## ⚙️ 느낀점
 
