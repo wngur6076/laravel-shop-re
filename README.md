@@ -78,11 +78,21 @@
     <div markdown="1>  
         <p align="center">
             <img width="45%" src="https://user-images.githubusercontent.com/71273875/115171110-46cde200-a0fd-11eb-90cf-043506d68a4f.gif"> 
-            <img width="45%" src="https://user-images.githubusercontent.com/71273875/115171509-1fc3e000-a0fe-11eb-8bc8-1e2f4463fbaa.gif">                         
+            <img width="45%" src="https://user-images.githubusercontent.com/71273875/115171509-1fc3e000-a0fe-11eb-8bc8-1e2f4463fbaa.gif">
+            <img width="45%" src="https://user-images.githubusercontent.com/71273875/115172100-7978da00-a0ff-11eb-8742-bd2d987bb586.gif">                                     <img width="45%" src="https://user-images.githubusercontent.com/71273875/115172229-c52b8380-a0ff-11eb-8212-d4ab0272a831.gif">                         
         </p>                                                                                                                                    
     </div>
-</details>      
+</details>  
 
+<details>
+    <summary>관리 (판매, My상품)</summary>
+    <div markdown="1>  
+        <p align="center">
+            <img width="45%" src="https://user-images.githubusercontent.com/71273875/115173163-a0d0a680-a101-11eb-8bea-8fd2d4d83c7a.gif"> 
+            <img width="45%" src="https://user-images.githubusercontent.com/71273875/115173420-3704cc80-a102-11eb-8997-b26526248a07.gif">                       
+        </p>                                                                                                                                    
+    </div>
+</details> 
 </ul>
 </details>               
               
