@@ -222,7 +222,7 @@
 
 * Backend architecture를 모두 신경 써서 기존프로젝트보다 더 크게 만들기
 * 입사 후 클린코드와 라라벨 컬렉션 공부에 집중
-* 또 아직은 잘 모르는 AWS 운영이나, 성능 관련된 Redis, ElasticSearch 등을 배워서 적용
+* 또 AWS 운영이나, 성능 관련된 Redis, ElasticSearch 등을 배워서 적용
 * 꾸준히 다른 사람 코드나 강의 보기
 
 
