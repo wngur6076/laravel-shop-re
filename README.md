@@ -2,7 +2,7 @@
 
 ## ⚙️ 주제
 
-* 리버싱 공부한 경험으로 주제 선정 ([게임 메모리 분석](https://drive.google.com/file/d/1ht_KHPd8tlAqbLGAW8zmWthQxdSDInS-/view), [게임 해킹툴 분석](https://drive.google.com/file/d/1rXNZw84lMwgbW6eE0xQqPD6KYAeDkgBK/view))
+* 리버싱 및 게임보안 공부한 경험으로 주제 선정 ([게임 메모리 분석](https://drive.google.com/file/d/1ht_KHPd8tlAqbLGAW8zmWthQxdSDInS-/view), [게임 해킹툴 분석](https://drive.google.com/file/d/1rXNZw84lMwgbW6eE0xQqPD6KYAeDkgBK/view))
 * 첫 프로젝트라 흥미 있는 주제면 재밌게 할 것 같아서 선정
 * 콘서트 티켓구매와 비슷한 로직 (콘서트->티켓구매 == 상품->코드구매)
 
