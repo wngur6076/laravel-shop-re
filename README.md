@@ -195,7 +195,7 @@
     * 현재
         * 페이지마다 정확한 데이터, 디자인 설계 후 코딩
         * 이슈관리는 GitHub 이슈트래커 사용함
-        * [github 하나로 1인 개발 워크플로우 완성하기: 실전 편](https://www.huskyhoochu.com/issue-based-version-control-201) 참고해서 [이슈트래커 사용해서 간단한 프로젝트 하는 중](https://github.com/wngur6076/study-group/projects/1)
+        * [github 하나로 1인 개발 워크플로우 완성하기: 실전 편](https://www.huskyhoochu.com/issue-based-version-control-201) 참고해서 [간단한 프로젝트 하는 중](https://github.com/wngur6076/study-group/projects/1)
         * Commit 메세지 정확하게 작성
         * Swagger 사용해서 API 문서화
          
