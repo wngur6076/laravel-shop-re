@@ -213,6 +213,7 @@
 
 * 힘들었던 내용
     * Bootstrap Template에서 masonry-wall 사용 에러가 떠서 vue.js vue-masonry-wall 사용
+    * Bootstrap Template은 jQuery인데, 이를 vue.js로 사용하는데 에러가 있어서 힘들었습니다.
     * JWT인증 및 SNS 로그인 프론트에서 처리 부분
 
 ## ⚙️ 느낀점
