@@ -8,7 +8,7 @@
 
 ## ⚙️ 서버
 
-* AWS: <http://ec2-15-164-212-91.ap-northeast-2.compute.amazonaws.com>
+* AWS: <http://ec2-15-164-233-124.ap-northeast-2.compute.amazonaws.com>
 * 접속 에러 시 크롬으로 접속
 * 관리자ID: rolfson.ashley@example.com 비밀번호: password
 * 회원가입 시 입력한 ID로 메일인증 필요
